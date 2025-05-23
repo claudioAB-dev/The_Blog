@@ -15,6 +15,14 @@ class Autor(db.Model):
 
     def __repr__(self):
         return f"<Autor {self.nombre}>"
+    def serialize(self):
+        return {
+            'id': self.id,
+            'nombre': self.nombre,
+            'email': self.email,
+            'Biografía': self.biografia
+            # agrega aquí otros campos que quieras exponer
+        }
 
 class Categoria(db.Model):
     __tablename__ = 'categorias'
@@ -55,7 +63,7 @@ class Entrada(db.Model):
     resumen = db.Column(db.Text, nullable=False)
     contenido = db.Column(db.Text, nullable=False)
     imagen_destacada = db.Column(db.String(255))
-    estado = db.Column(db.Enum('BORRADOR', 'PUBLICADO'), default='BORRADOR', nullable=False)
+    estado = db.Column(db.Enum('borrador', 'publicado'), default='borrador', nullable=False)
     fecha_publicacion = db.Column(db.TIMESTAMP)
     fecha_creacion = db.Column(db.TIMESTAMP, default=datetime.utcnow, nullable=False)
     fecha_actualizacion = db.Column(db.TIMESTAMP, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
@@ -63,10 +71,25 @@ class Entrada(db.Model):
     comentarios = db.relationship('Comentario', backref='entrada', lazy=True)
     etiquetas = db.relationship('Etiqueta', secondary='entradas_etiquetas', backref=db.backref('entradas', lazy=True))
 
-
     def __repr__(self):
         return f"<Entrada {self.titulo}>"
-
+    def serialize(self):
+        return {
+            'id': self.id,
+            'autor_id': self.autor_id,
+            'categoria_id': self.categoria_id,
+            'titulo': self.titulo,
+            'slug': self.slug,
+            'resumen': self.resumen,
+            'contenido': self.contenido,
+            'imagen_destacada': self.imagen_destacada,
+            'estado': self.estado,
+            'fecha_pulicacion': self.fecha_publicacion,
+            'fecha_creacion': self.fecha_creacion,
+            'fecha_actualizacion': self.fecha_actualizacion,
+            'comentarios': [comentario.id for comentario in self.comentarios],  
+            'etiquetas': [etiqueta.nombre for etiqueta in self.etiquetas]
+        }
 class EntradaEtiqueta(db.Model):
     __tablename__ = 'entradas_etiquetas'
     entrada_id = db.Column(db.Integer, db.ForeignKey('entradas.id'), primary_key=True)

@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from run import db # Importa la instancia de db que se inicializó en app.py
+from app import db # Importa la instancia de db que se inicializó en app.py
 from .models import Autor, Entrada, Comentario # Importa tus modelos
 
 # Define un Blueprint para organizar tus rutas
