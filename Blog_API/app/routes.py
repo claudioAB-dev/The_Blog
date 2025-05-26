@@ -1,7 +1,9 @@
+# routes.py
 from flask import Blueprint, request, jsonify
-from app import db # Importa la instancia de db que se inicializó en app.py
-from .models import Autor, Entrada, Comentario # Importa tus modelos
-
+# from app import db # Línea actual
+from .models import db # <--- CAMBIO SUGERIDO: Importar db directamente desde models.py
+from .models import Autor, Entrada, Comentario, Categoria# Esto ya es correcto
+# ... el resto de tu código de routes.py
 # Define un Blueprint para organizar tus rutas
 main_bp = Blueprint('main', __name__)
 
@@ -73,4 +75,135 @@ def create_autor():
         db.session.rollback() # En caso de error, deshaz la transacción
         return jsonify({'error': str(e)}), 500
 
-# Añade más rutas para PUT (actualizar), DELETE (eliminar), y para tus modelos Entrada y Comentario.
+def generar_slug(nombre):
+    """Genera un slug simple a partir de un nombre."""
+    # Convertir a minúsculas
+    slug = nombre.lower()
+    # Reemplazar espacios y caracteres no alfanuméricos por guiones
+    slug = re.sub(r'\s+', '-', slug) # espacios
+    slug = re.sub(r'[^\w\-]+', '', slug) # caracteres no alfanuméricos excepto guiones
+    # Evitar múltiples guiones seguidos
+    slug = re.sub(r'\-{2,}', '-', slug)
+    # Quitar guiones al principio o al final
+    slug = slug.strip('-')
+    return slug
+
+@main_bp.route('/categorias', methods=['POST'])
+def create_categoria():
+    """Crea una nueva categoría."""
+    data = request.get_json()
+
+    if not data:
+        return jsonify({'message': 'No se proporcionaron datos JSON.'}), 400
+
+    nombre = data.get('nombre')
+    slug = data.get('slug')
+    descripcion = data.get('descripcion')
+
+    if not nombre:
+        return jsonify({'message': 'El campo "nombre" es obligatorio.'}), 400
+
+    if not slug:
+        slug = generar_slug(nombre)
+        # Opcional: verificar si el slug generado ya existe y añadir un sufijo si es necesario
+        # Esto es importante porque el slug debe ser único.
+        # Por simplicidad, aquí asumimos que el slug generado es único o la BD lo rechazará.
+
+    nueva_categoria = Categoria(
+        nombre=nombre,
+        slug=slug,
+        descripcion=descripcion
+    )
+
+    try:
+        db.session.add(nueva_categoria)
+        db.session.commit()
+        return jsonify(nueva_categoria.serialize()), 201
+    except IntegrityError as e:
+        db.session.rollback()
+        # Detectar si el error es por 'nombre' o 'slug' único
+        if 'categorias.nombre' in str(e.orig):
+             return jsonify({'message': 'Error: El nombre de la categoría ya existe.'}), 409
+        elif 'categorias.slug' in str(e.orig):
+             return jsonify({'message': 'Error: El slug de la categoría ya existe o el generado ya existe.'}), 409
+        else:
+            return jsonify({'message': 'Error de integridad en la base de datos.', 'details': str(e.orig)}), 500
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'error': str(e)}), 500
+
+@main_bp.route('/categorias', methods=['GET'])
+def get_categorias():
+    """Obtiene todas las categorías."""
+    try:
+        categorias = Categoria.query.all()
+        return jsonify([categoria.serialize() for categoria in categorias]), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@main_bp.route('/categorias/<int:categoria_id>', methods=['GET'])
+def get_categoria_by_id(categoria_id):
+    """Obtiene una categoría específica por su ID."""
+    try:
+        categoria = Categoria.query.get(categoria_id)
+        if not categoria:
+            return jsonify({'message': 'Categoría no encontrada.'}), 404
+        return jsonify(categoria.serialize()), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@main_bp.route('/categorias/<int:categoria_id>', methods=['PUT'])
+def update_categoria(categoria_id):
+    """Actualiza una categoría existente."""
+    try:
+        categoria = Categoria.query.get(categoria_id)
+        if not categoria:
+            return jsonify({'message': 'Categoría no encontrada.'}), 404
+
+        data = request.get_json()
+        if not data:
+            return jsonify({'message': 'No se proporcionaron datos JSON.'}), 400
+
+        if 'nombre' in data:
+            categoria.nombre = data['nombre']
+            # Si se cambia el nombre, podrías querer regenerar el slug si no se proporciona uno nuevo
+            if 'slug' not in data or not data['slug']:
+                 categoria.slug = generar_slug(data['nombre'])
+
+        if 'slug' in data and data['slug']: # Permitir actualizar slug explícitamente
+            categoria.slug = data['slug']
+
+        if 'descripcion' in data:
+            categoria.descripcion = data.get('descripcion') # Usar .get() para campos opcionales
+
+        db.session.commit()
+        return jsonify(categoria.serialize()), 200
+    except IntegrityError as e:
+        db.session.rollback()
+        if 'categorias.nombre' in str(e.orig):
+             return jsonify({'message': 'Error: El nombre de la categoría ya existe.'}), 409
+        elif 'categorias.slug' in str(e.orig):
+             return jsonify({'message': 'Error: El slug de la categoría ya existe.'}), 409
+        else:
+            return jsonify({'message': 'Error de integridad en la base de datos.', 'details': str(e.orig)}), 500
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'error': str(e)}), 500
+
+@main_bp.route('/categorias/<int:categoria_id>', methods=['DELETE'])
+def delete_categoria(categoria_id):
+    """Elimina una categoría."""
+    try:
+        categoria = Categoria.query.get(categoria_id)
+        if not categoria:
+            return jsonify({'message': 'Categoría no encontrada.'}), 404
+
+        db.session.delete(categoria)
+        db.session.commit()
+        return jsonify({'message': 'Categoría eliminada exitosamente.'}), 200
+    except IntegrityError as e: # Podría ocurrir si hay restricciones FK no manejadas
+        db.session.rollback()
+        return jsonify({'message': 'Error de integridad: No se pudo eliminar la categoría, verifique las entradas asociadas.', 'details': str(e.orig)}), 409
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'error': str(e)}), 500

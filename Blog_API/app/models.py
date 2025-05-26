@@ -26,15 +26,37 @@ class Autor(db.Model):
 
 class Categoria(db.Model):
     __tablename__ = 'categorias'
-    id = db.Column(db.Integer, primary_key=True)
-    nombre = db.Column(db.String(100), unique=True, nullable=False)
-    slug = db.Column(db.String(100), unique=True, nullable=False)
-    descripcion = db.Column(db.Text)
 
+    id = db.Column(db.Integer, primary_key=True)
+
+    # Nuevos campos para nombres en varios idiomas
+    nombre_es = db.Column(db.String(100), unique=True, nullable=False)  # Español, primario y obligatorio
+    nombre_en = db.Column(db.String(100), nullable=True)                # Inglés, opcional
+    nombre_de = db.Column(db.String(100), nullable=True)                # Alemán, opcional
+
+    # El slug sigue siendo único y obligatorio. Deberás ajustar la lógica de generación
+    # en tus rutas para que use, por ejemplo, nombre_es.
+    slug = db.Column(db.String(100), unique=True, nullable=False)
+
+
+    # Relación con Entradas (sin cambios)
     entradas = db.relationship('Entrada', backref='categoria', lazy=True)
 
     def __repr__(self):
-        return f"<Categoria {self.nombre}>"
+        # Actualizado para usar el nombre en español como representación principal
+        return f"<Categoria {self.nombre_es} (ID: {self.id})>"
+
+    def serialize(self):
+        # Actualizado para incluir los nuevos campos de nombre
+        return {
+            'id': self.id,
+            'nombre_es': self.nombre_es,
+            'nombre_en': self.nombre_en,
+            'nombre_de': self.nombre_de,
+            'slug': self.slug,
+            # Puedes añadir más información si es necesario, por ejemplo:
+            # 'entradas_ids': [entrada.id for entrada in self.entradas]
+        }
 
 class Comentario(db.Model):
     __tablename__ = 'comentarios'

@@ -1,0 +1,323 @@
+/* BlogNavbar.css (continuación y modificaciones) */
+.blog-navbar {
+  background-color: #bddde4;
+  padding: 0.75rem 1.5rem; /* Ajustado para más elementos */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: relative;
+  min-height: 60px; /* Altura mínima */
+}
+
+/* --- GRUPOS PRINCIPALES --- */
+.blog-navbar-left-group {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0; /* Evita que se encoja si el grupo derecho es muy ancho */
+}
+
+.blog-navbar-right-group {
+  display: flex;
+  align-items: center;
+  gap: 1rem; /* Espacio entre buscador y switch de idioma */
+}
+
+/* --- BRAND Y NAV ITEMS (Escritorio) --- */
+.blog-navbar-brand {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: white;
+  text-decoration: none;
+  margin-right: 1.5rem;
+}
+.blog-navbar-brand:hover {
+  color: #ddd;
+}
+
+.blog-navbar-nav-items {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+}
+.blog-navbar-nav-items li {
+  margin-left: 1.25rem;
+}
+.blog-navbar-nav-items a {
+  color: white;
+  text-decoration: none;
+  font-size: 1rem;
+  transition: color 0.3s ease;
+}
+.blog-navbar-nav-items a:hover {
+  color: #00bcd4;
+}
+
+/* --- BUSCADOR EXPANDIBLE (Escritorio) --- */
+.expandable-search {
+  display: flex;
+  align-items: center;
+  position: relative; /* Para el input absoluto o transiciones */
+}
+
+.search-toggle-btn {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2; /* Encima del input */
+}
+.search-toggle-btn svg {
+  width: 20px;
+  height: 20px;
+}
+
+.search-input {
+  background-color: #444;
+  border: 1px solid #555;
+  color: white;
+  padding: 0.5rem 0.8rem;
+  border-radius: 15px; /* Bordes redondeados */
+  width: 0; /* Inicialmente oculto */
+  opacity: 0;
+  visibility: hidden;
+  transition: width 0.3s ease, opacity 0.3s ease, visibility 0.3s ease,
+    padding-left 0.3s ease;
+  margin-left: -20px; /* Compensa el padding del botón para superposición */
+  padding-left: 2.5rem; /* Espacio para el icono si se superpone */
+  font-size: 0.9rem;
+}
+
+.expandable-search.expanded .search-input {
+  width: 200px; /* Ancho deseado cuando está expandido */
+  opacity: 1;
+  visibility: visible;
+  margin-left: -2.2rem; /* Ajusta para que el input se "deslice" desde detrás del botón */
+}
+.expandable-search.expanded .search-toggle-btn {
+  /* Podrías cambiar el color del icono al expandir si quieres */
+  /* color: #00bcd4; */
+}
+
+/* --- SWITCH DE IDIOMA (Escritorio) --- */
+.language-switcher {
+  display: flex;
+  align-items: center;
+  background-color: #444;
+  border-radius: 15px;
+  padding: 0.2rem;
+}
+
+.language-switcher button {
+  background: none;
+  border: none;
+  color: #ccc;
+  padding: 0.4rem 0.6rem;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 500;
+  border-radius: 13px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.language-switcher button:hover {
+  color: white;
+}
+
+.language-switcher button.active {
+  background-color: #00bcd4;
+  color: white;
+  font-weight: bold;
+}
+
+/* --- TOGGLER ICON (Hamburguesa) --- */
+.blog-navbar-toggler {
+  display: none;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  z-index: 1001; /* Encima del menú colapsado */
+}
+.toggler-icon {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background-color: white;
+  margin: 4px 0;
+  transition: background-color 0.3s;
+}
+
+/* --- MENÚ COLAPSABLE (Móvil) --- */
+.blog-navbar-collapse {
+  display: none; /* Oculto por defecto */
+  position: absolute;
+  top: 100%; /* Justo debajo del navbar */
+  left: 0;
+  right: 0;
+  background-color: #333;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  max-height: 0;
+  overflow-y: auto; /* Scroll si el contenido es mucho */
+  transition: max-height 0.35s ease-in-out, padding 0.35s ease-in-out;
+  padding: 0 1rem;
+}
+
+.blog-navbar-collapse.expanded {
+  display: block;
+  max-height: calc(
+    100vh - 60px
+  ); /* Altura máxima, menos la altura del navbar */
+  padding: 1rem;
+}
+
+/* Buscador Móvil */
+.blog-navbar-search-mobile {
+  display: flex;
+  margin-bottom: 1rem;
+}
+.blog-navbar-search-mobile input[type="search"] {
+  flex-grow: 1;
+  padding: 0.6rem;
+  border: 1px solid #555;
+  border-radius: 4px 0 0 4px;
+  background-color: #444;
+  color: white;
+  font-size: 0.9rem;
+}
+.blog-navbar-search-mobile input[type="search"]::placeholder {
+  color: #bbb;
+}
+.blog-navbar-search-mobile button {
+  padding: 0.6rem 0.8rem;
+  border: 1px solid #00bcd4;
+  background-color: #00bcd4;
+  color: white;
+  border-radius: 0 4px 4px 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+.blog-navbar-search-mobile button svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* Nav Items Móvil */
+.blog-navbar-nav-items-mobile {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1rem 0;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.blog-navbar-nav-items-mobile li {
+  margin: 0;
+  text-align: left;
+}
+.blog-navbar-nav-items-mobile a {
+  display: block;
+  padding: 0.8rem 0.5rem;
+  border-bottom: 1px solid #444;
+  color: white;
+  text-decoration: none;
+  font-size: 1rem;
+}
+.blog-navbar-nav-items-mobile a:hover {
+  background-color: #444;
+}
+.blog-navbar-nav-items-mobile li:last-child a {
+  border-bottom: none;
+}
+
+/* Switch Idioma Móvil */
+.language-switcher-mobile {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #555;
+  text-align: left;
+}
+.language-switcher-mobile p {
+  margin: 0 0 0.5rem 0.2rem;
+  font-size: 0.9rem;
+  color: #ccc;
+}
+.language-switcher-mobile button {
+  background: none;
+  border: 1px solid #555;
+  color: #ccc;
+  padding: 0.5rem 0.8rem;
+  margin-right: 0.5rem;
+  margin-bottom: 0.5rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+  border-radius: 4px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+.language-switcher-mobile button:hover {
+  color: white;
+  border-color: #777;
+}
+.language-switcher-mobile button.active {
+  background-color: #00bcd4;
+  color: white;
+  border-color: #00bcd4;
+  font-weight: bold;
+}
+
+/* --- MEDIA QUERIES (Responsividad) --- */
+@media (max-width: 992px) {
+  /* Un punto de quiebre intermedio si es necesario */
+  .blog-navbar-nav-items {
+    display: none;
+  } /* Ocultar nav items de escritorio antes */
+  .blog-navbar-left-group {
+    margin-right: auto;
+  } /* Empujar el brand a la izquierda */
+  .blog-navbar-right-group {
+    /* Asegurar que no se desborde */
+    flex-shrink: 1;
+    min-width: 0; /* Permite que los elementos internos se encojan */
+  }
+  .expandable-search.expanded .search-input {
+    width: 150px; /* Más pequeño en tablets */
+  }
+}
+
+@media (max-width: 768px) {
+  .blog-navbar {
+    flex-wrap: wrap;
+  }
+
+  .blog-navbar-left-group {
+    flex-grow: 1; /* Brand ocupa espacio junto a toggler */
+  }
+  .blog-navbar-nav-items {
+    display: none;
+  } /* Ya oculto, pero por si acaso */
+
+  .blog-navbar-right-group {
+    display: none; /* Ocultar grupo derecho de escritorio (buscador y lang switch) */
+  }
+
+  .blog-navbar-toggler {
+    display: block;
+    order: 2;
+  }
+
+  .blog-navbar-collapse {
+    order: 3;
+    width: 100%;
+    /* Otros estilos de .blog-navbar-collapse.expanded ya definidos */
+  }
+}
