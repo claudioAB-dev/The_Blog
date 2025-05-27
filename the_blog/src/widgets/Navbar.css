@@ -1,7 +1,7 @@
-/* BlogNavbar.css (continuación y modificaciones) */
+/* BlogNavbar.css */
 .blog-navbar {
-  background-color: #bddde4;
-  padding: 0.75rem 1.5rem; /* Ajustado para más elementos */
+  background-color: #98c379;
+  padding: 0.75rem 1.5rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -11,26 +11,56 @@
   min-height: 60px; /* Altura mínima */
 }
 
-/* --- GRUPOS PRINCIPALES --- */
-.blog-navbar-left-group {
+/* --- GRUPOS PRINCIPALES (Izquierda, Centro, Derecha) --- */
+.blog-navbar-group {
   display: flex;
   align-items: center;
-  flex-shrink: 0; /* Evita que se encoja si el grupo derecho es muy ancho */
+  /* Por defecto, no crecen ni se encogen más de lo necesario. */
+  flex-shrink: 0;
 }
 
-.blog-navbar-right-group {
+.blog-navbar-group-left {
+  /* Contiene Brand y Home. Se alinea a la izquierda por defecto. */
+}
+.blog-navbar-group-left .blog-navbar-nav-items {
+  margin-left: 1.5rem; /* Espacio después del brand */
+}
+
+.blog-navbar-group-center {
+  flex-grow: 1; /* Ocupa el espacio central disponible */
+  justify-content: center; /* Centra la lista ul de categorías dentro de este div */
+  min-width: 0; /* Permite encoger si es necesario en layouts flexibles */
+  overflow: hidden; /* Evita que el contenido desborde y cause problemas */
+}
+
+.blog-navbar-group-center .blog-navbar-nav-items {
+  /* .blog-navbar-nav-items ya es display: flex */
+  gap: 1.5rem; /* Espacio entre elementos de categoría. Ajustar según diseño. */
+  justify-content: center; /* Asegura que los items se centren si el ul no llena el espacio */
+}
+
+.blog-navbar-group-center .blog-navbar-nav-items li {
+  margin-left: 0; /* Anula el margin-left original de .blog-navbar-nav-items li */
+}
+
+.blog-navbar-group-right {
+  /* Contiene Contacto y Herramientas. Se alinea a la derecha. */
+  gap: 1rem; /* Espacio entre la lista de "Contacto" y el div de herramientas */
+}
+
+.blog-navbar-tools {
   display: flex;
   align-items: center;
   gap: 1rem; /* Espacio entre buscador y switch de idioma */
 }
 
-/* --- BRAND Y NAV ITEMS (Escritorio) --- */
+/* --- BRAND Y NAV ITEMS GENERALES (aplican a todos los grupos si no se sobreescriben) --- */
 .blog-navbar-brand {
   font-size: 1.5rem;
   font-weight: bold;
   color: white;
   text-decoration: none;
-  margin-right: 1.5rem;
+  /* margin-right ya no es necesario aquí, se maneja por estructura de grupo */
 }
 .blog-navbar-brand:hover {
   color: #ddd;
@@ -40,26 +70,42 @@
   list-style: none;
   padding: 0;
   margin: 0;
-  display: flex;
+  display: flex; /* Asegura que los li se alineen horizontalmente */
 }
 .blog-navbar-nav-items li {
+  /* El margin-left original es solo para elementos en grupos de izquierda o derecha, 
+     no para el centro que usa 'gap' en el ul. */
+}
+.blog-navbar-group-left .blog-navbar-nav-items li,
+.blog-navbar-group-right .blog-navbar-nav-items li {
   margin-left: 1.25rem;
 }
+.blog-navbar-group-left .blog-navbar-nav-items li:first-child,
+.blog-navbar-group-right .blog-navbar-nav-items li:first-child {
+  margin-left: 0; /* El primer item del grupo derecho (Contacto) no necesita margen izquierdo si está junto a las tools*/
+}
+/* Ajuste para Contacto si es el único elemento antes de las herramientas */
+.blog-navbar-group-right .blog-navbar-nav-items-right-links li {
+  margin-left: 0; /* El enlace 'Contacto' mismo */
+}
+
 .blog-navbar-nav-items a {
-  color: white;
+  color: #f8f8f8;
   text-decoration: none;
   font-size: 1rem;
   transition: color 0.3s ease;
+  padding: 0.25rem 0.5rem; /* Añadir un poco de padding para mejor click target */
+  display: block; /* Para que el padding funcione bien */
 }
 .blog-navbar-nav-items a:hover {
-  color: #00bcd4;
+  color: #7fa66a;
 }
 
 /* --- BUSCADOR EXPANDIBLE (Escritorio) --- */
 .expandable-search {
   display: flex;
   align-items: center;
-  position: relative; /* Para el input absoluto o transiciones */
+  position: relative;
 }
 
 .search-toggle-btn {
@@ -71,7 +117,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 2; /* Encima del input */
+  z-index: 2;
 }
 .search-toggle-btn svg {
   width: 20px;
@@ -83,26 +129,22 @@
   border: 1px solid #555;
   color: white;
   padding: 0.5rem 0.8rem;
-  border-radius: 15px; /* Bordes redondeados */
-  width: 0; /* Inicialmente oculto */
+  border-radius: 15px;
+  width: 0;
   opacity: 0;
   visibility: hidden;
   transition: width 0.3s ease, opacity 0.3s ease, visibility 0.3s ease,
     padding-left 0.3s ease;
-  margin-left: -20px; /* Compensa el padding del botón para superposición */
-  padding-left: 2.5rem; /* Espacio para el icono si se superpone */
+  margin-left: -20px;
+  padding-left: 2.5rem;
   font-size: 0.9rem;
 }
 
 .expandable-search.expanded .search-input {
-  width: 200px; /* Ancho deseado cuando está expandido */
+  width: 200px;
   opacity: 1;
   visibility: visible;
-  margin-left: -2.2rem; /* Ajusta para que el input se "deslice" desde detrás del botón */
-}
-.expandable-search.expanded .search-toggle-btn {
-  /* Podrías cambiar el color del icono al expandir si quieres */
-  /* color: #00bcd4; */
+  margin-left: -2.2rem;
 }
 
 /* --- SWITCH DE IDIOMA (Escritorio) --- */
@@ -138,14 +180,14 @@
 
 /* --- TOGGLER ICON (Hamburguesa) --- */
 .blog-navbar-toggler {
-  display: none;
+  display: none; /* Oculto en escritorio */
   background: none;
   border: none;
   color: white;
   font-size: 1.5rem;
   cursor: pointer;
   padding: 0.5rem;
-  z-index: 1001; /* Encima del menú colapsado */
+  z-index: 1001;
 }
 .toggler-icon {
   display: block;
@@ -158,25 +200,23 @@
 
 /* --- MENÚ COLAPSABLE (Móvil) --- */
 .blog-navbar-collapse {
-  display: none; /* Oculto por defecto */
+  display: none;
   position: absolute;
-  top: 100%; /* Justo debajo del navbar */
+  top: 100%;
   left: 0;
   right: 0;
   background-color: #333;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
   z-index: 1000;
   max-height: 0;
-  overflow-y: auto; /* Scroll si el contenido es mucho */
+  overflow-y: auto;
   transition: max-height 0.35s ease-in-out, padding 0.35s ease-in-out;
   padding: 0 1rem;
 }
 
 .blog-navbar-collapse.expanded {
   display: block;
-  max-height: calc(
-    100vh - 60px
-  ); /* Altura máxima, menos la altura del navbar */
+  max-height: calc(100vh - 60px);
   padding: 1rem;
 }
 
@@ -277,47 +317,46 @@
 
 /* --- MEDIA QUERIES (Responsividad) --- */
 @media (max-width: 992px) {
-  /* Un punto de quiebre intermedio si es necesario */
-  .blog-navbar-nav-items {
+  /* Ocultar elementos de navegación principales de escritorio */
+  .blog-navbar-group-center, /* Ocultar categorías centrales */
+  .blog-navbar-group-left .blog-navbar-nav-items, /* Ocultar "Portafolio" */
+  .blog-navbar-group-right .blog-navbar-nav-items-right-links {
+    /* Ocultar "Contacto" */
     display: none;
-  } /* Ocultar nav items de escritorio antes */
-  .blog-navbar-left-group {
-    margin-right: auto;
-  } /* Empujar el brand a la izquierda */
-  .blog-navbar-right-group {
-    /* Asegurar que no se desborde */
-    flex-shrink: 1;
-    min-width: 0; /* Permite que los elementos internos se encojan */
   }
+
+  /* En este punto, .blog-navbar-group-left solo tiene el brand, */
+  /* y .blog-navbar-group-right solo tiene .blog-navbar-tools. */
+  /* .blog-navbar (justify-content: space-between) los colocará en extremos opuestos. */
+
   .expandable-search.expanded .search-input {
-    width: 150px; /* Más pequeño en tablets */
+    width: 150px; /* Buscador más pequeño en tablets */
   }
 }
 
 @media (max-width: 768px) {
   .blog-navbar {
-    flex-wrap: wrap;
+    flex-wrap: wrap; /* Necesario para que el toggler y el menú colapsado se manejen correctamente */
   }
 
-  .blog-navbar-left-group {
-    flex-grow: 1; /* Brand ocupa espacio junto a toggler */
-  }
-  .blog-navbar-nav-items {
+  /* Los elementos ocultados en 992px ya están ocultos. */
+  /* Ahora ocultar también las herramientas de escritorio (buscador y selector de idioma). */
+  .blog-navbar-group-right {
     display: none;
-  } /* Ya oculto, pero por si acaso */
-
-  .blog-navbar-right-group {
-    display: none; /* Ocultar grupo derecho de escritorio (buscador y lang switch) */
   }
+
+  /* El .blog-navbar-group-left (con el brand) y el .blog-navbar-toggler 
+     serán los únicos hijos directos visibles de .blog-navbar (antes de expandir el menú).
+     .blog-navbar con justify-content: space-between los posicionará. */
 
   .blog-navbar-toggler {
-    display: block;
-    order: 2;
+    display: block; /* Mostrar el toggler */
+    order: 2; /* Colocar después del grupo izquierdo (brand) */
   }
 
   .blog-navbar-collapse {
-    order: 3;
-    width: 100%;
-    /* Otros estilos de .blog-navbar-collapse.expanded ya definidos */
+    /* El menú desplegable */
+    order: 3; /* Después del toggler */
+    width: 100%; /* Ocupar todo el ancho */
   }
 }

@@ -1,10 +1,4 @@
-import React, {
-  useState,
-  useEffect,
-  useRef,
-  useCallback,
-  useMemo,
-} from "react";
+import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import type { FormEvent } from "react";
 import "./Navbar.css";
 
@@ -46,12 +40,6 @@ const CloseIcon = () => (
 
 type LanguageCode = "ES" | "EN" | "DE";
 
-interface NavItem {
-  id: string;
-  label: string;
-  href: string;
-}
-
 interface Language {
   code: LanguageCode;
   label: string;
@@ -84,7 +72,7 @@ const staticTranslations: Record<
   string,
   Partial<Record<LanguageCode, string>>
 > = {
-  home: { ES: "Inicio", EN: "Home", DE: "Startseite" },
+  home: { ES: "Portafolio", EN: "Portfolio", DE: "Portfolio" },
   contact: { ES: "Contacto", EN: "Contact", DE: "Kontakt" },
   brand: { ES: "The Blog", EN: "The Blog", DE: "The Blog" },
   searchPlaceholderDesktop: {
@@ -121,6 +109,7 @@ const staticTranslations: Record<
     DE: "Fehler beim Laden der Daten:",
   },
   noCategoriesFound: {
+    // Aunque ya no se usa para un retorno temprano global
     ES: "No se encontraron categorías.",
     EN: "No categories found.",
     DE: "Keine Kategorien gefunden.",
@@ -132,7 +121,6 @@ const getStaticLabel = (key: string, lang: LanguageCode): string => {
 };
 
 const BlogNavbar = () => {
-  // --- 1. TODOS LOS HOOKS SE DECLARAN PRIMERO ---
   const [isNavMenuExpanded, setIsNavMenuExpanded] = useState(false);
   const [isSearchExpanded, setIsSearchExpanded] = useState(false);
   const [currentLanguage, setCurrentLanguage] = useState<LanguageCode>("ES");
@@ -168,7 +156,36 @@ const BlogNavbar = () => {
     fetchData();
   }, []);
 
-  const navItems = useMemo(() => {
+  const homeItemForDesktop = useMemo(
+    () => ({
+      id: "home",
+      label: getStaticLabel("home", currentLanguage),
+      href: "/",
+    }),
+    [currentLanguage]
+  );
+
+  const contactItemForDesktop = useMemo(
+    () => ({
+      id: "contact",
+      label: getStaticLabel("contact", currentLanguage),
+      href: "/contacto",
+    }),
+    [currentLanguage]
+  );
+
+  const categoryNavLinks = useMemo(() => {
+    if (cargando || error || !datos || datos.length === 0) {
+      return [];
+    }
+    return datos.map((cat) => ({
+      id: `cat-${cat.id}`,
+      label: getCategoryNameByLanguage(cat, currentLanguage),
+      href: `/categorias/${cat.slug}`,
+    }));
+  }, [datos, currentLanguage, cargando, error]);
+
+  const navItemsForMobile = useMemo(() => {
     const staticHome = {
       id: "home",
       label: getStaticLabel("home", currentLanguage),
@@ -180,21 +197,20 @@ const BlogNavbar = () => {
       href: "/contacto",
     };
 
-    if (!datos || datos.length === 0) {
-      // Si no hay datos o están vacíos
-      return [staticHome, staticContact]; // Devuelve solo ítems estáticos
+    if (cargando || error || !datos || datos.length === 0) {
+      return [staticHome, staticContact];
     }
 
     return [
       staticHome,
-      ...datos.map((cat) => ({
+      ...(datos?.map((cat) => ({
         id: `cat-${cat.id}`,
         label: getCategoryNameByLanguage(cat, currentLanguage),
         href: `/categorias/${cat.slug}`,
-      })),
+      })) || []),
       staticContact,
     ];
-  }, [datos, currentLanguage]);
+  }, [datos, currentLanguage, cargando, error]);
 
   useEffect(() => {
     if (isSearchExpanded && searchInputRef.current) {
@@ -211,7 +227,7 @@ const BlogNavbar = () => {
         setIsSearchExpanded(false);
       }
     },
-    [setIsSearchExpanded] // setIsSearchExpanded es estable
+    [setIsSearchExpanded]
   );
 
   useEffect(() => {
@@ -221,7 +237,6 @@ const BlogNavbar = () => {
     };
   }, [handleClickOutside]);
 
-  // --- 2. LÓGICA DE RETORNO TEMPRANO (DESPUÉS DE TODOS LOS HOOKS) ---
   if (cargando) {
     return <p>{getStaticLabel("loading", currentLanguage)}</p>;
   }
@@ -234,16 +249,6 @@ const BlogNavbar = () => {
     );
   }
 
-  // Si no hay categorías dinámicas, podrías optar por mostrar un mensaje
-  // o renderizar el Navbar solo con ítems estáticos.
-  // Esta condición mantiene el comportamiento anterior de mostrar un mensaje.
-  if (!datos || datos.length === 0) {
-    // Podrías aquí decidir renderizar el navbar con navItems (que solo tendría estáticos)
-    // o mostrar este mensaje. Para mantener la lógica anterior:
-    return <p>{getStaticLabel("noCategoriesFound", currentLanguage)}</p>;
-  }
-
-  // --- 3. MANEJADORES DE EVENTOS Y OTRA LÓGICA PARA EL RENDERIZADO PRINCIPAL ---
   const handleLanguageChange = (langCode: LanguageCode) => {
     setCurrentLanguage(langCode);
   };
@@ -263,72 +268,95 @@ const BlogNavbar = () => {
     const formData = new FormData(event.currentTarget);
     const searchQuery = formData.get("mobileSearch") as string;
     console.log("Búsqueda móvil enviada:", searchQuery || "vacío");
-    // Implementar lógica de búsqueda aquí
-    setIsSearchExpanded(false); // Opcional: cerrar búsqueda/menú
+    setIsSearchExpanded(false);
     setIsNavMenuExpanded(false);
   };
 
-  // --- 4. RENDERIZADO PRINCIPAL DEL JSX ---
   return (
     <nav className="blog-navbar">
-      <div className="blog-navbar-left-group">
+      {/* IZQUIERDA: Brand + Home ("Portafolio") */}
+      <div className="blog-navbar-group blog-navbar-group-left">
         <a href="/" className="blog-navbar-brand">
           {getStaticLabel("brand", currentLanguage)}
         </a>
         <ul className="blog-navbar-nav-items">
-          {navItems.map((item) => (
-            <li key={item.id}>
-              <a href={item.href}>{item.label}</a>
-            </li>
-          ))}
+          <li key={homeItemForDesktop.id}>
+            <a href={homeItemForDesktop.href}>{homeItemForDesktop.label}</a>
+          </li>
         </ul>
       </div>
 
-      <div className="blog-navbar-right-group">
-        <div
-          className={`expandable-search ${isSearchExpanded ? "expanded" : ""}`}
-          ref={searchContainerRef}
-        >
-          <button
-            type="button"
-            className="search-toggle-btn"
-            onClick={toggleSearch}
-            aria-label={
-              isSearchExpanded
-                ? getStaticLabel("closeSearch", currentLanguage)
-                : getStaticLabel("openSearch", currentLanguage)
-            }
-            aria-expanded={isSearchExpanded}
-          >
-            {isSearchExpanded ? <CloseIcon /> : <SearchIcon />}
-          </button>
-          <input
-            ref={searchInputRef}
-            type="search"
-            placeholder={getStaticLabel(
-              "searchPlaceholderDesktop",
-              currentLanguage
-            )}
-            className="search-input"
-            aria-hidden={!isSearchExpanded}
-          />
+      {/* CENTRO: Categorías */}
+      {categoryNavLinks.length > 0 && (
+        <div className="blog-navbar-group blog-navbar-group-center">
+          <ul className="blog-navbar-nav-items">
+            {categoryNavLinks.map((item) => (
+              <li key={item.id}>
+                <a href={item.href}>{item.label}</a>
+              </li>
+            ))}
+          </ul>
         </div>
+      )}
 
-        <div className="language-switcher">
-          {languages.map((lang) => (
+      {/* DERECHA: Contacto + Herramientas (Buscador, Idioma) */}
+      <div className="blog-navbar-group blog-navbar-group-right">
+        <ul className="blog-navbar-nav-items blog-navbar-nav-items-right-links">
+          <li key={contactItemForDesktop.id}>
+            <a href={contactItemForDesktop.href}>
+              {contactItemForDesktop.label}
+            </a>
+          </li>
+        </ul>
+        <div className="blog-navbar-tools">
+          <div
+            className={`expandable-search ${
+              isSearchExpanded ? "expanded" : ""
+            }`}
+            ref={searchContainerRef}
+          >
             <button
-              key={lang.code}
               type="button"
-              onClick={() => handleLanguageChange(lang.code)}
-              className={currentLanguage === lang.code ? "active" : ""}
-              aria-label={`Cambiar a ${lang.label}`}
+              className="search-toggle-btn"
+              onClick={toggleSearch}
+              aria-label={
+                isSearchExpanded
+                  ? getStaticLabel("closeSearch", currentLanguage)
+                  : getStaticLabel("openSearch", currentLanguage)
+              }
+              aria-expanded={isSearchExpanded}
             >
-              {lang.code}
+              {isSearchExpanded ? <CloseIcon /> : <SearchIcon />}
             </button>
-          ))}
+            <input
+              ref={searchInputRef}
+              type="search"
+              placeholder={getStaticLabel(
+                "searchPlaceholderDesktop",
+                currentLanguage
+              )}
+              className="search-input"
+              aria-hidden={!isSearchExpanded}
+            />
+          </div>
+
+          <div className="language-switcher">
+            {languages.map((lang) => (
+              <button
+                key={lang.code}
+                type="button"
+                onClick={() => handleLanguageChange(lang.code)}
+                className={currentLanguage === lang.code ? "active" : ""}
+                aria-label={`Cambiar a ${lang.label}`}
+              >
+                {lang.code}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
 
+      {/* TOGGLER PARA MÓVIL */}
       <button
         type="button"
         className="blog-navbar-toggler"
@@ -342,6 +370,7 @@ const BlogNavbar = () => {
         <span className="toggler-icon"></span>
       </button>
 
+      {/* MENÚ COLAPSABLE MÓVIL */}
       <div
         id="mobileNavMenu"
         className={
@@ -372,7 +401,7 @@ const BlogNavbar = () => {
         </form>
 
         <ul className="blog-navbar-nav-items-mobile">
-          {navItems.map((item) => (
+          {navItemsForMobile.map((item) => (
             <li key={item.id}>
               <a href={item.href} onClick={() => setIsNavMenuExpanded(false)}>
                 {item.label}

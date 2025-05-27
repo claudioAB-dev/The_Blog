@@ -1,6 +1,8 @@
 # routes.py
 from flask import Blueprint, request, jsonify
 # from app import db # Línea actual
+import re
+from sqlalchemy.exc import IntegrityError
 from .models import db # <--- CAMBIO SUGERIDO: Importar db directamente desde models.py
 from .models import Autor, Entrada, Comentario, Categoria# Esto ya es correcto
 # ... el resto de tu código de routes.py
