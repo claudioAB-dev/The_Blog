@@ -1,0 +1,139 @@
+/* Estilos generales del contenedor de la página */
+.page-container {
+  display: flex;
+  flex-wrap: wrap; /* Permite que los elementos se envuelvan en pantallas pequeñas */
+  gap: 20px; /* Espacio entre el contenido principal y la sección del autor */
+  padding: 20px; /* Un poco de padding alrededor */
+}
+
+/* Sección del perfil del autor */
+.author-profile-section {
+  background-color: #f9f9f9; /* Un color de fondo suave */
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.author-card {
+  text-align: center; /* Centra el contenido de la tarjeta del autor */
+}
+
+.author-image {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%; /* Imagen redonda */
+  object-fit: cover; /* Asegura que la imagen cubra el espacio sin deformarse */
+  margin-bottom: 15px;
+  border: 3px solid #bddde4; /* Un borde con el color de tu Navbar */
+}
+
+.author-name {
+  margin-top: 0;
+  margin-bottom: 5px;
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.author-title {
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-size: 1rem;
+  color: #555;
+  font-weight: normal;
+}
+
+.author-bio {
+  font-size: 0.9rem;
+  color: #666;
+  line-height: 1.6;
+  margin-bottom: 15px;
+  text-align: left; /* Puede ser mejor para leer la bio */
+}
+
+.author-social-links a {
+  display: inline-block;
+  margin: 0 8px;
+  font-size: 0.9rem;
+  color: #007bff; /* Color de enlace estándar */
+  text-decoration: none;
+  padding: 5px 0;
+}
+
+.author-social-links a:hover {
+  text-decoration: underline;
+}
+
+/* Contenido principal */
+.main-content {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  /* border: 1px solid #e0e0e0; Opcional */
+}
+
+/* --- Disposición para Escritorio (Computadoras) --- */
+@media (min-width: 769px) {
+  /* Puedes ajustar este breakpoint según necesites */
+  .page-container {
+    flex-wrap: nowrap; /* Evita que se envuelvan en escritorio */
+  }
+
+  .author-profile-section {
+    width: 300px; /* Ancho fijo para la sección del autor */
+    order: 2; /* Coloca la sección del autor a la derecha */
+    flex-shrink: 0; /* Evita que se encoja si el contenido principal es muy ancho */
+  }
+
+  .main-content {
+    flex-grow: 1; /* Permite que el contenido principal ocupe el espacio restante */
+    order: 1; /* Coloca el contenido principal a la izquierda */
+    min-width: 0; /* Para evitar problemas de desbordamiento con flex-grow */
+  }
+}
+
+/* --- Disposición para Móviles --- */
+@media (max-width: 768px) {
+  /* Coincide con el breakpoint anterior */
+  .page-container {
+    flex-direction: column; /* Apila los elementos verticalmente */
+  }
+
+  .author-profile-section {
+    width: 100%; /* Ocupa todo el ancho en móviles */
+    order: 1; /* Coloca la sección del autor en la parte superior */
+    margin-bottom: 20px; /* Espacio antes del contenido principal */
+  }
+
+  .main-content {
+    width: 100%; /* Ocupa todo el ancho */
+    order: 2; /* Coloca el contenido principal debajo de la sección del autor */
+  }
+}
+/* En author_info.css (o tu archivo CSS global) */
+
+/* ... (tus estilos existentes para .author-profile-section, .author-card, etc.) ... */
+
+.author-social-links {
+  display: flex;
+  justify-content: center; /* Centra los iconos horizontalmente */
+  gap: 15px; /* Espacio entre los iconos */
+  margin-top: 15px; /* Espacio arriba de los iconos */
+}
+
+.author-social-link-item {
+  color: #007bff; /* Color de los iconos, puedes cambiarlo */
+  font-size: 28px; /* Controla el tamaño de los iconos (MUI icons heredan esto) */
+  display: inline-block; /* Necesario para que el title y el padding funcionen bien */
+  transition: color 0.3s ease, transform 0.2s ease;
+}
+
+.author-social-link-item:hover {
+  color: #0056b3; /* Color al pasar el mouse */
+  transform: scale(1.1); /* Efecto ligero al pasar el mouse */
+}
+
+/* Si quieres que los iconos de Material UI respondan al color del texto del enlace: */
+.author-social-link-item svg {
+  fill: currentColor; /* Esto a veces es necesario, aunque MUI suele manejarlo */
+}

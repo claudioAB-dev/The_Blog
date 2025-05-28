@@ -1,6 +1,9 @@
+// En BlogNavbar.tsx
 import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import type { FormEvent } from "react";
 import "./Navbar.css";
+import { useLanguage } from "../widgets/LanguageContext"; // Ajusta la ruta
+import type { LanguageCode } from "../widgets/LanguageContext";
 
 // Icono de Lupa
 const SearchIcon = () => (
@@ -37,8 +40,6 @@ const CloseIcon = () => (
     <line x1="6" y1="6" x2="18" y2="18"></line>
   </svg>
 );
-
-type LanguageCode = "ES" | "EN" | "DE";
 
 interface Language {
   code: LanguageCode;
@@ -109,7 +110,6 @@ const staticTranslations: Record<
     DE: "Fehler beim Laden der Daten:",
   },
   noCategoriesFound: {
-    // Aunque ya no se usa para un retorno temprano global
     ES: "No se encontraron categorías.",
     EN: "No categories found.",
     DE: "Keine Kategorien gefunden.",
@@ -117,13 +117,16 @@ const staticTranslations: Record<
 };
 
 const getStaticLabel = (key: string, lang: LanguageCode): string => {
-  return staticTranslations[key]?.[lang] || key;
+  // Fallback a ES si la traducción para el idioma actual no existe, luego a la clave misma.
+  return (
+    staticTranslations[key]?.[lang] || staticTranslations[key]?.["ES"] || key
+  );
 };
 
 const BlogNavbar = () => {
+  const { currentLanguage, setCurrentLanguage } = useLanguage(); // Usar contexto
   const [isNavMenuExpanded, setIsNavMenuExpanded] = useState(false);
   const [isSearchExpanded, setIsSearchExpanded] = useState(false);
-  const [currentLanguage, setCurrentLanguage] = useState<LanguageCode>("ES");
   const searchInputRef = useRef<HTMLInputElement>(null);
   const searchContainerRef = useRef<HTMLDivElement>(null);
   const [datos, setDatos] = useState<ApiResponse | null>(null);
@@ -250,7 +253,7 @@ const BlogNavbar = () => {
   }
 
   const handleLanguageChange = (langCode: LanguageCode) => {
-    setCurrentLanguage(langCode);
+    setCurrentLanguage(langCode); // Ahora llama a la función del contexto
   };
 
   const languages: Language[] = [
@@ -267,7 +270,6 @@ const BlogNavbar = () => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const searchQuery = formData.get("mobileSearch") as string;
-    console.log("Búsqueda móvil enviada:", searchQuery || "vacío");
     setIsSearchExpanded(false);
     setIsNavMenuExpanded(false);
   };
