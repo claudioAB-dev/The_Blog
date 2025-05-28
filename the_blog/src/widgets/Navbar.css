@@ -360,3 +360,40 @@
     width: 100%; /* Ocupar todo el ancho */
   }
 }
+/* En Navbar.css */
+.nav-link-button,
+.nav-link-button-mobile {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  color: inherit; /* Hereda el color del texto del navbar */
+  font: inherit; /* Hereda la fuente */
+  cursor: pointer;
+  text-align: left; /* Para el menú móvil */
+  display: inline-block; /* O block para el menú móvil */
+}
+
+/* Para el navbar de escritorio, si quieres que se parezca a los <a> */
+.blog-navbar-group-right .nav-link-button {
+  color: white;
+  font-size: 1rem;
+  padding: 0.25rem 0.5rem; /* Ajusta para que coincida con tus <a> */
+  transition: color 0.3s ease;
+}
+.blog-navbar-group-right .nav-link-button:hover {
+  color: #00bcd4; /* Tu color de hover */
+}
+
+/* Para el menú móvil, para que ocupe el espacio y parezca un item de lista */
+.nav-link-button-mobile {
+  display: block;
+  width: 100%;
+  padding: 0.8rem 0.5rem; /* Coincide con el padding de tus <a> móviles */
+  color: white; /* O el color de tus links móviles */
+  text-decoration: none;
+  font-size: 1rem;
+}
+.nav-link-button-mobile:hover {
+  background-color: #444; /* Coincide con el hover de tus <a> móviles */
+}

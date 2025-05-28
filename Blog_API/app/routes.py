@@ -4,7 +4,7 @@ from flask import Blueprint, request, jsonify
 import re
 from sqlalchemy.exc import IntegrityError
 from .models import db # <--- CAMBIO SUGERIDO: Importar db directamente desde models.py
-from .models import Autor, Entrada, Comentario, Categoria# Esto ya es correcto
+from .models import Autor, Entrada, Comentario, Categoria, MensajeContacto# Esto ya es correcto
 # ... el resto de tu código de routes.py
 # Define un Blueprint para organizar tus rutas
 main_bp = Blueprint('main', __name__)
@@ -208,4 +208,50 @@ def delete_categoria(categoria_id):
         return jsonify({'message': 'Error de integridad: No se pudo eliminar la categoría, verifique las entradas asociadas.', 'details': str(e.orig)}), 409
     except Exception as e:
         db.session.rollback()
+        return jsonify({'error': str(e)}), 500
+@main_bp.route('/mensajecontacto', methods=['POST'])
+def create_contacto():
+    """
+    Crea un nuevo contacto.
+    Espera un JSON con: nombre, email, telefono (opcional), asunto (opcional), mensaje (opcional).
+    """
+    try:
+        data = request.get_json()
+        if not data:
+            return jsonify({'message': 'Datos JSON requeridos'}), 400
+
+        nombre = data.get('nombre_remitente')
+        email = data.get('email_remitente')
+        asunto = data.get('asunto')     # Campo opcional
+        mensaje = data.get('mensaje')   # Campo opcional
+
+        if not nombre or not email:
+            return jsonify({'message': 'Nombre y email son requeridos'}), 400
+
+        if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
+                return jsonify({'message': 'Formato de email inválido'}), 400
+
+
+        new_contacto = MensajeContacto(
+            nombre_remitente=nombre,
+            email_remitente=email,
+            asunto=asunto,
+            mensaje=mensaje
+        )
+        db.session.add(new_contacto)
+        db.session.commit()
+
+        return jsonify({
+            'message': 'Contacto creado exitosamente',
+            'id': new_contacto.id,
+            'nombre': new_contacto.nombre_remitente,
+            'email': new_contacto.email_remitente,
+            'asunto': new_contacto.asunto,
+            'mensaje': new_contacto.mensaje
+        }), 201 # 201 Created
+
+    except Exception as e:
+        db.session.rollback() # En caso de error, deshaz la transacción
+        # Para depuración, puedes loggear el error:
+        # current_app.logger.error(f"Error al crear contacto: {e}")
         return jsonify({'error': str(e)}), 500

@@ -1,0 +1,159 @@
+.contact-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7); /* Overlay más oscuro */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1050; /* Asegura que esté sobre otros elementos como el Navbar (generalmente ~1000-1030) */
+  padding: 15px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0s linear 0.3s; /* Animación de aparición */
+}
+
+.contact-modal-overlay[role="dialog"] {
+  /* Cuando está abierto (isOpen=true) */
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.3s ease;
+}
+
+.contact-modal-content {
+  background-color: #ffffff;
+  padding: 25px 30px;
+  border-radius: 8px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  position: relative;
+  width: 100%;
+  max-width: 550px; /* Un poco más ancho */
+  max-height: 90vh;
+  overflow-y: auto;
+  color: #333;
+  transform: scale(0.95);
+  transition: transform 0.3s ease; /* Animación de aparición */
+}
+
+.contact-modal-overlay[role="dialog"] .contact-modal-content {
+  transform: scale(1);
+}
+
+.contact-modal-content h2 {
+  margin-top: 0;
+  margin-bottom: 25px;
+  color: #2c3e50; /* Color de título más oscuro */
+  font-size: 1.75rem; /* Un poco más pequeño */
+  text-align: center;
+  font-weight: 600;
+}
+
+.contact-modal-close-btn {
+  position: absolute;
+  top: 12px;
+  right: 15px;
+  background: transparent;
+  border: none;
+  font-size: 2.2rem; /* Más grande para mejor accesibilidad */
+  line-height: 1;
+  color: #95a5a6; /* Gris suave */
+  cursor: pointer;
+  padding: 5px; /* Área de click más grande */
+  transition: color 0.2s ease;
+}
+.contact-modal-close-btn:hover {
+  color: #7f8c8d; /* Más oscuro al pasar el mouse */
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500; /* Un poco menos bold */
+  font-size: 0.95rem;
+  color: #34495e;
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group textarea {
+  width: 100%;
+  padding: 12px 15px; /* Más padding */
+  border: 1px solid #bdc3c7; /* Borde más suave */
+  border-radius: 6px; /* Bordes más redondeados */
+  font-size: 1rem;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  color: #2c3e50;
+}
+
+.form-group input[type="text"]:focus,
+.form-group input[type="email"]:focus,
+.form-group textarea:focus {
+  border-color: #3498db; /* Color de tu Navbar o un azul primario */
+  outline: none;
+  box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.error-text {
+  color: #e74c3c; /* Rojo para errores */
+  font-size: 0.875rem;
+  margin-top: 6px;
+}
+
+.contact-modal-submit-btn {
+  display: block;
+  width: 100%;
+  padding: 12px 15px;
+  background-color: #3498db; /* Color primario */
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.contact-modal-submit-btn:hover:not(:disabled) {
+  background-color: #2980b9; /* Más oscuro al pasar el mouse */
+  transform: translateY(-1px);
+}
+.contact-modal-submit-btn:active:not(:disabled) {
+  transform: translateY(0px);
+}
+
+.contact-modal-submit-btn:disabled {
+  background-color: #95a5a6; /* Gris cuando está deshabilitado */
+  cursor: not-allowed;
+}
+
+.contact-modal-message {
+  padding: 15px 20px;
+  margin-bottom: 20px;
+  border-radius: 6px;
+  text-align: center;
+  font-size: 1rem;
+}
+
+.contact-modal-message.success {
+  background-color: #e8f5e9; /* Verde muy claro */
+  color: #2e7d32; /* Verde oscuro para texto */
+  border: 1px solid #a5d6a7; /* Borde verde claro */
+}
+
+.contact-modal-message.error {
+  background-color: #ffebee; /* Rojo muy claro */
+  color: #c62828; /* Rojo oscuro para texto */
+  border: 1px solid #ef9a9a; /* Borde rojo claro */
+}
