@@ -1,0 +1,61 @@
+/* LayoutStyles.css */
+
+/* Contenedor principal del layout de la página */
+.page-layout {
+  display: flex;
+  flex-direction: column; /* Por defecto (móvil): contenido y widget apilados verticalmente */
+  padding-top: 1rem; /* Añade un poco de espacio general arriba, debajo del Navbar */
+}
+
+/* Estilos para el componente PageWithAuthor (usando la clase raíz de tu componente) */
+/* Esta es la clase que tiene tu componente Author_info: <div className="page-container-author-widget"> */
+.page-container-author-widget {
+  width: 100%; /* Ocupa todo el ancho en la vista móvil */
+  order: -1; /* Mueve el widget de autor ARRIBA del contenido en la vista móvil */
+  margin-bottom: 20px; /* Espacio entre el widget y el contenido principal en móviles */
+  padding-left: 1rem; /* Espacio a la izquierda en móviles */
+  padding-right: 1rem; /* Espacio a la derecha en móviles */
+  box-sizing: border-box; /* Asegura que el padding no aumente el ancho total */
+}
+
+/* Estilos para el área de contenido principal */
+.main-page-content {
+  width: 100%; /* Ocupa todo el ancho */
+  order: 0; /* Se muestra DESPUÉS del widget en la vista móvil (debido al 'order: -1' del widget) */
+  padding-left: 1rem; /* Espacio a la izquierda en móviles */
+  padding-right: 1rem; /* Espacio a la derecha en móviles */
+  box-sizing: border-box; /* Asegura que el padding no aumente el ancho total */
+}
+
+/* Media Query para pantallas mFás grandes (ej. tablets y desktops) */
+/* Ajusta el valor de min-width (992px) según tus breakpoints deseados */
+@media (min-width: 992px) {
+  .page-layout {
+    flex-direction: row; /* Cambia la dirección a horizontal */
+    align-items: flex-start; /* Alinea los items al inicio si tienen alturas diferentes */
+    padding-top: 2rem; /* Aumenta el espacio superior en escritorio */
+    padding-left: 1.5rem; /* Espacio a la izquierda del layout general */
+    padding-right: 5%; /* NUEVO: Espacio a la derecha del layout general del 2% del viewport width */
+  }
+
+  .main-page-content {
+    flex-grow: 1; /* El contenido principal ocupa el espacio restante */
+    order: 0; /* Se muestra a la IZQUIERDA */
+    padding-left: 0; /* Resetea padding específico de móvil si es necesario */
+    padding-right: 0; /* Resetea padding específico de móvil si es necesario */
+  }
+
+  .page-container-author-widget {
+    order: 1; /* Mueve el widget de autor a la DERECHA del contenido */
+    width: 300px; /* Ancho fijo para el sidebar/widget. Ajusta según tu diseño. */
+    flex-shrink: 0; /* Evita que el widget se encoja si el contenido es muy largo */
+    margin-left: 20px; /* Espacio entre el contenido principal y el widget */
+    margin-bottom: 0; /* Elimina el margen inferior de la vista móvil */
+
+    /* NUEVOS AJUSTES PARA ESCRITORIO: */
+    margin-top: 4vh; /* NUEVO: Empuja el widget de autor un 5% de la altura del viewport hacia abajo */
+
+    padding-left: 0; /* Resetea padding específico de móvil si es necesario */
+    padding-right: 0; /* Resetea padding específico de móvil si es necesario */
+  }
+}
