@@ -1,6 +1,7 @@
 import React, { useMemo, useEffect, useState } from "react";
-import { useLanguage } from "../widgets/LanguageContext"; // Asegúrate que esta ruta sea correcta
-import type { LanguageCode } from "../widgets/LanguageContext"; // Asegúrate que esta ruta sea correcta
+import { Link } from "react-router-dom"; // <--- IMPORTANTE: Para la navegación
+import { useLanguage } from "../widgets/LanguageContext"; // Ajusta la ruta si es necesario
+import type { LanguageCode } from "../widgets/LanguageContext"; // Ajusta la ruta si es necesario
 
 import "./Entradas.css"; // Asegúrate que esta ruta sea correcta
 
@@ -36,7 +37,7 @@ const BlogTranslations: Record<
   },
 };
 
-// --- Función de Traducción ---
+// --- Función de Traducción (Estática) ---
 const getTranslation = (
   key: string,
   lang: LanguageCode,
@@ -59,23 +60,21 @@ const getTranslation = (
 };
 
 // --- Interfaces ---
-
-// Define la estructura de una entrada de blog individual
 interface BlogPost {
   id: number;
   autor_id: number;
   categoria_id: number;
-  slug: string;
+  slug: string; // Muy importante para la URL amigable
   imagen_destacada: string;
-  estado: string; // e.g., 'publicado', 'borrador'
-  fecha_publicacion: string; // Formato ISO 8601 recomendado: "YYYY-MM-DDTHH:mm:ssZ"
+  estado: string;
+  fecha_publicacion: string;
   fecha_creacion: string;
   fecha_actualizacion: string;
   // Campos traducibles
   titulo_es: string;
   resumen_es: string;
-  contenido_es: string;
-  titulo_en?: string; // Opcional si no todas las entradas tienen todas las traducciones
+  contenido_es: string; // El contenido completo se usará en EntradaDetalle.tsx
+  titulo_en?: string;
   resumen_en?: string;
   contenido_en?: string;
   titulo_de?: string;
@@ -83,24 +82,20 @@ interface BlogPost {
   contenido_de?: string;
 }
 
-// El API devuelve un array de BlogPost
-type ApiResponse = BlogPost[];
+type ApiResponse = BlogPost[]; // Asumimos que la API devuelve un array de BlogPost
 
-// Helper para obtener el campo traducido de una entrada
+// --- Helper para obtener el campo traducido de una entrada ---
 const getPostTranslatedField = (
   post: BlogPost,
-  fieldName: "titulo" | "resumen" | "contenido",
+  fieldName: "titulo" | "resumen" | "contenido", // Extendible si hay más campos
   lang: LanguageCode
 ): string => {
   const targetLangField =
     `${fieldName}_${lang.toLowerCase()}` as keyof BlogPost;
   const fallbackEsField = `${fieldName}_es` as keyof BlogPost;
-
-  return (
-    (post[targetLangField] as string) ||
-    (post[fallbackEsField] as string) ||
-    `[${fieldName} no disponible]`
-  );
+  const fieldValue =
+    (post[targetLangField] as string) || (post[fallbackEsField] as string);
+  return fieldValue || `[${fieldName} no disponible en ${lang} o ES]`;
 };
 
 // --- Componente Entradas ---
@@ -112,7 +107,6 @@ const Entradas: React.FC = () => {
 
   // URL del backend (Idealmente desde una variable de entorno)
   const API_URL = "http://127.0.0.1:5000/entradas";
-  // Efecto para cargar las entradas del blog
   useEffect(() => {
     const fetchData = async (): Promise<void> => {
       setCargando(true);
@@ -124,7 +118,7 @@ const Entradas: React.FC = () => {
             `Error HTTP: ${respuesta.status} ${respuesta.statusText}`
           );
         }
-        const json = (await respuesta.json()) as ApiResponse; // Asumimos que la API devuelve directamente el array
+        const json = (await respuesta.json()) as ApiResponse;
         setBlogPosts(json);
       } catch (e: unknown) {
         if (e instanceof Error) {
@@ -132,14 +126,14 @@ const Entradas: React.FC = () => {
         } else {
           setError("Ocurrió un error desconocido al cargar las entradas.");
         }
-        setBlogPosts(null); // Limpiar datos en caso de error
+        setBlogPosts(null);
       } finally {
         setCargando(false);
       }
     };
 
     fetchData();
-  }, [API_URL]); // Dependencia API_URL por si cambia (aunque generalmente es constante)
+  }, [API_URL]); // Dependencia API_URL por si cambia
 
   // Textos de la página memoizados para eficiencia
   const pageTitle = useMemo(
@@ -150,11 +144,11 @@ const Entradas: React.FC = () => {
     () => getTranslation("blogPageDescription", currentLanguage),
     [currentLanguage]
   );
-  const noEntriesMessage = useMemo(
+  const noEntriesMessageText = useMemo(
     () => getTranslation("noEntriesMessage", currentLanguage),
     [currentLanguage]
   );
-  const loadingMessage = useMemo(
+  const loadingMessageText = useMemo(
     () => getTranslation("loadingMessage", currentLanguage),
     [currentLanguage]
   );
@@ -164,27 +158,13 @@ const Entradas: React.FC = () => {
   );
 
   if (cargando) {
-    return <div className="entradas-status">{loadingMessage}</div>;
+    return <div className="entradas-status">{loadingMessageText}</div>;
   }
 
   if (error) {
     return (
       <div className="entradas-status entradas-error">
         Error al cargar las entradas: {error}
-      </div>
-    );
-  }
-
-  if (!blogPosts || blogPosts.length === 0) {
-    return (
-      <div className="entradas-page-container">
-        <header className="entradas-header">
-          <h1 className="entradas-main-title">{pageTitle}</h1>
-          <p className="entradas-description">{pageDescription}</p>
-        </header>
-        <section className="entradas-list-section">
-          <p className="entradas-no-entries">{noEntriesMessage}</p>
-        </section>
       </div>
     );
   }
@@ -196,54 +176,62 @@ const Entradas: React.FC = () => {
         <p className="entradas-description">{pageDescription}</p>
       </header>
 
-      <section className="entradas-list-section">
-        {blogPosts.map((entry) => {
-          const titulo = getPostTranslatedField(
-            entry,
-            "titulo",
-            currentLanguage
-          );
-          const resumen = getPostTranslatedField(
-            entry,
-            "resumen",
-            currentLanguage
-          );
-          // const contenido = getPostTranslatedField(entry, "contenido", currentLanguage); // Lo usarías en una vista de detalle
+      {!blogPosts || blogPosts.length === 0 ? (
+        <section className="entradas-list-section">
+          <p className="entradas-no-entries">{noEntriesMessageText}</p>
+        </section>
+      ) : (
+        <section className="entradas-list-section">
+          {blogPosts.map((entry) => {
+            const titulo = getPostTranslatedField(
+              entry,
+              "titulo",
+              currentLanguage
+            );
+            const resumen = getPostTranslatedField(
+              entry,
+              "resumen",
+              currentLanguage
+            );
 
-          return (
-            <article key={entry.id} className="entrada-item">
-              {entry.imagen_destacada && (
-                <img
-                  src={entry.imagen_destacada}
-                  alt={`Imagen para ${titulo}`}
-                  className="entrada-imagen"
-                />
-              )}
-              <div className="entrada-contenido">
-                <h2 className="entrada-titulo">{titulo}</h2>
-                <p className="entrada-meta">
-                  <span>
-                    Publicado:{" "}
-                    {new Date(entry.fecha_publicacion).toLocaleDateString(
-                      currentLanguage.toLowerCase() +
-                        "-" +
-                        currentLanguage.toUpperCase()
-                    )}
-                  </span>
-                  {/* Podrías añadir más metadatos como autor o categoría aquí */}
-                </p>
-                <p className="entrada-resumen">{resumen}</p>
-                {/* En un listado, usualmente enlazas a la página de detalle de la entrada */}
-                {/* Ejemplo: <a href={`/blog/${entry.slug}`}>{readMoreText}</a> */}
-                {/* O si usas React Router: <Link to={`/blog/${entry.slug}`}>{readMoreText}</Link> */}
-                <a href={`/blog/${entry.slug}`} className="entrada-leer-mas">
-                  {readMoreText}
-                </a>
-              </div>
-            </article>
-          );
-        })}
-      </section>
+            return (
+              <article key={entry.id} className="entrada-item">
+                {entry.imagen_destacada && (
+                  <Link
+                    to={`/blog/${entry.slug}`}
+                    className="entrada-imagen-link"
+                  >
+                    <img
+                      src={entry.imagen_destacada}
+                      alt={`Imagen para ${titulo}`}
+                      className="entrada-imagen"
+                    />
+                  </Link>
+                )}
+                <div className="entrada-contenido">
+                  <h2 className="entrada-titulo">
+                    <Link to={`/blog/${entry.slug}`}>{titulo}</Link>
+                  </h2>
+                  <p className="entrada-meta">
+                    <span>
+                      Publicado:{" "}
+                      {new Date(entry.fecha_publicacion).toLocaleDateString(
+                        // Genera un locale string como 'es-ES', 'en-US', 'de-DE'
+                        `${currentLanguage.toLowerCase()}-${currentLanguage.toUpperCase()}`
+                      )}
+                    </span>
+                    {/* Aquí podrías añadir más metadatos, como el autor o categoría si los tuvieras */}
+                  </p>
+                  <p className="entrada-resumen">{resumen}</p>
+                  <Link to={`/blog/${entry.slug}`} className="entrada-leer-mas">
+                    {readMoreText}
+                  </Link>
+                </div>
+              </article>
+            );
+          })}
+        </section>
+      )}
     </div>
   );
 };

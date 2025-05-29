@@ -1,19 +1,13 @@
-.entradas-main-title {
-  font-size: 2rem;
-  font-weight: bold;
-  margin-bottom: 1rem;
-  color: rgb(136, 226, 2);
-}
 /* Contenido para Entradas.css */
 
 /* --- Variables Globales de Estilo --- */
 :root {
   --primary-font: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  --secondary-font: "Georgia", serif; /* Para títulos, opcional */
+  --secondary-font: "Georgia", serif; /* Para títulos principales, opcional */
   --text-color: #333;
-  --primary-color: #007bff; /* Azul primario común */
+  --primary-color: #007bff; /* Azul primario común (botones, etc.) */
   --secondary-color: #6c757d; /* Gris oscuro para meta textos */
-  --background-color: #f8f9fa; /* Gris claro para el fondo de la página */
+  --background-color: #ffffff; /* ACTUALIZADO: Fondo de página blanco como en la imagen */
   --card-background-color: #ffffff; /* Blanco para las tarjetas */
   --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   --card-hover-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
@@ -40,6 +34,8 @@ body {
   max-width: 1200px;
   margin: 2rem auto;
   padding: 1.5rem 2rem;
+  /* Nota: Este contenedor podría ser parte de un layout de dos columnas (main + sidebar)
+     definido en un nivel superior o con CSS adicional si se quiere replicar el sidebar. */
 }
 
 /* --- Cabecera de la Página de Entradas --- */
@@ -53,7 +49,7 @@ body {
 .entradas-main-title {
   font-family: var(--secondary-font);
   font-size: 2.8rem;
-  color: var(--primary-color);
+  color: #2a3b80; /* ACTUALIZADO: Azul oscuro específico para el título principal, tomado de la imagen */
   margin-top: 0;
   margin-bottom: 0.75rem;
 }
@@ -73,7 +69,10 @@ body {
   font-size: 1.15rem;
   color: var(--secondary-color);
   padding: 3rem 1.5rem;
-  background-color: var(--card-background-color);
+  background-color: var(
+    --card-background-color
+  ); /* Si el fondo de la página es blanco, puede necesitar un borde para destacar */
+  /* border: 1px solid #eee; /* Ejemplo de borde si se necesita contraste con fondo blanco */
   border-radius: var(--border-radius);
   box-shadow: var(--card-shadow);
   margin: 2.5rem auto;
@@ -89,7 +88,7 @@ body {
 /* --- Sección de la Lista de Entradas --- */
 .entradas-list-section {
   display: grid;
-  /* Crea columnas responsivas: intentará llenar con ítems de al menos 320px, 
+  /* Crea columnas responsivas: intentará llenar con ítems de al menos 320px,
      y si hay espacio, crecerán hasta ocupar 1 fracción del espacio disponible. */
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   gap: 2rem; /* Espacio entre las tarjetas de las entradas */
@@ -128,7 +127,9 @@ body {
 }
 
 .entrada-titulo {
-  font-family: var(--secondary-font);
+  font-family: var(
+    --primary-font
+  ); /* ACTUALIZADO: Sans-serif para títulos de tarjeta, como en la imagen */
   font-size: 1.6rem;
   color: var(--text-color);
   margin-top: 0;
@@ -207,10 +208,6 @@ body {
   .entradas-description {
     font-size: 1rem;
   }
-  /* Opcional: cambiar a una sola columna antes si es necesario */
-  /* .entradas-list-section {
-    grid-template-columns: 1fr;
-  } */
   .entrada-imagen {
     height: 200px;
   }
