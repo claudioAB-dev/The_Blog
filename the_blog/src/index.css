@@ -1,7 +1,195 @@
-* {
+/* index.css */
+
+/* 1. Reset Básico y Box-Sizing Global
+-------------------------------------------------------------------------------- */
+*,
+*::before,
+*::after {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
+
+html {
+  /* MODIFICADO: Aumentamos el tamaño de fuente base. 
+     Antes era 100% (generalmente 16px). 
+     Ahora 112.5% (generalmente 18px si la base del navegador es 16px).
+     Puedes ajustarlo a 118.75% (para ~19px) o 125% (para ~20px) si quieres un aumento mayor.
+  */
+  font-size: 112.5%;
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 body {
-  background-color: #ffffff;
+  font-family: var(--font-primary);
+  line-height: 1.65; /* Este interlineado debería seguir funcionando bien, ajústalo si es necesario */
+  color: var(--color-text-primary);
+  background-color: var(--color-background-body);
+  overflow-x: hidden;
+}
+
+/* 2. Variables CSS (Custom Properties)
+-------------------------------------------------------------------------------- */
+:root {
+  /* Paleta de Colores (Sin cambios aquí) */
+  --color-primary: #7faa72;
+  --color-primary-dark: #5e8c6a;
+  --color-accent: #00bcd4;
+
+  --color-text-primary: #333d45;
+  --color-text-secondary: #55626b;
+  --color-text-headings: #2c3e50;
+  --color-text-light: #ffffff;
+  --color-text-on-primary: #ffffff;
+
+  --color-background-body: #f8f9fa;
+  --color-background-card: #ffffff;
+  --color-background-code: #2d2d2d;
+
+  --color-border: #e0e3e6;
+  --color-border-light: #ececec;
+  --color-shadow: rgba(0, 0, 0, 0.08);
+  --shadow-card: 0 4px 12px rgba(0, 0, 0, 0.1); /* Añadido para tarjetas */
+  --shadow-card-hover: 0 6px 16px rgba(0, 0, 0, 0.15); /* Añadido para tarjetas */
+
+  /* Tipografía (Sin cambios en las definiciones de variables de fuente aquí, ya que escalarán con la base) */
+  --font-primary: "Nunito Sans", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+    "Segoe UI Symbol";
+  --font-headings: "Merriweather Sans", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol";
+  --font-code: "Fira Code", "Consolas", "Monaco", "Andale Mono", "Ubuntu Mono",
+    monospace;
+
+  /* Tamaños de Fuente Base (Estos valores en 'rem' ahora se calcularán sobre una base más grande) */
+  /* Por ejemplo, si la base es 18px: */
+  /* --font-size-xs: 0.75rem;  -> 13.5px */
+  /* --font-size-sm: 0.875rem; -> 15.75px */
+  /* --font-size-base: 1rem;   -> 18px */
+  /* --font-size-md: 1.125rem; -> 20.25px */
+  /* etc. */
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-md: 1.125rem;
+  --font-size-lg: 1.25rem;
+  --font-size-xl: 1.5rem;
+  --font-size-xxl: 2rem;
+  --font-size-xxxl: 2.5rem;
+
+  /* Espaciado (Sin cambios aquí, pero considera si necesitas ajustar algún espaciado visualmente después del cambio de fuente) */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-xxl: 3rem;
+
+  /* Radios de Borde (Sin cambios aquí) */
+  --border-radius-sm: 4px;
+  --border-radius-md: 8px;
+  --border-radius-lg: 12px;
+  --border-radius-xl: 16px;
+  --border-radius-pill: 50px;
+  --border-radius-circle: 50%;
+
+  /* Transiciones (Sin cambios aquí) */
+  --transition-short: 0.2s ease;
+  --transition-base: 0.3s ease;
+
+  /* Z-indexes (Sin cambios aquí) */
+  --z-index-dropdown: 1000;
+  --z-index-sticky: 1020;
+  /* ... más z-indexes ... */
+
+  /* Colores de Alerta (Asegúrate que estén definidos) */
+  --color-danger: #dc3545;
+  --color-danger-background: #f8d7da;
+  --color-danger-border: #f5c6cb;
+}
+
+/* 3. Estilos Tipográficos Base 
+   (No se necesitan cambios aquí, ya que usan variables en 'rem' que escalarán)
+-------------------------------------------------------------------------------- */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-headings);
+  color: var(--color-text-headings);
+  line-height: 1.3;
+  margin-top: var(--space-lg);
+  margin-bottom: var(--space-md);
+  font-weight: 700;
+}
+
+h1 {
+  font-size: var(--font-size-xxxl);
+}
+h2 {
+  font-size: var(--font-size-xxl);
+}
+h3 {
+  font-size: var(--font-size-xl);
+}
+h4 {
+  font-size: var(--font-size-lg);
+}
+h5 {
+  font-size: var(--font-size-md);
+}
+h6 {
+  font-size: var(--font-size-base);
+  font-weight: 600;
+}
+
+p {
+  margin-bottom: var(--space-md);
+  font-size: var(--font-size-base);
+}
+
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+  transition: color var(--transition-short);
+}
+a:hover,
+a:focus {
+  color: var(--color-primary-dark);
+  text-decoration: underline;
+}
+
+/* ... (resto de estilos tipográficos, formularios, utilidades, etc., sin cambios necesarios ya que usan 'rem' o heredan) ... */
+
+/* Ejemplo de cómo se verían los estilos de formularios y código, también escalarán: */
+input,
+button,
+textarea,
+select {
+  font-family: inherit;
+  font-size: inherit; /* Heredará el tamaño escalado */
+  line-height: inherit;
+  /* ... */
+}
+
+pre,
+code {
+  font-family: var(--font-code);
+  font-size: var(--font-size-sm); /* Escalará con la nueva base */
+}
+
+/* ... (resto del archivo index.css) ... */
+body {
+  /* Asumiendo que este CSS es parte de un proyecto más grande */
+  font-family: var(--primary-font);
+  color: var(--text-color);
+  line-height: 1.6;
+  background-color: var(--background-color);
+  margin: 0;
+  padding: 0;
 }

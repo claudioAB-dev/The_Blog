@@ -1,139 +1,153 @@
 /* Estilos generales del contenedor de la página */
 .page-container {
   display: flex;
-  flex-wrap: wrap; /* Permite que los elementos se envuelvan en pantallas pequeñas */
-  gap: 20px; /* Espacio entre el contenido principal y la sección del autor */
-  padding: 20px; /* Un poco de padding alrededor */
+  flex-wrap: wrap;
+  gap: 30px; /* MODIFICADO: Un poco más de espacio si la sidebar es más grande */
+  padding: 30px; /* MODIFICADO: Más padding general */
 }
 
 /* Sección del perfil del autor */
 .author-profile-section {
-  background-color: #f9f9f9; /* Un color de fondo suave */
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  padding: 20px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  background-color: #ffffff;
+  border: 1px solid #ececec;
+  border-radius: 16px; /* MODIFICADO: Radio un poco mayor para una tarjeta más grande */
+  padding: 30px; /* MODIFICADO: Mayor padding interno */
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08); /* MODIFICADO: Sombra ligeramente más pronunciada para una tarjeta más grande */
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
 }
 
 .author-card {
-  text-align: center; /* Centra el contenido de la tarjeta del autor */
+  text-align: center;
 }
 
 .author-image {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%; /* Imagen redonda */
-  object-fit: cover; /* Asegura que la imagen cubra el espacio sin deformarse */
-  margin-bottom: 15px;
-  border: 3px solid #bddde4; /* Un borde con el color de tu Navbar */
+  width: 140px; /* MODIFICADO: Imagen significativamente más grande (antes 110px) */
+  height: 140px; /* MODIFICADO: Imagen significativamente más grande (antes 110px) */
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 25px; /* MODIFICADO: Más espacio debajo de la imagen (antes 20px) */
+  border: 5px solid #7faa72; /* MODIFICADO: Borde un poco más grueso (antes 4px) */
+  box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.07); /* MODIFICADO: Sombra interior un poco más notable */
 }
 
 .author-name {
   margin-top: 0;
-  margin-bottom: 5px;
-  font-size: 1.5rem;
-  color: #333;
+  margin-bottom: 10px; /* MODIFICADO: Ajuste de espacio (antes 8px) */
+  font-size: 2rem; /* MODIFICADO: Nombre notablemente más grande (antes 1.65rem) */
+  color: #2c3e50;
+  font-weight: 600;
 }
 
 .author-title {
   margin-top: 0;
-  margin-bottom: 10px;
-  font-size: 1rem;
-  color: #555;
+  margin-bottom: 15px; /* MODIFICADO: Ajuste de espacio (antes 12px) */
+  font-size: 1.15rem; /* MODIFICADO: Título un poco más grande (antes 1rem) */
+  color: #526d82;
   font-weight: normal;
 }
 
 .author-bio {
-  font-size: 0.9rem;
-  color: #666;
-  line-height: 1.6;
-  margin-bottom: 15px;
-  text-align: left; /* Puede ser mejor para leer la bio */
+  font-size: 1rem; /* MODIFICADO: Bio un poco más grande para leer mejor (antes 0.95rem) */
+  color: #4a5568;
+  line-height: 1.75; /* MODIFICADO: Interlineado ligeramente mayor (antes 1.7) */
+  margin-bottom: 25px; /* MODIFICADO: Más espacio antes de los links (antes 20px) */
+  text-align: left;
 }
-
-.author-social-links a {
-  display: inline-block;
-  margin: 0 8px;
-  font-size: 0.9rem;
-  color: #007bff; /* Color de enlace estándar */
-  text-decoration: none;
-  padding: 5px 0;
-}
-
-.author-social-links a:hover {
-  text-decoration: underline;
+.author-bio strong,
+.author-bio .highlight {
+  color: #7faa72;
+  font-weight: 600; /* Podrías incluso hacerlo 700 si el tamaño de fuente aumenta */
 }
 
 /* Contenido principal */
 .main-content {
   background-color: #ffffff;
-  padding: 20px;
-  border-radius: 8px;
-  /* border: 1px solid #e0e0e0; Opcional */
+  padding: 30px; /* MODIFICADO: Padding consistente */
+  border-radius: 16px; /* MODIFICADO: Radio consistente */
+  /* box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04); */ /* Mantener sutil o ajustar si es necesario */
 }
 
 /* --- Disposición para Escritorio (Computadoras) --- */
 @media (min-width: 769px) {
-  /* Puedes ajustar este breakpoint según necesites */
+  /* Puedes ajustar este breakpoint si es necesario, ej: 992px para sidebars más grandes */
   .page-container {
-    flex-wrap: nowrap; /* Evita que se envuelvan en escritorio */
+    flex-wrap: nowrap;
   }
 
   .author-profile-section {
-    width: 300px; /* Ancho fijo para la sección del autor */
-    order: 2; /* Coloca la sección del autor a la derecha */
-    flex-shrink: 0; /* Evita que se encoja si el contenido principal es muy ancho */
+    width: 380px;
+    /* Considera un max-width también, ej: max-width: 400px; */
+    order: 2;
+    flex-shrink: 0;
+    /* NUEVO: Margen a la derecha del 3% */
+    margin-right: 8%;
   }
 
   .main-content {
-    flex-grow: 1; /* Permite que el contenido principal ocupe el espacio restante */
-    order: 1; /* Coloca el contenido principal a la izquierda */
-    min-width: 0; /* Para evitar problemas de desbordamiento con flex-grow */
+    flex-grow: 1;
+    order: 1;
+    min-width: 0;
   }
 }
 
 /* --- Disposición para Móviles --- */
 @media (max-width: 768px) {
-  /* Coincide con el breakpoint anterior */
+  /* O el breakpoint que uses para cambiar a layout de columna */
   .page-container {
-    flex-direction: column; /* Apila los elementos verticalmente */
+    flex-direction: column;
   }
 
   .author-profile-section {
-    width: 100%; /* Ocupa todo el ancho en móviles */
-    order: 1; /* Coloca la sección del autor en la parte superior */
-    margin-bottom: 20px; /* Espacio antes del contenido principal */
+    width: 100%;
+    order: 1;
+    margin-bottom: 30px; /* MODIFICADO: Espacio consistente */
+    padding: 25px; /* MODIFICADO: En móvil, el padding puede ser un poco menor que en desktop si es muy grande */
+  }
+  .author-image {
+    /* Ajustes específicos para móvil si es necesario */
+    width: 120px;
+    height: 120px;
+    margin-bottom: 20px;
+  }
+  .author-name {
+    font-size: 1.8rem; /* Ligeramente menor que en desktop pero aún grande */
+  }
+  .author-title {
+    font-size: 1.1rem;
+  }
+  .author-bio {
+    font-size: 0.95rem; /* Puede volver al tamaño anterior en móvil si 1rem es mucho */
   }
 
   .main-content {
-    width: 100%; /* Ocupa todo el ancho */
-    order: 2; /* Coloca el contenido principal debajo de la sección del autor */
+    width: 100%;
+    order: 2;
+    padding: 25px; /* MODIFICADO: Padding consistente en móvil */
   }
 }
+
 /* En author_info.css (o tu archivo CSS global) */
-
-/* ... (tus estilos existentes para .author-profile-section, .author-card, etc.) ... */
-
 .author-social-links {
   display: flex;
-  justify-content: center; /* Centra los iconos horizontalmente */
-  gap: 15px; /* Espacio entre los iconos */
-  margin-top: 15px; /* Espacio arriba de los iconos */
+  justify-content: center;
+  gap: 20px; /* MODIFICADO: Un poco más de espacio entre iconos (antes 18px) */
+  margin-top: 25px; /* MODIFICADO: Espacio consistente (antes 20px) */
 }
 
 .author-social-link-item {
-  color: #007bff; /* Color de los iconos, puedes cambiarlo */
-  font-size: 28px; /* Controla el tamaño de los iconos (MUI icons heredan esto) */
-  display: inline-block; /* Necesario para que el title y el padding funcionen bien */
-  transition: color 0.3s ease, transform 0.2s ease;
+  color: #7faa72;
+  font-size: 30px; /* MODIFICADO: Iconos sociales más grandes (antes 26px) */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease, transform 0.2s ease;
 }
 
 .author-social-link-item:hover {
-  color: #0056b3; /* Color al pasar el mouse */
-  transform: scale(1.1); /* Efecto ligero al pasar el mouse */
+  color: #5e8c6a;
+  transform: scale(1.2) translateY(-3px); /* MODIFICADO: Efecto hover un poco más pronunciado */
 }
 
-/* Si quieres que los iconos de Material UI respondan al color del texto del enlace: */
 .author-social-link-item svg {
-  fill: currentColor; /* Esto a veces es necesario, aunque MUI suele manejarlo */
+  fill: currentColor;
 }

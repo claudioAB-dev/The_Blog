@@ -29,34 +29,49 @@ body {
   padding: 0;
 }
 
+/* Entradas.css - Adaptado al concepto global */
+
+/* --- Estilos Base (Opcional, si no los tienes definidos globalmente) --- */
+/* Se asume que index.css ya maneja los estilos de body */
+/*
+body {
+  font-family: var(--font-primary);
+  color: var(--color-text-primary);
+  line-height: 1.6;
+  background-color: var(--color-background-body);
+  margin: 0;
+  padding: 0;
+}
+*/
+
 /* --- Contenedor Principal de la Página de Entradas --- */
 .entradas-page-container {
-  max-width: 1200px;
-  margin: 2rem auto;
-  padding: 1.5rem 2rem;
-  /* Nota: Este contenedor podría ser parte de un layout de dos columnas (main + sidebar)
-     definido en un nivel superior o con CSS adicional si se quiere replicar el sidebar. */
+  max-width: 1200px; /* O una variable si la tienes: --container-max-width */
+  margin: var(--space-xl) auto; /* Antes: 2rem */
+  padding: var(--space-lg) var(--space-xl); /* Antes: 1.5rem 2rem */
 }
 
 /* --- Cabecera de la Página de Entradas --- */
 .entradas-header {
   text-align: center;
-  margin-bottom: 3rem;
-  padding-bottom: 1.5rem;
-  border-bottom: 1px solid #e0e0e0;
+  margin-bottom: var(--space-xxl); /* Antes: 3rem */
+  padding-bottom: var(--space-lg); /* Antes: 1.5rem */
+  border-bottom: 1px solid var(--color-border); /* Antes: #e0e0e0 */
 }
 
 .entradas-main-title {
-  font-family: var(--secondary-font);
-  font-size: 2.8rem;
-  color: #2a3b80; /* ACTUALIZADO: Azul oscuro específico para el título principal, tomado de la imagen */
+  font-family: var(--font-headings); /* Antes: --secondary-font */
+  font-size: var(--font-size-xxxl); /* Antes: 2.8rem, ajusta si es necesario */
+  color: var(
+    --color-text-headings
+  ); /* Antes: #2a3b80 (azul oscuro), ahora nuestro color de encabezados */
   margin-top: 0;
-  margin-bottom: 0.75rem;
+  margin-bottom: var(--space-md); /* Antes: 0.75rem */
 }
 
 .entradas-description {
-  font-size: 1.1rem;
-  color: var(--secondary-color);
+  font-size: var(--font-size-md); /* Antes: 1.1rem */
+  color: var(--color-text-secondary); /* Antes: --secondary-color */
   max-width: 750px;
   margin-left: auto;
   margin-right: auto;
@@ -66,189 +81,206 @@ body {
 .entradas-status,
 .entradas-no-entries {
   text-align: center;
-  font-size: 1.15rem;
-  color: var(--secondary-color);
-  padding: 3rem 1.5rem;
-  background-color: var(
-    --card-background-color
-  ); /* Si el fondo de la página es blanco, puede necesitar un borde para destacar */
-  /* border: 1px solid #eee; /* Ejemplo de borde si se necesita contraste con fondo blanco */
-  border-radius: var(--border-radius);
-  box-shadow: var(--card-shadow);
-  margin: 2.5rem auto;
+  font-size: var(--font-size-md); /* Antes: 1.15rem */
+  color: var(--color-text-secondary);
+  padding: var(--space-xxl) var(--space-lg); /* Antes: 3rem 1.5rem */
+  background-color: var(--color-background-card);
+  border-radius: var(--border-radius-md); /* Antes: --border-radius */
+  box-shadow: var(--shadow-card); /* Antes: --card-shadow */
+  margin: var(--space-xl) auto; /* Antes: 2.5rem */
   max-width: 650px;
 }
 
 .entradas-error {
-  color: var(--danger-color);
-  background-color: var(--danger-background);
-  border: 1px solid var(--danger-border);
+  color: var(--color-danger);
+  background-color: var(--color-danger-background);
+  border: 1px solid var(--color-danger-border);
 }
 
 /* --- Sección de la Lista de Entradas --- */
 .entradas-list-section {
   display: grid;
-  /* Crea columnas responsivas: intentará llenar con ítems de al menos 320px,
-     y si hay espacio, crecerán hasta ocupar 1 fracción del espacio disponible. */
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 2rem; /* Espacio entre las tarjetas de las entradas */
+  gap: var(--space-xl); /* Antes: 2rem */
 }
 
 /* --- Estilo para cada Ítem de Entrada (Tarjeta) --- */
 .entrada-item {
-  background-color: var(--card-background-color);
-  border-radius: var(--border-radius);
-  box-shadow: var(--card-shadow);
-  overflow: hidden; /* Asegura que la imagen respete los bordes redondeados */
+  background-color: var(--color-background-card);
+  border-radius: var(--border-radius-md); /* Antes: --border-radius */
+  box-shadow: var(--shadow-card); /* Antes: --card-shadow */
+  overflow: hidden;
   display: flex;
-  flex-direction: column; /* Apila imagen, contenido */
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  flex-direction: column;
+  transition: transform var(--transition-base),
+    box-shadow var(--transition-base); /* Antes: 0.3s ease */
 }
 
 .entrada-item:hover {
-  transform: translateY(-6px);
-  box-shadow: var(--card-hover-shadow);
+  transform: translateY(
+    -6px
+  ); /* Puedes hacer esto una variable si se repite: --transform-card-hover */
+  box-shadow: var(--shadow-card-hover); /* Antes: --card-hover-shadow */
 }
 
 /* --- Imagen Destacada de la Entrada --- */
 .entrada-imagen {
   width: 100%;
-  height: 220px; /* Altura fija para consistencia visual */
-  object-fit: cover; /* Escala y recorta la imagen para que llene el espacio sin deformarse */
-  display: block; /* Elimina espacio extra debajo de la imagen si es inline */
+  height: 220px;
+  object-fit: cover;
+  display: block;
 }
 
 /* --- Contenido de la Entrada (Texto) --- */
 .entrada-contenido {
-  padding: 1.5rem;
+  padding: var(--space-lg); /* Antes: 1.5rem */
   display: flex;
   flex-direction: column;
-  flex-grow: 1; /* Permite que el botón "Leer más" se alinee al fondo */
+  flex-grow: 1;
 }
 
 .entrada-titulo {
   font-family: var(
-    --primary-font
-  ); /* ACTUALIZADO: Sans-serif para títulos de tarjeta, como en la imagen */
-  font-size: 1.6rem;
-  color: var(--text-color);
+    --font-primary
+  ); /* Mantenemos Sans-serif para títulos de tarjeta */
+  font-weight: 700; /* Añadido para más énfasis, ya que es un título */
+  font-size: var(--font-size-lg); /* Antes: 1.6rem */
+  color: var(
+    --color-text-headings
+  ); /* Antes: --text-color (ahora un color específico para encabezados) */
   margin-top: 0;
-  margin-bottom: 0.75rem;
+  margin-bottom: var(--space-sm); /* Antes: 0.75rem */
   line-height: 1.3;
 }
 
 /* --- Metadatos de la Entrada (Fecha, Autor, etc.) --- */
 .entrada-meta {
-  font-size: 0.85rem;
-  color: var(--secondary-color);
-  margin-bottom: 1rem;
+  font-size: var(--font-size-sm); /* Antes: 0.85rem */
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-md); /* Antes: 1rem */
 }
 
 .entrada-meta span {
-  margin-right: 1rem; /* Espacio entre metadatos si añades más */
-  display: inline-block; /* Para que el margen funcione correctamente */
+  margin-right: var(--space-md); /* Antes: 1rem */
+  display: inline-block;
 }
 
 /* --- Resumen de la Entrada --- */
 .entrada-resumen {
-  font-size: 1rem;
-  color: var(--text-color);
-  margin-bottom: 1.5rem;
-  flex-grow: 1; /* Ocupa el espacio disponible, empujando el botón hacia abajo */
+  font-size: var(--font-size-base); /* Antes: 1rem */
+  color: var(--color-text-primary); /* Antes: --text-color */
+  margin-bottom: var(--space-lg); /* Antes: 1.5rem */
+  flex-grow: 1;
   line-height: 1.7;
 }
 
 /* --- Enlace/Botón "Leer más" --- */
 .entrada-leer-mas {
-  display: inline-block; /* Permite padding y no ocupa todo el ancho por defecto */
-  background-color: var(--primary-color);
-  color: #fff;
-  padding: 0.7rem 1.4rem;
+  display: inline-block;
+  background-color: var(--color-primary); /* Antes: --primary-color (azul) */
+  color: var(--color-text-on-primary); /* Antes: #fff */
+  padding: var(--space-sm) var(--space-lg); /* Antes: 0.7rem 1.4rem, ajustado a variables */
   text-decoration: none;
-  border-radius: 5px;
-  font-weight: bold;
-  transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  border-radius: var(--border-radius-sm); /* Antes: 5px */
+  font-weight: 600; /* Un poco menos pesado que el 700 de los títulos */
+  transition: background-color var(--transition-short),
+    box-shadow var(--transition-short);
   text-align: center;
-  margin-top: auto; /* Se alinea al final del contenedor flex (.entrada-contenido) */
-  align-self: flex-start; /* No se estira al ancho completo del contenedor padre */
+  margin-top: auto;
+  align-self: flex-start;
 }
 
 .entrada-leer-mas:hover,
 .entrada-leer-mas:focus {
-  background-color: var(--link-hover-color);
-  color: #fff;
-  box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.5); /* Anillo de foco para accesibilidad */
-  outline: none; /* Quita el outline por defecto si se añade un box-shadow de foco */
+  background-color: var(--color-primary-dark); /* Antes: --link-hover-color */
+  color: var(--color-text-on-primary);
+  /* MODIFICADO: Anillo de foco usando el color primario */
+  box-shadow: 0 0 0 0.2rem rgba(from var(--color-primary) r g b / 0.35); /* Necesitarías valores RGB o una variable de color primario con alfa */
+  /* Alternativa más simple para el foco si no quieres manejar RGB: */
+  /* box-shadow: 0 0 0 2px var(--color-background-body), 0 0 0 4px var(--color-primary); */
+  outline: none;
+}
+/* Si necesitas los valores RGB para el box-shadow del botón (ej: si --color-primary es #7FAA72)
+   rgba(127, 170, 114, 0.35)
+   Para hacerlo dinámico, necesitarías definir variables RGB en tu :root en index.css:
+   --color-primary-rgb: 127, 170, 114;
+   Y luego usar: box-shadow: 0 0 0 0.2rem rgba(var(--color-primary-rgb), 0.35);
+   Por ahora, usaré una aproximación o un estilo de foco alternativo.
+   La alternativa de doble box-shadow es robusta: */
+.entrada-leer-mas:focus {
+  box-shadow: 0 0 0 2px var(--color-background-card),
+    0 0 0 4px var(--color-primary);
 }
 
 /* --- Ajustes Responsivos --- */
 @media (max-width: 992px) {
-  /* Tablets y pantallas medianas */
   .entradas-main-title {
-    font-size: 2.4rem;
+    font-size: var(--font-size-xxl); /* Antes: 2.4rem */
   }
   .entradas-list-section {
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 1.5rem;
+    gap: var(--space-lg); /* Antes: 1.5rem */
   }
   .entrada-titulo {
-    font-size: 1.45rem;
+    font-size: var(--font-size-md); /* Antes: 1.45rem, ajusta con tu escala */
   }
 }
 
 @media (max-width: 768px) {
-  /* Tablets pequeñas y móviles grandes */
   .entradas-page-container {
-    padding: 1rem 1.5rem;
-    margin: 1rem auto;
+    padding: var(--space-md) var(--space-lg); /* Antes: 1rem 1.5rem */
+    margin: var(--space-md) auto; /* Antes: 1rem */
   }
   .entradas-main-title {
-    font-size: 2.1rem;
+    font-size: calc(
+      var(--font-size-xl) + 0.2rem
+    ); /* Antes: 2.1rem, aproximado */
   }
   .entradas-description {
-    font-size: 1rem;
+    font-size: var(--font-size-base); /* Antes: 1rem */
   }
   .entrada-imagen {
     height: 200px;
   }
   .entrada-contenido {
-    padding: 1.25rem;
+    padding: var(--space-md); /* Antes: 1.25rem */
   }
   .entrada-titulo {
-    font-size: 1.35rem;
+    font-size: calc(
+      var(--font-size-md) - 0.05rem
+    ); /* Antes: 1.35rem, aproximado */
   }
 }
 
 @media (max-width: 480px) {
-  /* Móviles pequeños */
   .entradas-page-container {
-    padding: 1rem;
+    padding: var(--space-md); /* Antes: 1rem */
   }
   .entradas-header {
-    margin-bottom: 2rem;
+    margin-bottom: var(--space-xl); /* Antes: 2rem */
   }
   .entradas-main-title {
-    font-size: 1.8rem;
+    font-size: var(--font-size-xl); /* Antes: 1.8rem */
   }
   .entradas-list-section {
     grid-template-columns: 1fr; /* Una sola columna */
-    gap: 1.25rem;
+    gap: var(--space-lg); /* Antes: 1.25rem */
   }
   .entrada-imagen {
     height: 180px;
   }
   .entrada-contenido {
-    padding: 1rem;
+    padding: var(--space-sm) var(--space-md); /* Antes: 1rem */
   }
   .entrada-titulo {
-    font-size: 1.25rem;
+    font-size: var(--font-size-base); /* Antes: 1.25rem, ajusta con tu escala */
   }
   .entrada-resumen {
-    font-size: 0.95rem;
+    font-size: var(--font-size-sm); /* Antes: 0.95rem */
   }
   .entrada-leer-mas {
-    padding: 0.6rem 1rem;
-    width: 100%; /* Ocupa todo el ancho para facilitar el toque */
-    box-sizing: border-box; /* El padding se incluye en el ancho total */
+    padding: var(--space-sm) var(--space-md); /* Antes: 0.6rem 1rem */
+    width: 100%;
+    /* box-sizing: border-box; /* Ya es global si se aplica la recomendación */
   }
 }

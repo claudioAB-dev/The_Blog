@@ -1,104 +1,141 @@
 /* BlogNavbar.css */
 .blog-navbar {
-  background-color: #98c379;
-  padding: 0.75rem 1.5rem;
+  /* MODIFICADO: Un verde ligeramente más profundo y menos saturado para un look más premium. */
+  /* Podrías considerar alternativas como #6A9C58 o #5E8D54 si buscas aún más profundidad. */
+  background-color: #7faa72; /* Anterior: #98c379 */
+  /* MODIFICADO: Incremento ligero en el padding vertical para que respire más. */
+  padding: 1rem 1.5rem; /* Anterior: 0.75rem 1.5rem */
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: white;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  color: #ffffff; /* MODIFICADO: Blanco puro para mejor contraste con el nuevo fondo */
+  /* MODIFICADO: Sombra más sutil y moderna */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* Anterior: 0 2px 4px rgba(0, 0, 0, 0.1) */
   position: relative;
-  min-height: 60px; /* Altura mínima */
+  min-height: 65px; /* MODIFICADO: Ligero ajuste por el padding */
+  /* NUEVO: Transición suave para cambios de fondo si alguna vez los animas */
+  transition: background-color 0.3s ease;
 }
 
 /* --- GRUPOS PRINCIPALES (Izquierda, Centro, Derecha) --- */
 .blog-navbar-group {
   display: flex;
   align-items: center;
-  /* Por defecto, no crecen ni se encogen más de lo necesario. */
   flex-shrink: 0;
 }
 
 .blog-navbar-group-left {
-  /* Contiene Brand y Home. Se alinea a la izquierda por defecto. */
+  /* No hay cambios directos aquí, se beneficia de los cambios globales */
 }
 .blog-navbar-group-left .blog-navbar-nav-items {
-  margin-left: 1.5rem; /* Espacio después del brand */
+  margin-left: 1.75rem; /* MODIFICADO: Ligero aumento para consistencia */
 }
 
 .blog-navbar-group-center {
-  flex-grow: 1; /* Ocupa el espacio central disponible */
-  justify-content: center; /* Centra la lista ul de categorías dentro de este div */
-  min-width: 0; /* Permite encoger si es necesario en layouts flexibles */
-  overflow: hidden; /* Evita que el contenido desborde y cause problemas */
+  flex-grow: 1;
+  justify-content: center;
+  min-width: 0;
+  overflow: hidden;
 }
 
 .blog-navbar-group-center .blog-navbar-nav-items {
-  /* .blog-navbar-nav-items ya es display: flex */
-  gap: 1.5rem; /* Espacio entre elementos de categoría. Ajustar según diseño. */
-  justify-content: center; /* Asegura que los items se centren si el ul no llena el espacio */
+  gap: 2rem; /* MODIFICADO: Un poco más de espacio entre categorías principales */
+  justify-content: center;
 }
 
 .blog-navbar-group-center .blog-navbar-nav-items li {
-  margin-left: 0; /* Anula el margin-left original de .blog-navbar-nav-items li */
+  margin-left: 0;
 }
 
 .blog-navbar-group-right {
-  /* Contiene Contacto y Herramientas. Se alinea a la derecha. */
-  gap: 1rem; /* Espacio entre la lista de "Contacto" y el div de herramientas */
+  gap: 1.25rem; /* MODIFICADO: Ligero ajuste de espaciado */
 }
 
 .blog-navbar-tools {
   display: flex;
   align-items: center;
-  gap: 1rem; /* Espacio entre buscador y switch de idioma */
+  gap: 1rem;
 }
 
-/* --- BRAND Y NAV ITEMS GENERALES (aplican a todos los grupos si no se sobreescriben) --- */
+/* --- BRAND Y NAV ITEMS GENERALES --- */
 .blog-navbar-brand {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: white;
+  /* MODIFICADO: Un poco más grande y quizás una fuente específica si la tienes definida globalmente. */
+  font-size: 1.75rem; /* Anterior: 1.5rem */
+  font-weight: 700; /* MODIFICADO: Un bold más estándar o 600 si prefieres algo menos pesado */
+  color: #ffffff; /* MODIFICADO: Asegurar blanco puro */
   text-decoration: none;
-  /* margin-right ya no es necesario aquí, se maneja por estructura de grupo */
+  /* NUEVO: Efecto sutil para el brand */
+  transition: color 0.2s ease-in-out, transform 0.2s ease-in-out;
 }
 .blog-navbar-brand:hover {
-  color: #ddd;
+  /* MODIFICADO: Un blanco ligeramente translúcido o un color de acento muy sutil. */
+  color: #e0e0e0; /* Anterior: #ddd */
+  /* NUEVO: Pequeño efecto al hacer hover */
+  /* transform: scale(1.03); */ /* Descomentar si te gusta este efecto */
 }
 
 .blog-navbar-nav-items {
   list-style: none;
   padding: 0;
   margin: 0;
-  display: flex; /* Asegura que los li se alineen horizontalmente */
+  display: flex;
 }
 .blog-navbar-nav-items li {
-  /* El margin-left original es solo para elementos en grupos de izquierda o derecha, 
-     no para el centro que usa 'gap' en el ul. */
+  /* No hay cambios directos aquí */
 }
 .blog-navbar-group-left .blog-navbar-nav-items li,
 .blog-navbar-group-right .blog-navbar-nav-items li {
-  margin-left: 1.25rem;
+  margin-left: 1.5rem; /* MODIFICADO: Un poco más de espacio */
 }
 .blog-navbar-group-left .blog-navbar-nav-items li:first-child,
 .blog-navbar-group-right .blog-navbar-nav-items li:first-child {
-  margin-left: 0; /* El primer item del grupo derecho (Contacto) no necesita margen izquierdo si está junto a las tools*/
+  margin-left: 0;
 }
-/* Ajuste para Contacto si es el único elemento antes de las herramientas */
 .blog-navbar-group-right .blog-navbar-nav-items-right-links li {
-  margin-left: 0; /* El enlace 'Contacto' mismo */
+  margin-left: 0;
 }
 
 .blog-navbar-nav-items a {
-  color: #f8f8f8;
+  color: #ffffff; /* MODIFICADO: Blanco puro o un off-white muy claro como #F5F5F5 */
   text-decoration: none;
-  font-size: 1rem;
-  transition: color 0.3s ease;
-  padding: 0.25rem 0.5rem; /* Añadir un poco de padding para mejor click target */
-  display: block; /* Para que el padding funcione bien */
+  font-size: 1rem; /* Se mantiene, pero asegúrate que la fuente base sea legible */
+  /* NUEVO: Un poco más de peso para los links, los hace sentir más importantes */
+  font-weight: 500; /* O 'normal' si tu fuente es naturalmente más gruesa */
+  transition: color 0.2s ease, background-color 0.2s ease;
+  padding: 0.5rem 0.75rem; /* MODIFICADO: Padding más generoso para mejor área de click y estética */
+  display: block;
+  border-radius: 6px; /* NUEVO: Bordes redondeados sutiles para los items */
+  position: relative; /* NUEVO: Para el pseudo-elemento del active link */
 }
+
 .blog-navbar-nav-items a:hover {
-  color: #7fa66a;
+  /* MODIFICADO: Un hover más sutil, quizás un ligero cambio de fondo o un color de texto diferente. */
+  /* color: #C8E6C9; */ /* Un verde muy pálido como opción */
+  color: #ffffff;
+  background-color: rgba(
+    255,
+    255,
+    255,
+    0.1
+  ); /* MODIFICADO: Fondo translúcido sutil en hover */
+}
+
+/* NUEVO: Estilo para el enlace activo */
+.blog-navbar-nav-items a.active {
+  color: #ffffff;
+  font-weight: 700; /* Más peso para el activo */
+  /* background-color: rgba(0, 0, 0, 0.1);  Una opción para destacar */
+}
+/* NUEVO: Otra opción para el enlace activo: un pequeño borde inferior */
+.blog-navbar-nav-items a.active::after {
+  content: "";
+  position: absolute;
+  bottom: 4px; /* Ajusta según el padding del 'a' */
+  left: 0.75rem; /* Coincide con el padding horizontal */
+  right: 0.75rem; /* Coincide con el padding horizontal */
+  height: 3px;
+  background-color: #ffffff; /* O un color de acento */
+  border-radius: 2px;
 }
 
 /* --- BUSCADOR EXPANDIBLE (Escritorio) --- */
@@ -111,152 +148,205 @@
 .search-toggle-btn {
   background: none;
   border: none;
-  color: white;
+  color: #ffffff; /* MODIFICADO: Asegurar blanco */
   cursor: pointer;
-  padding: 0.5rem;
+  padding: 0.6rem; /* MODIFICADO: Un poco más de padding */
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 2;
+  border-radius: 50%; /* NUEVO: Hacer el botón del icono redondo */
+  transition: background-color 0.2s ease;
+}
+.search-toggle-btn:hover {
+  background-color: rgba(255, 255, 255, 0.15); /* NUEVO: Feedback en hover */
 }
 .search-toggle-btn svg {
-  width: 20px;
-  height: 20px;
+  width: 22px; /* MODIFICADO: Ligeramente más grande */
+  height: 22px; /* MODIFICADO: Ligeramente más grande */
 }
 
 .search-input {
-  background-color: #444;
-  border: 1px solid #555;
+  /* MODIFICADO: Fondo del input más integrado o un color que contraste elegantemente */
+  background-color: rgba(
+    0,
+    0,
+    0,
+    0.15
+  ); /* Anterior: #444. Ahora un translúcido oscuro */
+  border: 1px solid rgba(255, 255, 255, 0.3); /* MODIFICADO: Borde más sutil y claro */
   color: white;
-  padding: 0.5rem 0.8rem;
-  border-radius: 15px;
+  padding: 0.6rem 1rem; /* MODIFICADO: Padding ajustado */
+  border-radius: 20px; /* MODIFICADO: Bordes más redondeados */
   width: 0;
   opacity: 0;
   visibility: hidden;
   transition: width 0.3s ease, opacity 0.3s ease, visibility 0.3s ease,
-    padding-left 0.3s ease;
-  margin-left: -20px;
-  padding-left: 2.5rem;
+    padding-left 0.3s ease, background-color 0.3s ease, border-color 0.3s ease; /* MODIFICADO: Transiciones más completas */
+  margin-left: -20px; /* Ajustar según sea necesario con el nuevo padding del botón */
+  padding-left: 2.8rem; /* MODIFICADO: Para no solaparse con el icono cuando está visible */
   font-size: 0.9rem;
+}
+.search-input::placeholder {
+  /* NUEVO */
+  color: rgba(255, 255, 255, 0.7);
 }
 
 .expandable-search.expanded .search-input {
-  width: 200px;
+  width: 220px; /* MODIFICADO: Un poco más ancho */
   opacity: 1;
   visibility: visible;
-  margin-left: -2.2rem;
+  margin-left: -2.5rem; /* Ajustar según el tamaño del botón y padding */
+  background-color: rgba(
+    0,
+    0,
+    0,
+    0.25
+  ); /* Un poco más oscuro cuando expandido */
 }
 
 /* --- SWITCH DE IDIOMA (Escritorio) --- */
 .language-switcher {
   display: flex;
   align-items: center;
-  background-color: #444;
-  border-radius: 15px;
-  padding: 0.2rem;
+  /* MODIFICADO: Integrar mejor el fondo o usar un estilo de "píldora" más limpio */
+  background-color: rgba(0, 0, 0, 0.15); /* Anterior: #444 */
+  border-radius: 20px; /* MODIFICADO: Coherente con el buscador */
+  padding: 0.25rem; /* MODIFICADO: Padding ligero */
+  border: 1px solid rgba(255, 255, 255, 0.2); /* NUEVO: Borde sutil */
 }
 
 .language-switcher button {
   background: none;
   border: none;
-  color: #ccc;
-  padding: 0.4rem 0.6rem;
+  color: #e0e0e0; /* MODIFICADO: Un gris claro, casi blanco */
+  padding: 0.4rem 0.8rem; /* MODIFICADO: Padding ajustado */
   cursor: pointer;
   font-size: 0.85rem;
-  font-weight: 500;
-  border-radius: 13px;
+  font-weight: 500; /* MODIFICADO: Peso de fuente */
+  border-radius: 18px; /* MODIFICADO: Bordes redondeados internos */
   transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .language-switcher button:hover {
   color: white;
+  background-color: rgba(255, 255, 255, 0.1); /* MODIFICADO: Hover sutil */
 }
 
 .language-switcher button.active {
-  background-color: #00bcd4;
-  color: white;
-  font-weight: bold;
+  /* MODIFICADO: El color #00bcd4 (cyan) es un acento fuerte. Asegúrate que combine o elige uno más armónico con el verde. */
+  /* Si el cyan es tu color de acento secundario global, está bien. Si no, considera blanco o un verde muy claro. */
+  background-color: #ffffff; /* Opción 1: Botón activo blanco */
+  color: #333333; /* Texto oscuro para contraste en botón blanco */
+  /* background-color: #00BCD4; */ /* Opción 2: Mantener el cyan si es intencional */
+  /* color: white; */
+  font-weight: 700; /* MODIFICADO: Más bold */
 }
 
 /* --- TOGGLER ICON (Hamburguesa) --- */
 .blog-navbar-toggler {
-  display: none; /* Oculto en escritorio */
+  display: none;
   background: none;
   border: none;
   color: white;
-  font-size: 1.5rem;
+  font-size: 1.5rem; /* Puede que necesites ajustar esto si cambias el icono a SVG */
   cursor: pointer;
   padding: 0.5rem;
   z-index: 1001;
+  /* NUEVO: Para mejor feedback visual */
+  border-radius: 6px;
+  transition: background-color 0.2s ease;
 }
+.blog-navbar-toggler:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
 .toggler-icon {
+  /* Considera usar un icono SVG para más control */
   display: block;
-  width: 22px;
-  height: 2px;
+  width: 24px; /* MODIFICADO: Ligeramente más grande */
+  height: 3px; /* MODIFICADO: Un poco más grueso */
   background-color: white;
-  margin: 4px 0;
-  transition: background-color 0.3s;
+  margin: 5px 0; /* MODIFICADO: Un poco más de separación */
+  transition: background-color 0.3s, transform 0.3s ease-in-out; /* NUEVO: Transición para animación */
+  border-radius: 1px; /* NUEVO: Puntas redondeadas */
+}
+
+/* NUEVO: Animación para el toggler (opcional, requiere JS para añadir/quitar clase 'open') */
+.blog-navbar-toggler.open .toggler-icon:nth-child(1) {
+  transform: translateY(8px) rotate(45deg); /* Ajustar 8px según height y margin */
+}
+.blog-navbar-toggler.open .toggler-icon:nth-child(2) {
+  opacity: 0;
+}
+.blog-navbar-toggler.open .toggler-icon:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg); /* Ajustar 8px */
 }
 
 /* --- MENÚ COLAPSABLE (Móvil) --- */
 .blog-navbar-collapse {
   display: none;
   position: absolute;
-  top: 100%;
+  top: 100%; /* Se mantiene, pero asegúrate que no haya solapamiento con la sombra del navbar si es muy grande */
   left: 0;
   right: 0;
-  background-color: #333;
+  /* MODIFICADO: Un fondo que sea coherente. Si el navbar es #7FAA72, #333 es un contraste alto. */
+  /* Podrías usar una versión más oscura del verde, o un gris oscuro más moderno. */
+  background-color: #3a3a3a; /* Anterior: #333. Un gris ligeramente más suave. */
+  /* background-color: #5E8D54; */ /* Opción: Verde oscuro */
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
   z-index: 1000;
   max-height: 0;
   overflow-y: auto;
-  transition: max-height 0.35s ease-in-out, padding 0.35s ease-in-out;
+  transition: max-height 0.35s ease-in-out, padding 0.35s ease-in-out,
+    background-color 0.3s ease;
   padding: 0 1rem;
 }
 
 .blog-navbar-collapse.expanded {
   display: block;
-  max-height: calc(100vh - 60px);
+  /* MODIFICADO: El 65px debe coincidir con la altura del navbar */
+  max-height: calc(100vh - 65px);
   padding: 1rem;
 }
 
 /* Buscador Móvil */
 .blog-navbar-search-mobile {
   display: flex;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem; /* MODIFICADO: Más espacio abajo */
 }
 .blog-navbar-search-mobile input[type="search"] {
   flex-grow: 1;
-  padding: 0.6rem;
+  padding: 0.75rem; /* MODIFICADO: Padding más generoso */
   border: 1px solid #555;
-  border-radius: 4px 0 0 4px;
-  background-color: #444;
+  border-radius: 6px 0 0 6px; /* MODIFICADO: Ligero redondeo */
+  background-color: #4f4f4f; /* MODIFICADO: Un poco más claro que el #444 */
   color: white;
-  font-size: 0.9rem;
+  font-size: 1rem; /* MODIFICADO: Tamaño de fuente estándar */
 }
 .blog-navbar-search-mobile input[type="search"]::placeholder {
-  color: #bbb;
+  color: #b0b0b0; /* MODIFICADO: Placeholder más claro */
 }
 .blog-navbar-search-mobile button {
-  padding: 0.6rem 0.8rem;
-  border: 1px solid #00bcd4;
-  background-color: #00bcd4;
+  padding: 0.75rem 1rem; /* MODIFICADO */
+  border: 1px solid #00a3b9; /* MODIFICADO: Un cyan ligeramente más oscuro para el borde que el fondo */
+  background-color: #00bcd4; /* Mantenemos el cyan, o cambiar por un acento del navbar principal */
   color: white;
-  border-radius: 0 4px 4px 0;
+  border-radius: 0 6px 6px 0; /* MODIFICADO */
   cursor: pointer;
   display: flex;
   align-items: center;
 }
 .blog-navbar-search-mobile button svg {
-  width: 18px;
-  height: 18px;
+  width: 20px; /* MODIFICADO */
+  height: 20px; /* MODIFICADO */
 }
 
 /* Nav Items Móvil */
 .blog-navbar-nav-items-mobile {
   list-style: none;
   padding: 0;
-  margin: 0 0 1rem 0;
+  margin: 0 0 1.5rem 0; /* MODIFICADO */
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -267,133 +357,156 @@
 }
 .blog-navbar-nav-items-mobile a {
   display: block;
-  padding: 0.8rem 0.5rem;
-  border-bottom: 1px solid #444;
-  color: white;
+  padding: 0.9rem 0.5rem; /* MODIFICADO: Más padding vertical */
+  border-bottom: 1px solid #4f4f4f; /* MODIFICADO: Coherente con otros grises */
+  color: #f0f0f0; /* MODIFICADO: Blanco menos intenso */
   text-decoration: none;
-  font-size: 1rem;
+  font-size: 1.05rem; /* MODIFICADO: Ligeramente más grande */
+  transition: background-color 0.2s ease, color 0.2s ease; /* NUEVO */
 }
 .blog-navbar-nav-items-mobile a:hover {
-  background-color: #444;
+  background-color: #4a4a4a; /* MODIFICADO */
+  color: #ffffff;
 }
 .blog-navbar-nav-items-mobile li:last-child a {
   border-bottom: none;
 }
+/* NUEVO: Estilo para el enlace activo en móvil */
+.blog-navbar-nav-items-mobile a.active {
+  color: #ffffff; /* O tu color de acento principal */
+  font-weight: bold;
+  background-color: #454545; /* Un fondo sutilmente diferente */
+}
 
 /* Switch Idioma Móvil */
 .language-switcher-mobile {
-  margin-top: 1rem;
-  padding-top: 1rem;
+  margin-top: 1.5rem; /* MODIFICADO */
+  padding-top: 1.5rem; /* MODIFICADO */
   border-top: 1px solid #555;
   text-align: left;
 }
 .language-switcher-mobile p {
-  margin: 0 0 0.5rem 0.2rem;
-  font-size: 0.9rem;
-  color: #ccc;
+  margin: 0 0 0.75rem 0.2rem; /* MODIFICADO */
+  font-size: 0.95rem; /* MODIFICADO */
+  color: #d0d0d0; /* MODIFICADO */
 }
 .language-switcher-mobile button {
   background: none;
-  border: 1px solid #555;
-  color: #ccc;
-  padding: 0.5rem 0.8rem;
-  margin-right: 0.5rem;
-  margin-bottom: 0.5rem;
+  border: 1px solid #666; /* MODIFICADO */
+  color: #d0d0d0; /* MODIFICADO */
+  padding: 0.6rem 1rem; /* MODIFICADO */
+  margin-right: 0.75rem; /* MODIFICADO */
+  margin-bottom: 0.75rem; /* MODIFICADO */
   cursor: pointer;
-  font-size: 0.9rem;
-  border-radius: 4px;
-  transition: background-color 0.2s ease, color 0.2s ease;
+  font-size: 0.9rem; /* MODIFICADO */
+  border-radius: 6px; /* MODIFICADO */
+  transition: background-color 0.2s ease, color 0.2s ease,
+    border-color 0.2s ease;
 }
 .language-switcher-mobile button:hover {
   color: white;
-  border-color: #777;
+  border-color: #888;
+  background-color: #4f4f4f; /* NUEVO */
 }
 .language-switcher-mobile button.active {
-  background-color: #00bcd4;
+  background-color: #00bcd4; /* Mantenido, pero considera consistencia con desktop */
+  /* background-color: #FFFFFF; */ /* Opción blanca */
+  /* color: #333333; */ /* Texto oscuro para botón blanco */
   color: white;
-  border-color: #00bcd4;
+  border-color: #00bcd4; /* O el color del fondo si es blanco */
   font-weight: bold;
 }
 
 /* --- MEDIA QUERIES (Responsividad) --- */
+/* No he modificado la lógica de las media queries, solo los estilos internos que heredan */
 @media (max-width: 992px) {
-  /* Ocultar elementos de navegación principales de escritorio */
-  .blog-navbar-group-center, /* Ocultar categorías centrales */
-  .blog-navbar-group-left .blog-navbar-nav-items, /* Ocultar "Portafolio" */
+  .blog-navbar-group-center,
+  .blog-navbar-group-left .blog-navbar-nav-items,
   .blog-navbar-group-right .blog-navbar-nav-items-right-links {
-    /* Ocultar "Contacto" */
     display: none;
   }
-
-  /* En este punto, .blog-navbar-group-left solo tiene el brand, */
-  /* y .blog-navbar-group-right solo tiene .blog-navbar-tools. */
-  /* .blog-navbar (justify-content: space-between) los colocará en extremos opuestos. */
-
   .expandable-search.expanded .search-input {
-    width: 150px; /* Buscador más pequeño en tablets */
+    width: 180px; /* MODIFICADO: Ajuste fino */
   }
 }
 
 @media (max-width: 768px) {
   .blog-navbar {
-    flex-wrap: wrap; /* Necesario para que el toggler y el menú colapsado se manejen correctamente */
+    flex-wrap: wrap;
   }
-
-  /* Los elementos ocultados en 992px ya están ocultos. */
-  /* Ahora ocultar también las herramientas de escritorio (buscador y selector de idioma). */
   .blog-navbar-group-right {
     display: none;
   }
-
-  /* El .blog-navbar-group-left (con el brand) y el .blog-navbar-toggler 
-     serán los únicos hijos directos visibles de .blog-navbar (antes de expandir el menú).
-     .blog-navbar con justify-content: space-between los posicionará. */
-
   .blog-navbar-toggler {
-    display: block; /* Mostrar el toggler */
-    order: 2; /* Colocar después del grupo izquierdo (brand) */
+    display: flex; /* MODIFICADO: Usar flex para centrar el icono si es SVG o tiene padding interno */
+    align-items: center;
+    justify-content: center;
+    order: 2;
   }
-
   .blog-navbar-collapse {
-    /* El menú desplegable */
-    order: 3; /* Después del toggler */
-    width: 100%; /* Ocupar todo el ancho */
+    order: 3;
+    width: 100%;
   }
 }
-/* En Navbar.css */
+
+/* --- ESTILOS PARA BOTONES COMO ENLACES (si los usas para navegación) --- */
 .nav-link-button,
 .nav-link-button-mobile {
   background: none;
   border: none;
   padding: 0;
   margin: 0;
-  color: inherit; /* Hereda el color del texto del navbar */
-  font: inherit; /* Hereda la fuente */
+  color: inherit;
+  font: inherit;
   cursor: pointer;
-  text-align: left; /* Para el menú móvil */
-  display: inline-block; /* O block para el menú móvil */
+  text-align: left;
+  display: inline-block;
 }
 
-/* Para el navbar de escritorio, si quieres que se parezca a los <a> */
 .blog-navbar-group-right .nav-link-button {
-  color: white;
+  /* MODIFICADO: Para que coincida con los nuevos estilos de <a> */
+  color: #ffffff;
   font-size: 1rem;
-  padding: 0.25rem 0.5rem; /* Ajusta para que coincida con tus <a> */
-  transition: color 0.3s ease;
+  font-weight: 500;
+  padding: 0.5rem 0.75rem;
+  transition: color 0.2s ease, background-color 0.2s ease;
+  border-radius: 6px;
 }
 .blog-navbar-group-right .nav-link-button:hover {
-  color: #00bcd4; /* Tu color de hover */
+  /* MODIFICADO: Coincidir con hover de <a> */
+  color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+/* NUEVO: Estilo activo para botones como enlaces */
+.blog-navbar-group-right .nav-link-button.active {
+  font-weight: 700;
+  /* background-color: rgba(0, 0, 0, 0.1); O similar al .active de los 'a' */
+}
+.blog-navbar-group-right .nav-link-button.active::after {
+  /* Si quieres el subrayado */
+  content: "";
+  position: absolute; /* Necesitaría que el botón también sea position: relative */
+  /* Estilos del ::after como en .blog-navbar-nav-items a.active::after */
+  /* Esto es más complejo para un botón, quizás solo cambiar fondo/peso sea suficiente */
 }
 
-/* Para el menú móvil, para que ocupe el espacio y parezca un item de lista */
 .nav-link-button-mobile {
   display: block;
   width: 100%;
-  padding: 0.8rem 0.5rem; /* Coincide con el padding de tus <a> móviles */
-  color: white; /* O el color de tus links móviles */
+  /* MODIFICADO: Coincidir con los nuevos estilos de <a> móviles */
+  padding: 0.9rem 0.5rem;
+  color: #f0f0f0;
   text-decoration: none;
-  font-size: 1rem;
+  font-size: 1.05rem;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 .nav-link-button-mobile:hover {
-  background-color: #444; /* Coincide con el hover de tus <a> móviles */
+  background-color: #4a4a4a;
+  color: #ffffff;
+}
+/* NUEVO: Estilo activo para botones como enlaces en móvil */
+.nav-link-button-mobile.active {
+  color: #ffffff;
+  font-weight: bold;
+  background-color: #454545;
 }
