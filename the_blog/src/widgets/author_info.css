@@ -72,6 +72,8 @@
   /* Puedes ajustar este breakpoint si es necesario, ej: 992px para sidebars más grandes */
   .page-container {
     flex-wrap: nowrap;
+    align-items: flex-start; /* <-- Añade esto */
+    gap: 40px;
   }
 
   .author-profile-section {
@@ -80,7 +82,8 @@
     order: 2;
     flex-shrink: 0;
     /* NUEVO: Margen a la derecha del 3% */
-    margin-right: 8%;
+    margin-top: 0;
+    margin-left: -7%;
   }
 
   .main-content {

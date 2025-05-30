@@ -4,8 +4,10 @@ import "./author_info.css";
 import authorFoto from "../assets/author_foto.png";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
+import MailIcon from "@mui/icons-material/Mail";
 import { useLanguage } from "../widgets/LanguageContext"; // Ajusta la ruta
 import type { LanguageCode } from "../widgets/LanguageContext";
+import { Mail } from "@mui/icons-material";
 
 // El tipo LanguageCode se importa desde LanguageContext
 // Las traducciones y la función getAuthorWidgetLabel pueden permanecer aquí o moverse

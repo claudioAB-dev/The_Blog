@@ -11,12 +11,7 @@
 }
 
 html {
-  /* MODIFICADO: Aumentamos el tamaño de fuente base. 
-     Antes era 100% (generalmente 16px). 
-     Ahora 112.5% (generalmente 18px si la base del navegador es 16px).
-     Puedes ajustarlo a 118.75% (para ~19px) o 125% (para ~20px) si quieres un aumento mayor.
-  */
-  font-size: 112.5%;
+  font-size: 80%;
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -64,12 +59,12 @@ body {
   --font-code: "Fira Code", "Consolas", "Monaco", "Andale Mono", "Ubuntu Mono",
     monospace;
 
-  /* Tamaños de Fuente Base (Estos valores en 'rem' ahora se calcularán sobre una base más grande) */
-  /* Por ejemplo, si la base es 18px: */
-  /* --font-size-xs: 0.75rem;  -> 13.5px */
-  /* --font-size-sm: 0.875rem; -> 15.75px */
-  /* --font-size-base: 1rem;   -> 18px */
-  /* --font-size-md: 1.125rem; -> 20.25px */
+  /* Tamaños de Fuente Base (Estos valores en 'rem' ahora se calcularán sobre una base más pequeña) */
+  /* Por ejemplo, si la base es 16px: */
+  /* --font-size-xs: 0.75rem;   -> 12px */
+  /* --font-size-sm: 0.875rem;  -> 14px */
+  /* --font-size-base: 1rem;    -> 16px */
+  /* --font-size-md: 1.125rem;  -> 18px */
   /* etc. */
   --font-size-xs: 0.75rem;
   --font-size-sm: 0.875rem;
@@ -80,13 +75,13 @@ body {
   --font-size-xxl: 2rem;
   --font-size-xxxl: 2.5rem;
 
-  /* Espaciado (Sin cambios aquí, pero considera si necesitas ajustar algún espaciado visualmente después del cambio de fuente) */
-  --space-xs: 0.25rem;
-  --space-sm: 0.5rem;
-  --space-md: 1rem;
-  --space-lg: 1.5rem;
-  --space-xl: 2rem;
-  --space-xxl: 3rem;
+  /* Espaciado (Ajustados para ser más pequeños. Considera si necesitas ajustar visualmente) */
+  --space-xs: 0.2rem; /* Originalmente 0.25rem */
+  --space-sm: 0.4rem; /* Originalmente 0.5rem */
+  --space-md: 0.8rem; /* Originalmente 1rem */
+  --space-lg: 1.2rem; /* Originalmente 1.5rem */
+  --space-xl: 1.6rem; /* Originalmente 2rem */
+  --space-xxl: 2.4rem; /* Originalmente 3rem */
 
   /* Radios de Borde (Sin cambios aquí) */
   --border-radius-sm: 4px;
@@ -111,8 +106,8 @@ body {
   --color-danger-border: #f5c6cb;
 }
 
-/* 3. Estilos Tipográficos Base 
-   (No se necesitan cambios aquí, ya que usan variables en 'rem' que escalarán)
+/* 3. Estilos Tipográficos Base
+    (No se necesitan cambios aquí, ya que usan variables en 'rem' que escalarán con la nueva base de 100%)
 -------------------------------------------------------------------------------- */
 h1,
 h2,
@@ -183,13 +178,4 @@ code {
   font-size: var(--font-size-sm); /* Escalará con la nueva base */
 }
 
-/* ... (resto del archivo index.css) ... */
-body {
-  /* Asumiendo que este CSS es parte de un proyecto más grande */
-  font-family: var(--primary-font);
-  color: var(--text-color);
-  line-height: 1.6;
-  background-color: var(--background-color);
-  margin: 0;
-  padding: 0;
-}
+/* ... (El segundo bloque 'body' que estaba aquí ha sido eliminado por redundancia y uso de variables no definidas) ... */

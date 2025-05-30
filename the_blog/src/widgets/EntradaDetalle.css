@@ -1,73 +1,82 @@
 /* src/components/Entradas/EntradaDetalle.css */
 
-/* Variables de diseño (opcional, para fácil personalización) */
-:root {
-  --color-texto-principal: #333;
-  --color-texto-secundario: #555;
-  --color-enlace: #007bff;
-  --color-borde: #e0e0e0;
-  --fuente-principal: "Helvetica Neue", Arial, sans-serif;
-  --fuente-titulos: "Georgia", serif;
-  --max-ancho-contenido: 800px;
-  --espaciado-base: 1rem; /* 16px si la fuente base es 16px */
-}
+/* NOTA: Se eliminan las variables :root locales. 
+   Todos los estilos ahora usarán las variables globales definidas en tu index.css 
+   (o en un archivo de variables importado por index.css).
+   Asegúrate de que variables como --font-primary, --font-headings, --color-primary, 
+   --color-text-headings, --color-text-primary, --color-text-secondary, 
+   --color-background-card, --color-border, --shadow-card, 
+   --space-sm, --space-md, --space-lg, --border-radius-md, etc., estén disponibles.
+*/
 
 .entrada-detalle-container {
-  max-width: var(--max-ancho-contenido);
-  margin: calc(var(--espaciado-base) * 2) auto;
-  padding: calc(var(--espaciado-base) * 1.5);
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  line-height: 1.7;
-  color: var(--color-texto-principal);
-  font-family: var(--fuente-principal);
+  max-width: 800px; /* Ancho ideal para lectura de artículos */
+  margin: var(--space-xl) auto; /* Centrado y con espacio vertical */
+  padding: var(--space-xl); /* Espaciado interno generoso */
+  background-color: var(--color-background-card);
+  border-radius: var(--border-radius-lg); /* Bordes redondeados consistentes */
+  box-shadow: var(--shadow-card);
+  line-height: 1.75; /* Interlineado generoso para el cuerpo del texto */
+  color: var(--color-text-primary);
+  font-family: var(--font-primary);
 }
 
 .entrada-detalle-header {
-  margin-bottom: calc(var(--espaciado-base) * 2);
-  border-bottom: 1px solid var(--color-borde);
-  padding-bottom: calc(var(--espaciado-base) * 1.5);
+  margin-bottom: var(--space-xl);
+  padding-bottom: var(--space-lg);
+  border-bottom: 1px solid var(--color-border);
 }
 
 .entrada-detalle-titulo {
-  font-family: var(--fuente-titulos);
-  font-size: 2.5rem; /* Ajustar según preferencia */
-  color: #222;
+  font-family: var(--font-headings);
+  font-size: var(--font-size-xxxl); /* Título principal bien grande */
+  color: var(--color-text-headings);
   margin-top: 0;
-  margin-bottom: calc(var(--espaciado-base) * 0.75);
-  line-height: 1.3;
+  margin-bottom: var(--space-md);
+  line-height: 1.25;
 }
 
 .entrada-detalle-imagen {
   width: 100%;
   max-height: 450px;
-  object-fit: cover; /* o 'contain' según la imagen */
-  border-radius: 6px;
-  margin-bottom: calc(var(--espaciado-base) * 1.5);
-  border: 1px solid var(--color-borde);
+  object-fit: cover;
+  border-radius: var(--border-radius-md); /* Redondeo para la imagen */
+  margin-bottom: var(--space-lg);
+  /* border: 1px solid var(--color-border-light); /* Opcional, si la imagen necesita un borde sutil */
 }
 
 .entrada-detalle-meta {
-  font-size: 0.9rem;
-  color: var(--color-texto-secundario);
-  margin-bottom: calc(var(--espaciado-base) * 1.5);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-lg);
+  display: flex; /* Para alinear items de metadatos */
+  flex-wrap: wrap; /* Para que se ajusten en pantallas pequeñas */
+  gap: var(--space-sm) var(--space-lg); /* Espacio entre items */
 }
 
 .entrada-detalle-meta .meta-item {
-  margin-bottom: calc(var(--espaciado-base) * 0.5);
-  display: block; /* O inline-block si quieres que estén en la misma línea con separadores */
+  margin-bottom: 0; /* El gap se encarga del espaciado */
+  /* display: block; Se maneja por flexbox ahora */
 }
 
 .entrada-detalle-meta .meta-label {
-  font-weight: bold;
-  color: #444;
+  font-weight: 600; /* Un poco más de peso */
+  color: var(
+    --color-text-secondary
+  ); /* Mismo color o ligeramente más oscuro que el valor */
+  margin-right: var(--space-xs);
 }
 
 /* Estilos para el cuerpo del contenido (generado por dangerouslySetInnerHTML) */
 .entrada-detalle-cuerpo {
-  font-size: 1.05rem; /* Ligeramente más grande para lectura */
-  word-wrap: break-word; /* Evitar overflow horizontal */
+  font-size: var(
+    --font-size-base
+  ); /* Tamaño base para el contenido principal */
+  word-wrap: break-word;
+}
+
+.entrada-detalle-cuerpo > *:first-child {
+  margin-top: 0; /* El primer elemento del contenido no necesita margen superior extra */
 }
 
 .entrada-detalle-cuerpo h1,
@@ -76,119 +85,202 @@
 .entrada-detalle-cuerpo h4,
 .entrada-detalle-cuerpo h5,
 .entrada-detalle-cuerpo h6 {
-  font-family: var(--fuente-titulos);
-  color: #333;
-  margin-top: calc(var(--espaciado-base) * 2);
-  margin-bottom: var(--espaciado-base);
+  font-family: var(--font-headings);
+  color: var(--color-text-headings);
+  margin-top: var(--space-xl);
+  margin-bottom: var(--space-md);
   line-height: 1.4;
 }
 
+/* Ajustar tamaños de encabezados dentro del contenido para que sean subordinados al título principal */
 .entrada-detalle-cuerpo h1 {
-  font-size: 2rem;
-}
+  font-size: var(--font-size-xxl);
+} /* Raro tener H1 dentro del cuerpo, pero por si acaso */
 .entrada-detalle-cuerpo h2 {
-  font-size: 1.75rem;
+  font-size: var(--font-size-xl);
 }
 .entrada-detalle-cuerpo h3 {
-  font-size: 1.5rem;
+  font-size: var(--font-size-lg);
+}
+.entrada-detalle-cuerpo h4 {
+  font-size: var(--font-size-md);
+}
+.entrada-detalle-cuerpo h5 {
+  font-size: var(--font-size-base);
+  font-weight: 700;
+}
+.entrada-detalle-cuerpo h6 {
+  font-size: var(--font-size-sm);
+  font-weight: 700;
 }
 
 .entrada-detalle-cuerpo p {
-  margin-bottom: var(--espaciado-base);
+  margin-bottom: var(--space-md);
 }
 
 .entrada-detalle-cuerpo a {
-  color: var(--color-enlace);
-  text-decoration: none;
-  transition: color 0.2s ease-in-out;
+  color: var(--color-primary);
+  text-decoration: underline; /* Subrayado para enlaces dentro del contenido es común */
+  text-decoration-color: rgba(
+    from var(--color-primary) r g b / 0.4
+  ); /* Subrayado más sutil */
+  text-underline-offset: 2px;
+  transition: color var(--transition-short),
+    text-decoration-color var(--transition-short);
 }
+/* Para la línea anterior, si necesitas valores RGB para --color-primary (#7FAA72): 127, 170, 114 */
+/* text-decoration-color: rgba(127, 170, 114, 0.4); */
+/* O usa una variable --color-primary-transparent si la defines */
 
 .entrada-detalle-cuerpo a:hover,
 .entrada-detalle-cuerpo a:focus {
-  color: darken(var(--color-enlace), 15%);
-  text-decoration: underline;
+  color: var(--color-primary-dark);
+  text-decoration-color: var(--color-primary-dark);
 }
 
 .entrada-detalle-cuerpo ul,
 .entrada-detalle-cuerpo ol {
-  margin-bottom: var(--espaciado-base);
-  padding-left: calc(var(--espaciado-base) * 1.5);
+  margin-bottom: var(--space-md);
+  padding-left: var(--space-lg); /* Espacio estándar para listas */
+}
+.entrada-detalle-cuerpo ul li,
+.entrada-detalle-cuerpo ol li {
+  margin-bottom: var(--space-sm);
 }
 
 .entrada-detalle-cuerpo blockquote {
-  border-left: 4px solid var(--color-borde);
-  padding-left: var(--espaciado-base);
-  margin: var(--espaciado-base) 0;
+  border-left: 4px solid var(--color-primary);
+  padding: var(--space-sm) var(--space-lg);
+  margin: var(--space-lg) 0;
   font-style: italic;
-  color: var(--color-texto-secundario);
+  color: var(--color-text-secondary);
+  background-color: var(
+    --color-background-body
+  ); /* Fondo sutil para destacarlo */
+  border-radius: 0 var(--border-radius-sm) var(--border-radius-sm) 0;
 }
 
 .entrada-detalle-cuerpo pre {
-  background-color: #f4f4f4;
-  padding: var(--espaciado-base);
-  border-radius: 4px;
-  overflow-x: auto; /* Para bloques de código largos */
-  font-family: "Courier New", Courier, monospace;
-  font-size: 0.9em;
+  background-color: var(--color-background-code); /* Usar variable global */
+  color: var(
+    --color-text-light
+  ); /* Asumiendo texto claro en fondo oscuro para código */
+  padding: var(--space-md);
+  border-radius: var(--border-radius-md);
+  overflow-x: auto;
+  font-family: var(--font-code); /* Usar variable global */
+  font-size: var(--font-size-sm); /* Tamaño de fuente base para código */
+  line-height: 1.5;
+  margin: var(--space-lg) 0;
 }
 
 .entrada-detalle-cuerpo code {
-  font-family: "Courier New", Courier, monospace;
-  background-color: #f0f0f0; /* Ligero fondo para código inline */
-  padding: 0.1em 0.3em;
-  border-radius: 3px;
+  /* Código inline */
+  font-family: var(--font-code);
+  background-color: rgba(
+    from var(--color-primary) r g b / 0.08
+  ); /* Fondo muy sutil con color primario */
+  color: var(--color-primary-dark); /* Un color que destaque pero sea legible */
+  padding: 0.2em 0.4em;
+  border-radius: var(--border-radius-sm);
+  font-size: 0.9em; /* Ligeramente más pequeño que el texto circundante */
 }
+/* Para el rgba anterior, con --color-primary (#7FAA72): rgba(127, 170, 114, 0.08) */
 
 .entrada-detalle-cuerpo img {
   max-width: 100%;
   height: auto;
-  border-radius: 4px;
-  margin: var(--espaciado-base) 0;
+  border-radius: var(--border-radius-md); /* Consistencia en redondeo */
+  margin: var(--space-lg) auto; /* Centrar imágenes de bloque */
+  display: block;
+  box-shadow: var(--shadow-card); /* Sombra sutil para imágenes destacadas */
 }
 
 /* Estados de carga y error */
 .entrada-detalle-status {
-  padding: calc(var(--espaciado-base) * 2);
+  padding: var(--space-xxl) var(--space-lg);
   text-align: center;
-  font-size: 1.2rem;
-  color: var(--color-texto-secundario);
-  min-height: 200px; /* Para evitar saltos de layout */
+  font-size: var(--font-size-lg);
+  color: var(--color-text-secondary);
+  min-height: 300px;
   display: flex;
+  flex-direction: column; /* Para alinear icono y texto si añades icono */
   justify-content: center;
   align-items: center;
+  background-color: var(
+    --color-background-card
+  ); /* Para que tenga el mismo fondo que un post cargado */
+  border-radius: var(--border-radius-lg);
+  margin: var(--space-xl) auto;
+  max-width: var(--max-ancho-contenido); /* Mantener consistencia */
+}
+
+.entrada-detalle-status .icon {
+  /* Si decides añadir un SVG o icono de fuente */
+  font-size: 3rem;
+  margin-bottom: var(--space-md);
 }
 
 .entrada-detalle-error {
-  color: #d9534f; /* Un color rojo para errores */
-  background-color: #f2dede;
-  border: 1px solid #ebccd1;
-  border-radius: 4px;
+  color: var(--color-danger);
+  background-color: var(--color-danger-background);
+  border: 1px solid var(--color-danger-border);
 }
 
 /* Responsividad */
+@media (max-width: 992px) {
+  .entrada-detalle-titulo {
+    font-size: var(
+      --font-size-xxl
+    ); /* Ajuste responsivo del título principal */
+  }
+}
+
 @media (max-width: 768px) {
   .entrada-detalle-container {
-    margin: var(--espaciado-base) 0;
-    padding: var(--espaciado-base);
-    border-radius: 0;
-    box-shadow: none;
+    margin: var(--space-lg) 0 0 0; /* Menos margen vertical en móvil, sin margen horizontal para ocupar ancho */
+    padding: var(--space-lg);
+    border-radius: 0; /* A menudo se quitan los bordes en móvil para ocupar todo el ancho */
+    box-shadow: none; /* Y también las sombras */
   }
 
   .entrada-detalle-titulo {
-    font-size: 2rem;
+    font-size: calc(var(--font-size-xl) + 0.2rem); /* Aproximación responsiva */
+  }
+
+  .entrada-detalle-meta {
+    flex-direction: column; /* Apilar metadatos en móvil */
+    gap: var(--space-xs);
+    align-items: flex-start;
   }
 
   .entrada-detalle-cuerpo {
-    font-size: 1rem;
+    font-size: var(
+      --font-size-base
+    ); /* Puede ser el mismo que desktop o ligeramente menor */
   }
 
   .entrada-detalle-cuerpo h1 {
-    font-size: 1.75rem;
+    font-size: var(--font-size-xl);
   }
   .entrada-detalle-cuerpo h2 {
-    font-size: 1.5rem;
+    font-size: var(--font-size-lg);
   }
   .entrada-detalle-cuerpo h3 {
-    font-size: 1.25rem;
+    font-size: var(--font-size-md);
+  }
+}
+
+@media (max-width: 480px) {
+  .entrada-detalle-container {
+    padding: var(--space-md);
+  }
+  .entrada-detalle-titulo {
+    font-size: var(--font-size-xl);
+  }
+  .entrada-detalle-cuerpo {
+    font-size: calc(
+      var(--font-size-base) - 0.05rem
+    ); /* Ligeramente más pequeño si es necesario */
   }
 }

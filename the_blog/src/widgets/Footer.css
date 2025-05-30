@@ -1,0 +1,200 @@
+/* Footer.css */
+
+/* Contenedor principal del Footer */
+.blog-footer {
+  background-color: var(--color-primary); /* Mismo verde que el Navbar */
+  color: var(
+    --color-text-on-primary
+  ); /* Texto blanco/claro sobre fondo verde */
+  padding: var(--space-xl) var(--space-lg); /* Espaciado generoso */
+  font-family: var(--font-primary);
+  font-size: var(--font-size-sm); /* Tamaño de fuente base para el footer */
+  margin-top: var(
+    --space-xxl
+  ); /* Espacio para separarlo del contenido principal de la página */
+}
+
+/* Contenedor del contenido dentro del footer, para centrar y limitar ancho */
+.footer-content-wrapper {
+  max-width: 1200px; /* O tu variable --container-max-width si la tienes */
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  flex-wrap: wrap; /* Permite que las secciones se apilen en pantallas pequeñas */
+  justify-content: space-between; /* Distribuye el espacio entre las secciones */
+  align-items: center; /* Alinea verticalmente los items al centro (si tienen alturas diferentes) */
+  gap: var(--space-lg); /* Espacio entre las secciones del footer */
+}
+
+/* Estilo base para cada sección del footer */
+.footer-section {
+  min-width: 200px; /* Un ancho mínimo para que no se compriman demasiado */
+  flex-basis: auto; /* Permite que crezcan según su contenido */
+}
+
+/* Sección de Copyright */
+.footer-copyright {
+  text-align: center; /* Centrado en móviles cuando se apila */
+  flex-grow: 1; /* Puede ocupar más espacio si es necesario */
+}
+.footer-copyright p {
+  margin-bottom: 0; /* El gap del wrapper maneja el espaciado */
+  opacity: 0.9; /* Un poco más sutil */
+}
+
+/* Sección de Enlaces */
+.footer-links {
+  text-align: center; /* Centrado en móviles */
+}
+
+.footer-nav-items {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; /* Centra los ítems de la lista */
+  gap: var(--space-sm) var(--space-md); /* Espacio entre enlaces */
+}
+
+.footer-nav-items a {
+  color: var(--color-text-on-primary);
+  text-decoration: none;
+  opacity: 0.9;
+  transition: opacity var(--transition-short);
+}
+
+.footer-nav-items a:hover,
+.footer-nav-items a:focus {
+  opacity: 1;
+  text-decoration: underline;
+  outline: none; /* Si se provee otra indicación de foco (ej. el subrayado) */
+}
+
+/* Sección de Selector de Idioma */
+.footer-language-switcher {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Centrado en móviles */
+  gap: var(--space-xs); /* Espacio entre botones de idioma */
+  /* Similar al del Navbar pero adaptado */
+  background-color: rgba(
+    255,
+    255,
+    255,
+    0.1
+  ); /* Fondo translúcido para el grupo */
+  border-radius: var(
+    --border-radius-pill
+  ); /* Bordes de píldora para el contenedor */
+  padding: var(--space-xs);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.footer-language-switcher button {
+  background: none;
+  border: none;
+  color: var(--color-text-on-primary);
+  opacity: 0.8;
+  padding: var(--space-xs) var(--space-sm);
+  cursor: pointer;
+  font-size: var(--font-size-xs); /* Ligeramente más pequeño */
+  font-weight: 600;
+  border-radius: var(
+    --border-radius-pill
+  ); /* Bordes redondeados para cada botón */
+  transition: background-color var(--transition-short),
+    opacity var(--transition-short), color var(--transition-short);
+  text-transform: uppercase;
+}
+
+.footer-language-switcher button:hover,
+.footer-language-switcher button:focus {
+  opacity: 1;
+  background-color: rgba(255, 255, 255, 0.15);
+  outline: none;
+}
+
+.footer-language-switcher button.active {
+  background-color: var(--color-text-on-primary); /* Botón activo blanco */
+  color: var(--color-primary); /* Texto del color primario del footer */
+  opacity: 1;
+  font-weight: 700;
+}
+
+/* Sección de Redes Sociales (Estilos placeholder si decides implementarla) */
+/*
+  .footer-social-media {
+    text-align: center;
+  }
+  .footer-social-media p {
+    margin-bottom: var(--space-sm);
+    opacity: 0.9;
+  }
+  .social-icons {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-md);
+  }
+  .social-icons a {
+    color: var(--color-text-on-primary);
+    font-size: var(--font-size-lg); // Asumiendo que usas iconos de fuente o SVGs que heredan tamaño
+    opacity: 0.8;
+    transition: opacity var(--transition-short), transform var(--transition-short);
+  }
+  .social-icons a:hover,
+  .social-icons a:focus {
+    opacity: 1;
+    transform: scale(1.1);
+    outline: none;
+  }
+  */
+
+/* --- Ajustes Responsivos para el Footer --- */
+@media (max-width: 768px) {
+  .footer-content-wrapper {
+    flex-direction: column; /* Apila las secciones verticalmente */
+    align-items: center; /* Centra las secciones apiladas */
+    text-align: center; /* Asegura que el texto dentro de las secciones se centre */
+    gap: var(--space-lg); /* Mantiene un buen espaciado vertical */
+  }
+
+  .footer-section {
+    width: 100%; /* Permite que cada sección ocupe el ancho completo */
+    text-align: center; /* Asegura centrado para todas las secciones */
+    min-width: auto; /* Anula el min-width de escritorio */
+  }
+
+  .footer-copyright {
+    order: 2; /* Mueve el copyright al final en la vista móvil */
+  }
+
+  .footer-links {
+    order: 0; /* Enlaces primero (después de redes, si las hay) */
+  }
+  .footer-nav-items {
+    justify-content: center; /* Asegura que los enlaces estén centrados */
+  }
+
+  .footer-language-switcher {
+    order: 1; /* Selector de idioma en medio o según preferencia */
+    margin-bottom: var(--space-md); /* Espacio extra si es necesario */
+  }
+
+  /* Si tienes redes sociales: */
+  /*
+    .footer-social-media {
+      order: -1; // Redes sociales arriba de todo
+    }
+    */
+}
+
+@media (max-width: 480px) {
+  .blog-footer {
+    padding: var(--space-lg) var(--space-md); /* Menos padding en móviles muy pequeños */
+  }
+
+  .footer-language-switcher button {
+    padding: calc(var(--space-xs) * 1.5) var(--space-sm); /* Ajustar padding si es necesario */
+  }
+}

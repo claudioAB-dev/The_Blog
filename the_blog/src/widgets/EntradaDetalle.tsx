@@ -201,18 +201,6 @@ const EntradaDetalle: React.FC = () => {
                 {fechaPublicacionFormateada}
               </time>
             </p>
-            <p className="meta-item">
-              <span className="meta-label">
-                {getDetailTranslation("authorLabel", currentLanguage)}:
-              </span>{" "}
-              {post.autor_id}
-            </p>
-            <p className="meta-item">
-              <span className="meta-label">
-                {getDetailTranslation("categoryLabel", currentLanguage)}:
-              </span>{" "}
-              {post.categoria_id}
-            </p>
           </div>
         </header>
         <div

@@ -5,9 +5,8 @@ import { LanguageProvider } from "./widgets/LanguageContext";
 import Navbar from "./widgets/Navbar";
 import Author_info from "./widgets/Author_info";
 import Entradas from "./widgets/Entradas";
-import EntradaDetalle from "./widgets/EntradaDetalle"; // <-- Importa tu nuevo componente
-// Asegúrate de que el archivo exista y la ruta sea correcta. Si el archivo se llama 'EntradaDetalle.tsx', descomenta la línea de arriba.
-// Si el archivo tiene otro nombre o ubicación, actualiza la ruta de importación aquí.
+import EntradaDetalle from "./widgets/EntradaDetalle";
+import Footer from "./widgets/footer";
 
 const App: React.FC = () => {
   return (
@@ -38,6 +37,7 @@ const App: React.FC = () => {
           {/* Author_info se mantiene como parte del layout general */}
           <Author_info />
         </div>
+        <Footer />
       </BrowserRouter>
     </LanguageProvider>
   );
