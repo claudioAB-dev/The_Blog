@@ -261,32 +261,58 @@ def get_entradas():
     if slug:
         entrada = Entrada.query.filter_by(slug=slug).first()
         if entrada:
-            return jsonify(entrada.to_dict())
+            # Opción 1: Serialización manual (recomendado para consistencia)
+            entrada_data = {
+                "id": entrada.id,
+                "autor_id": entrada.autor_id,
+                "categoria_id": entrada.categoria_id,
+                "titulo_es": entrada.titulo_es,
+                "slug": entrada.slug,
+                "resumen_es": entrada.resumen_es,
+                "contenido_es": entrada.contenido_es,
+                "imagen_destacada": entrada.imagen_destacada,
+                "estado": entrada.estado, # Asegúrate que el enum se serialice bien a string
+                "fecha_publicacion": entrada.fecha_publicacion.isoformat() if entrada.fecha_publicacion else None,
+                "fecha_creacion": entrada.fecha_creacion.isoformat() if entrada.fecha_creacion else None,
+                "fecha_actualizacion": entrada.fecha_actualizacion.isoformat() if entrada.fecha_actualizacion else None,
+                "titulo_en": entrada.titulo_en,
+                "titulo_de": entrada.titulo_de,
+                "resumen_en": entrada.resumen_en,
+                "resumen_de": entrada.resumen_de,
+                "contenido_en": entrada.contenido_en,
+                "contenido_de": entrada.contenido_de
+            }
+            return jsonify(entrada_data)
+            # Opción 2: Usar el método serialize (primero debes corregirlo en models.py)
+            # return jsonify(entrada.serialize()) 
         else:
             return jsonify({'message': 'No encontrada'}), 404
     else:
+        # ... tu código existente para obtener todas las entradas ...
+        # (que parece estar funcionando)
         try:
             entradas = Entrada.query.all()
             entradas_list = []
-            for entrada in entradas:
+            for entrada_item in entradas: # Renombrado para evitar confusión con la variable 'entrada' de arriba
                 entradas_list.append({
-                    "id": entrada.id,
-                    "autor_id": entrada.autor_id,
-                    "categoria_id": entrada.categoria_id,
-                    "titulo_es": entrada.titulo_es,
-                    "slug": entrada.slug,
-                    "resumen_es": entrada.resumen_es,
-                    "contenido_es": entrada.contenido_es,
-                    "imagen_destacada": entrada.imagen_destacada,
-                    "fecha_publicacion": entrada.fecha_publicacion,
-                    "fecha_creacion": entrada.fecha_creacion,
-                    "fecha_actualizacion": entrada.fecha_actualizacion,
-                    "titulo_en": entrada.titulo_en,
-                    "titulo_de": entrada.titulo_de,
-                    "resumen_en": entrada.resumen_en,
-                    "resumen_de": entrada.resumen_de,
-                    "contenido_en": entrada.contenido_en,
-                    "contenido_de": entrada.contenido_de
+                    "id": entrada_item.id,
+                    "autor_id": entrada_item.autor_id,
+                    "categoria_id": entrada_item.categoria_id,
+                    "titulo_es": entrada_item.titulo_es,
+                    "slug": entrada_item.slug,
+                    "resumen_es": entrada_item.resumen_es,
+                    "contenido_es": entrada_item.contenido_es,
+                    "imagen_destacada": entrada_item.imagen_destacada,
+                    "estado": entrada_item.estado,
+                    "fecha_publicacion": entrada_item.fecha_publicacion.isoformat() if entrada_item.fecha_publicacion else None,
+                    "fecha_creacion": entrada_item.fecha_creacion.isoformat() if entrada_item.fecha_creacion else None,
+                    "fecha_actualizacion": entrada_item.fecha_actualizacion.isoformat() if entrada_item.fecha_actualizacion else None,
+                    "titulo_en": entrada_item.titulo_en,
+                    "titulo_de": entrada_item.titulo_de,
+                    "resumen_en": entrada_item.resumen_en,
+                    "resumen_de": entrada_item.resumen_de,
+                    "contenido_en": entrada_item.contenido_en,
+                    "contenido_de": entrada_item.contenido_de
                 })
             return jsonify(entradas_list), 200
         except Exception as e:
