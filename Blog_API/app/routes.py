@@ -257,29 +257,37 @@ def create_contacto():
 
 @main_bp.route('/entradas', methods=['GET'])
 def get_entradas():
-    try:
-        entradas = Entrada.query.all()
-        entradas_list = []
-        for entrada in entradas:
-            entradas_list.append({
-                "id": entrada.id,
-                "autor_id": entrada.autor_id,
-                "categoria_id": entrada.categoria_id,
-                "titulo_es": entrada.titulo_es,
-                "slug": entrada.slug,
-                "resumen_es": entrada.resumen_es,
-                "contenido_es": entrada.contenido_es,
-                "imagen_destacada": entrada.imagen_destacada,
-                "fecha_publicacion": entrada.fecha_publicacion,
-                "fecha_creacion": entrada.fecha_creacion,
-                "fecha_actualizacion": entrada.fecha_actualizacion,
-                "titulo_en": entrada.titulo_en,
-                "titulo_de": entrada.titulo_de,
-                "resumen_en": entrada.resumen_en,
-                "resumen_de": entrada.resumen_de,
-                "contenido_en": entrada.contenido_en,
-                "contenido_de": entrada.contenido_de
-            })
-        return jsonify(entradas_list), 200
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
+    slug = request.args.get('slug')
+    if slug:
+        entrada = Entrada.query.filter_by(slug=slug).first()
+        if entrada:
+            return jsonify(entrada.to_dict())
+        else:
+            return jsonify({'message': 'No encontrada'}), 404
+    else:
+        try:
+            entradas = Entrada.query.all()
+            entradas_list = []
+            for entrada in entradas:
+                entradas_list.append({
+                    "id": entrada.id,
+                    "autor_id": entrada.autor_id,
+                    "categoria_id": entrada.categoria_id,
+                    "titulo_es": entrada.titulo_es,
+                    "slug": entrada.slug,
+                    "resumen_es": entrada.resumen_es,
+                    "contenido_es": entrada.contenido_es,
+                    "imagen_destacada": entrada.imagen_destacada,
+                    "fecha_publicacion": entrada.fecha_publicacion,
+                    "fecha_creacion": entrada.fecha_creacion,
+                    "fecha_actualizacion": entrada.fecha_actualizacion,
+                    "titulo_en": entrada.titulo_en,
+                    "titulo_de": entrada.titulo_de,
+                    "resumen_en": entrada.resumen_en,
+                    "resumen_de": entrada.resumen_de,
+                    "contenido_en": entrada.contenido_en,
+                    "contenido_de": entrada.contenido_de
+                })
+            return jsonify(entradas_list), 200
+        except Exception as e:
+            return jsonify({'error': str(e)}), 500

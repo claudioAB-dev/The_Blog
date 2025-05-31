@@ -1,18 +1,27 @@
+/* author.css */
+
 /* Estilos generales del contenedor de la página */
 .page-container {
   display: flex;
   flex-wrap: wrap;
-  gap: 30px; /* MODIFICADO: Un poco más de espacio si la sidebar es más grande */
-  padding: 30px; /* MODIFICADO: Más padding general */
+  gap: var(
+    --space-xl
+  ); /* MODIFICADO: Usando variable de espaciado (30px -> 3.2rem si 1rem=10px, o ajusta) */
+  padding: var(--space-xl); /* MODIFICADO: Usando variable de espaciado */
+  /* background-color: var(--color-background-body); /* Aseguramos que el fondo del page-container es el del body */
 }
 
 /* Sección del perfil del autor */
 .author-profile-section {
-  background-color: #ffffff;
-  border: 1px solid #ececec;
-  border-radius: 16px; /* MODIFICADO: Radio un poco mayor para una tarjeta más grande */
-  padding: 30px; /* MODIFICADO: Mayor padding interno */
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08); /* MODIFICADO: Sombra ligeramente más pronunciada para una tarjeta más grande */
+  background-color: var(--color-background-card); /* Fondo de tarjeta oscuro */
+  border: 1px solid var(--color-border); /* Borde oscuro sutil */
+  border-radius: var(
+    --border-radius-xl
+  ); /* Radio de borde con variable (16px) */
+  padding: var(--space-xl); /* Padding con variable */
+  box-shadow: var(
+    --shadow-card
+  ); /* Sombra de tarjeta estándar para tema oscuro */
   transition: box-shadow 0.3s ease, border-color 0.3s ease;
 }
 
@@ -21,69 +30,90 @@
 }
 
 .author-image {
-  width: 140px; /* MODIFICADO: Imagen significativamente más grande (antes 110px) */
-  height: 140px; /* MODIFICADO: Imagen significativamente más grande (antes 110px) */
-  border-radius: 50%;
+  width: 140px;
+  height: 140px;
+  border-radius: var(
+    --border-radius-circle
+  ); /* Radio de círculo con variable */
   object-fit: cover;
-  margin-bottom: 25px; /* MODIFICADO: Más espacio debajo de la imagen (antes 20px) */
-  border: 5px solid #7faa72; /* MODIFICADO: Borde un poco más grueso (antes 4px) */
-  box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.07); /* MODIFICADO: Sombra interior un poco más notable */
+  margin-bottom: var(
+    --space-lg
+  ); /* Espacio con variable (25px -> 2.4rem o ajusta) */
+  border: 5px solid var(--color-primary); /* Borde con color primario del tema */
+  /* MODIFICADO: Sombra interior adaptada para tema oscuro o considerar eliminarla si no aporta */
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.3); /* Sombra interior más oscura y sutil */
 }
 
 .author-name {
   margin-top: 0;
-  margin-bottom: 10px; /* MODIFICADO: Ajuste de espacio (antes 8px) */
-  font-size: 2rem; /* MODIFICADO: Nombre notablemente más grande (antes 1.65rem) */
-  color: #2c3e50;
+  margin-bottom: var(
+    --space-sm
+  ); /* Espacio con variable (10px -> 0.8rem o ajusta) */
+  font-size: var(
+    --font-size-xl
+  ); /* Tamaño de fuente con variable (2rem -> 2.4rem o ajusta) */
+  color: var(--color-text-headings); /* Color de encabezados (blanco) */
   font-weight: 600;
 }
 
 .author-title {
   margin-top: 0;
-  margin-bottom: 15px; /* MODIFICADO: Ajuste de espacio (antes 12px) */
-  font-size: 1.15rem; /* MODIFICADO: Título un poco más grande (antes 1rem) */
-  color: #526d82;
+  margin-bottom: var(
+    --space-md
+  ); /* Espacio con variable (15px -> 1.6rem o ajusta) */
+  font-size: var(
+    --font-size-base
+  ); /* Tamaño de fuente con variable (1.15rem -> 1.6rem o ajusta) */
+  color: var(
+    --color-text-secondary
+  ); /* Color de texto secundario (gris claro) */
   font-weight: normal;
 }
 
 .author-bio {
-  font-size: 1rem; /* MODIFICADO: Bio un poco más grande para leer mejor (antes 0.95rem) */
-  color: #4a5568;
-  line-height: 1.75; /* MODIFICADO: Interlineado ligeramente mayor (antes 1.7) */
-  margin-bottom: 25px; /* MODIFICADO: Más espacio antes de los links (antes 20px) */
+  font-size: var(
+    --font-size-base
+  ); /* Tamaño de fuente con variable (1rem -> 1.6rem o ajusta) */
+  color: var(
+    --color-text-primary
+  ); /* Color de texto primario (gris más claro) */
+  line-height: 1.75;
+  margin-bottom: var(
+    --space-lg
+  ); /* Espacio con variable (25px -> 2.4rem o ajusta) */
   text-align: left;
 }
 .author-bio strong,
 .author-bio .highlight {
-  color: #7faa72;
-  font-weight: 600; /* Podrías incluso hacerlo 700 si el tamaño de fuente aumenta */
+  color: var(--color-primary); /* Resaltado con color primario del tema */
+  font-weight: 600;
 }
 
-/* Contenido principal */
+/* Contenido principal (donde irían los posts del autor, por ejemplo) */
 .main-content {
-  background-color: #ffffff;
-  padding: 30px; /* MODIFICADO: Padding consistente */
-  border-radius: 16px; /* MODIFICADO: Radio consistente */
-  /* box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04); */ /* Mantener sutil o ajustar si es necesario */
+  background-color: var(
+    --color-background-card
+  ); /* También como tarjeta, o var(--color-background-body) si prefieres */
+  padding: var(--space-xl); /* Padding con variable */
+  border-radius: var(--border-radius-xl); /* Radio con variable */
+  border: 1px solid var(--color-border); /* NUEVO: Añadir borde para consistencia con author-profile */
+  /* box-shadow: var(--shadow-card); /* Opcional: si quieres que también tenga sombra */
 }
 
 /* --- Disposición para Escritorio (Computadoras) --- */
 @media (min-width: 769px) {
-  /* Puedes ajustar este breakpoint si es necesario, ej: 992px para sidebars más grandes */
   .page-container {
     flex-wrap: nowrap;
-    align-items: flex-start; /* <-- Añade esto */
-    gap: 40px;
+    align-items: flex-start;
+    gap: var(--space-xxl); /* Espacio con variable (40px -> ~4.8rem o ajusta) */
   }
 
   .author-profile-section {
     width: 380px;
-    /* Considera un max-width también, ej: max-width: 400px; */
     order: 2;
     flex-shrink: 0;
-    /* NUEVO: Margen a la derecha del 3% */
     margin-top: 0;
-    margin-left: -7%;
+    margin-left: -7%; /* Manteniendo tu diseño de superposición */
   }
 
   .main-content {
@@ -95,7 +125,6 @@
 
 /* --- Disposición para Móviles --- */
 @media (max-width: 768px) {
-  /* O el breakpoint que uses para cambiar a layout de columna */
   .page-container {
     flex-direction: column;
   }
@@ -103,29 +132,39 @@
   .author-profile-section {
     width: 100%;
     order: 1;
-    margin-bottom: 30px; /* MODIFICADO: Espacio consistente */
-    padding: 25px; /* MODIFICADO: En móvil, el padding puede ser un poco menor que en desktop si es muy grande */
+    margin-bottom: var(
+      --space-xl
+    ); /* Espacio con variable (30px -> 3.2rem o ajusta) */
+    padding: var(--space-lg); /* Padding móvil (25px -> 2.4rem o ajusta) */
+    margin-left: 0; /* NUEVO: Resetear el margen negativo en móvil */
   }
   .author-image {
-    /* Ajustes específicos para móvil si es necesario */
     width: 120px;
     height: 120px;
-    margin-bottom: 20px;
+    margin-bottom: var(
+      --space-md
+    ); /* Espacio móvil (20px -> 1.6rem o ajusta) */
   }
   .author-name {
-    font-size: 1.8rem; /* Ligeramente menor que en desktop pero aún grande */
+    font-size: var(
+      --font-size-lg
+    ); /* Tamaño móvil (1.8rem -> 2.0rem o ajusta) */
   }
   .author-title {
-    font-size: 1.1rem;
+    font-size: var(
+      --font-size-sm
+    ); /* Tamaño móvil (1.1rem -> 1.4rem o ajusta) */
   }
   .author-bio {
-    font-size: 0.95rem; /* Puede volver al tamaño anterior en móvil si 1rem es mucho */
+    font-size: var(
+      --font-size-sm
+    ); /* Tamaño móvil (0.95rem -> 1.4rem para mejor legibilidad) */
   }
 
   .main-content {
     width: 100%;
     order: 2;
-    padding: 25px; /* MODIFICADO: Padding consistente en móvil */
+    padding: var(--space-lg); /* Padding móvil (25px -> 2.4rem o ajusta) */
   }
 }
 
@@ -133,13 +172,16 @@
 .author-social-links {
   display: flex;
   justify-content: center;
-  gap: 20px; /* MODIFICADO: Un poco más de espacio entre iconos (antes 18px) */
-  margin-top: 25px; /* MODIFICADO: Espacio consistente (antes 20px) */
+  gap: var(--space-md); /* Espacio con variable (20px -> 1.6rem o ajusta) */
+  margin-top: var(
+    --space-lg
+  ); /* Espacio con variable (25px -> 2.4rem o ajusta) */
 }
 
 .author-social-link-item {
-  color: #7faa72;
-  font-size: 30px; /* MODIFICADO: Iconos sociales más grandes (antes 26px) */
+  color: var(--color-primary); /* Iconos con color primario */
+  font-size: 3rem; /* Tamaño de icono (30px -> 3rem). ¡Asegúrate que tus variables de font-size lleguen aquí o define una nueva! */
+  /* Alternativa si no tienes una variable tan grande: font-size: var(--font-size-xxxl); (si es 2.5rem) y ajusta el valor numérico */
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -147,10 +189,10 @@
 }
 
 .author-social-link-item:hover {
-  color: #5e8c6a;
-  transform: scale(1.2) translateY(-3px); /* MODIFICADO: Efecto hover un poco más pronunciado */
+  color: var(--color-primary-dark); /* Color primario oscuro en hover */
+  transform: scale(1.2) translateY(-3px);
 }
 
 .author-social-link-item svg {
-  fill: currentColor;
+  fill: currentColor; /* SVG hereda el color del link */
 }

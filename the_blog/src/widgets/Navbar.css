@@ -1,20 +1,26 @@
 /* BlogNavbar.css */
+
+/* Usaremos variables de :root definidas en tu index.css (tema oscuro "Tech") */
+
 .blog-navbar {
-  /* MODIFICADO: Un verde ligeramente más profundo y menos saturado para un look más premium. */
-  /* Podrías considerar alternativas como #6A9C58 o #5E8D54 si buscas aún más profundidad. */
-  background-color: #7faa72; /* Anterior: #98c379 */
-  /* MODIFICADO: Incremento ligero en el padding vertical para que respire más. */
-  padding: 1rem 1.5rem; /* Anterior: 0.75rem 1.5rem */
+  /* MODIFICADO: Usando variables para el fondo y color de texto */
+  background-color: var(
+    --color-background-card
+  ); /* Fondo oscuro para el navbar, ligeramente distinto al body */
+  /* Alternativa: background-color: var(--color-background-body); si quieres que se fusione más */
+  /* Alternativa: background-color: #181824; /* Un tono específico si --color-background-card no te convence */
+  padding: 1rem 1.5rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: #ffffff; /* MODIFICADO: Blanco puro para mejor contraste con el nuevo fondo */
-  /* MODIFICADO: Sombra más sutil y moderna */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* Anterior: 0 2px 4px rgba(0, 0, 0, 0.1) */
+  color: var(--color-text-headings); /* Texto principal del navbar (blanco) */
+  /* MODIFICADO: Usando variable de sombra o una adaptada al tema oscuro */
+  box-shadow: var(--shadow-card); /* Sombra de tarjeta estándar */
+  /* Alternativa: box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25); */
   position: relative;
-  min-height: 65px; /* MODIFICADO: Ligero ajuste por el padding */
-  /* NUEVO: Transición suave para cambios de fondo si alguna vez los animas */
+  min-height: 65px;
   transition: background-color 0.3s ease;
+  border-bottom: 1px solid var(--color-border); /* NUEVO: Un borde sutil para separar del contenido */
 }
 
 /* --- GRUPOS PRINCIPALES (Izquierda, Centro, Derecha) --- */
@@ -28,7 +34,7 @@
   /* No hay cambios directos aquí, se beneficia de los cambios globales */
 }
 .blog-navbar-group-left .blog-navbar-nav-items {
-  margin-left: 1.75rem; /* MODIFICADO: Ligero aumento para consistencia */
+  margin-left: 1.75rem;
 }
 
 .blog-navbar-group-center {
@@ -39,7 +45,7 @@
 }
 
 .blog-navbar-group-center .blog-navbar-nav-items {
-  gap: 2rem; /* MODIFICADO: Un poco más de espacio entre categorías principales */
+  gap: 2rem;
   justify-content: center;
 }
 
@@ -48,7 +54,7 @@
 }
 
 .blog-navbar-group-right {
-  gap: 1.25rem; /* MODIFICADO: Ligero ajuste de espaciado */
+  gap: 1.25rem;
 }
 
 .blog-navbar-tools {
@@ -59,18 +65,14 @@
 
 /* --- BRAND Y NAV ITEMS GENERALES --- */
 .blog-navbar-brand {
-  /* MODIFICADO: Un poco más grande y quizás una fuente específica si la tienes definida globalmente. */
-  font-size: 1.75rem; /* Anterior: 1.5rem */
-  font-weight: 700; /* MODIFICADO: Un bold más estándar o 600 si prefieres algo menos pesado */
-  color: #ffffff; /* MODIFICADO: Asegurar blanco puro */
+  font-size: 1.75rem; /* Podrías usar una variable de tamaño de fuente si la tienes */
+  font-weight: 700;
+  color: var(--color-text-headings); /* Blanco de los encabezados */
   text-decoration: none;
-  /* NUEVO: Efecto sutil para el brand */
   transition: color 0.2s ease-in-out, transform 0.2s ease-in-out;
 }
 .blog-navbar-brand:hover {
-  /* MODIFICADO: Un blanco ligeramente translúcido o un color de acento muy sutil. */
-  color: #e0e0e0; /* Anterior: #ddd */
-  /* NUEVO: Pequeño efecto al hacer hover */
+  color: var(--color-primary); /* Color primario al hacer hover */
   /* transform: scale(1.03); */ /* Descomentar si te gusta este efecto */
 }
 
@@ -85,7 +87,7 @@
 }
 .blog-navbar-group-left .blog-navbar-nav-items li,
 .blog-navbar-group-right .blog-navbar-nav-items li {
-  margin-left: 1.5rem; /* MODIFICADO: Un poco más de espacio */
+  margin-left: 1.5rem;
 }
 .blog-navbar-group-left .blog-navbar-nav-items li:first-child,
 .blog-navbar-group-right .blog-navbar-nav-items li:first-child {
@@ -96,45 +98,41 @@
 }
 
 .blog-navbar-nav-items a {
-  color: #ffffff; /* MODIFICADO: Blanco puro o un off-white muy claro como #F5F5F5 */
+  color: var(
+    --color-text-primary
+  ); /* Texto primario (gris claro) para no competir con el brand */
   text-decoration: none;
-  font-size: 1rem; /* Se mantiene, pero asegúrate que la fuente base sea legible */
-  /* NUEVO: Un poco más de peso para los links, los hace sentir más importantes */
-  font-weight: 500; /* O 'normal' si tu fuente es naturalmente más gruesa */
+  font-size: var(--font-size-base); /* Usando variable de tamaño */
+  font-weight: 500;
   transition: color 0.2s ease, background-color 0.2s ease;
-  padding: 0.5rem 0.75rem; /* MODIFICADO: Padding más generoso para mejor área de click y estética */
+  padding: 0.5rem 0.75rem;
   display: block;
-  border-radius: 6px; /* NUEVO: Bordes redondeados sutiles para los items */
-  position: relative; /* NUEVO: Para el pseudo-elemento del active link */
+  border-radius: var(--border-radius-md); /* Usando variable de radio */
+  position: relative;
 }
 
 .blog-navbar-nav-items a:hover {
-  /* MODIFICADO: Un hover más sutil, quizás un ligero cambio de fondo o un color de texto diferente. */
-  /* color: #C8E6C9; */ /* Un verde muy pálido como opción */
-  color: #ffffff;
-  background-color: rgba(
-    255,
-    255,
-    255,
-    0.1
-  ); /* MODIFICADO: Fondo translúcido sutil en hover */
+  color: var(--color-text-headings); /* Blanco al hacer hover */
+  background-color: rgba(255, 255, 255, 0.05); /* Fondo translúcido muy sutil */
+  /* Alternativa: background-color: var(--color-primary-dark); color: var(--color-text-on-primary); */
 }
 
-/* NUEVO: Estilo para el enlace activo */
 .blog-navbar-nav-items a.active {
-  color: #ffffff;
-  font-weight: 700; /* Más peso para el activo */
-  /* background-color: rgba(0, 0, 0, 0.1);  Una opción para destacar */
+  color: var(--color-primary); /* Color primario para el enlace activo */
+  font-weight: 700;
+  /* background-color: rgba(0, 0, 0, 0.1); /* No aplicaría bien en tema oscuro */
 }
-/* NUEVO: Otra opción para el enlace activo: un pequeño borde inferior */
+
 .blog-navbar-nav-items a.active::after {
   content: "";
   position: absolute;
-  bottom: 4px; /* Ajusta según el padding del 'a' */
-  left: 0.75rem; /* Coincide con el padding horizontal */
-  right: 0.75rem; /* Coincide con el padding horizontal */
+  bottom: 4px;
+  left: 0.75rem;
+  right: 0.75rem;
   height: 3px;
-  background-color: #ffffff; /* O un color de acento */
+  background-color: var(
+    --color-primary
+  ); /* Color primario para la línea del activo */
   border-radius: 2px;
 }
 
@@ -148,60 +146,56 @@
 .search-toggle-btn {
   background: none;
   border: none;
-  color: #ffffff; /* MODIFICADO: Asegurar blanco */
+  color: var(--color-text-headings);
   cursor: pointer;
-  padding: 0.6rem; /* MODIFICADO: Un poco más de padding */
+  padding: 0.6rem;
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 2;
-  border-radius: 50%; /* NUEVO: Hacer el botón del icono redondo */
+  border-radius: var(--border-radius-circle); /* Variable para círculo */
   transition: background-color 0.2s ease;
 }
 .search-toggle-btn:hover {
-  background-color: rgba(255, 255, 255, 0.15); /* NUEVO: Feedback en hover */
+  background-color: rgba(255, 255, 255, 0.1); /* Feedback en hover */
 }
 .search-toggle-btn svg {
-  width: 22px; /* MODIFICADO: Ligeramente más grande */
-  height: 22px; /* MODIFICADO: Ligeramente más grande */
+  width: 22px;
+  height: 22px;
+  fill: currentColor; /* Para que herede el color del botón */
 }
 
 .search-input {
-  /* MODIFICADO: Fondo del input más integrado o un color que contraste elegantemente */
-  background-color: rgba(
-    0,
-    0,
-    0,
-    0.15
-  ); /* Anterior: #444. Ahora un translúcido oscuro */
-  border: 1px solid rgba(255, 255, 255, 0.3); /* MODIFICADO: Borde más sutil y claro */
-  color: white;
-  padding: 0.6rem 1rem; /* MODIFICADO: Padding ajustado */
-  border-radius: 20px; /* MODIFICADO: Bordes más redondeados */
+  background-color: rgba(0, 0, 0, 0.2); /* Un poco más oscuro y translúcido */
+  border: 1px solid var(--color-border); /* Borde sutil usando variable */
+  color: var(--color-text-primary);
+  padding: 0.6rem 1rem;
+  border-radius: var(--border-radius-pill); /* Variable para píldora */
   width: 0;
   opacity: 0;
   visibility: hidden;
   transition: width 0.3s ease, opacity 0.3s ease, visibility 0.3s ease,
-    padding-left 0.3s ease, background-color 0.3s ease, border-color 0.3s ease; /* MODIFICADO: Transiciones más completas */
-  margin-left: -20px; /* Ajustar según sea necesario con el nuevo padding del botón */
-  padding-left: 2.8rem; /* MODIFICADO: Para no solaparse con el icono cuando está visible */
-  font-size: 0.9rem;
+    padding-left 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+  margin-left: -20px;
+  padding-left: 2.8rem;
+  font-size: var(--font-size-sm); /* Usando variable */
 }
 .search-input::placeholder {
-  /* NUEVO */
-  color: rgba(255, 255, 255, 0.7);
+  color: var(
+    --color-text-secondary
+  ); /* Placeholder con color de texto secundario */
 }
 
 .expandable-search.expanded .search-input {
-  width: 220px; /* MODIFICADO: Un poco más ancho */
+  width: 220px;
   opacity: 1;
   visibility: visible;
-  margin-left: -2.5rem; /* Ajustar según el tamaño del botón y padding */
+  margin-left: -2.5rem;
   background-color: rgba(
     0,
     0,
     0,
-    0.25
+    0.3
   ); /* Un poco más oscuro cuando expandido */
 }
 
@@ -209,38 +203,39 @@
 .language-switcher {
   display: flex;
   align-items: center;
-  /* MODIFICADO: Integrar mejor el fondo o usar un estilo de "píldora" más limpio */
-  background-color: rgba(0, 0, 0, 0.15); /* Anterior: #444 */
-  border-radius: 20px; /* MODIFICADO: Coherente con el buscador */
-  padding: 0.25rem; /* MODIFICADO: Padding ligero */
-  border: 1px solid rgba(255, 255, 255, 0.2); /* NUEVO: Borde sutil */
+  background-color: rgba(0, 0, 0, 0.2); /* Coherente con el buscador */
+  border-radius: var(--border-radius-pill);
+  padding: 0.25rem;
+  border: 1px solid var(--color-border);
 }
 
 .language-switcher button {
   background: none;
   border: none;
-  color: #e0e0e0; /* MODIFICADO: Un gris claro, casi blanco */
-  padding: 0.4rem 0.8rem; /* MODIFICADO: Padding ajustado */
+  color: var(--color-text-secondary); /* Texto secundario */
+  padding: 0.4rem 0.8rem;
   cursor: pointer;
-  font-size: 0.85rem;
-  font-weight: 500; /* MODIFICADO: Peso de fuente */
-  border-radius: 18px; /* MODIFICADO: Bordes redondeados internos */
+  font-size: var(--font-size-xs); /* Usando variable */
+  font-weight: 500;
+  border-radius: var(--border-radius-pill); /* Coherente con el contenedor */
   transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .language-switcher button:hover {
-  color: white;
-  background-color: rgba(255, 255, 255, 0.1); /* MODIFICADO: Hover sutil */
+  color: var(--color-text-headings);
+  background-color: rgba(255, 255, 255, 0.05);
 }
 
 .language-switcher button.active {
-  /* MODIFICADO: El color #00bcd4 (cyan) es un acento fuerte. Asegúrate que combine o elige uno más armónico con el verde. */
-  /* Si el cyan es tu color de acento secundario global, está bien. Si no, considera blanco o un verde muy claro. */
-  background-color: #ffffff; /* Opción 1: Botón activo blanco */
-  color: #333333; /* Texto oscuro para contraste en botón blanco */
-  /* background-color: #00BCD4; */ /* Opción 2: Mantener el cyan si es intencional */
-  /* color: white; */
-  font-weight: 700; /* MODIFICADO: Más bold */
+  /* Usando el color de acento definido en :root (index.css) */
+  background-color: var(--color-accent);
+  color: var(
+    --color-text-on-primary
+  ); /* Asumiendo que el texto sobre el acento debe ser claro */
+  /* Alternativa que tenías (blanco con texto oscuro): */
+  /* background-color: #ffffff; */
+  /* color: #333333; */
+  font-weight: 700;
 }
 
 /* --- TOGGLER ICON (Hamburguesa) --- */
@@ -248,13 +243,12 @@
   display: none;
   background: none;
   border: none;
-  color: white;
-  font-size: 1.5rem; /* Puede que necesites ajustar esto si cambias el icono a SVG */
+  color: var(--color-text-headings);
+  font-size: 1.5rem;
   cursor: pointer;
   padding: 0.5rem;
   z-index: 1001;
-  /* NUEVO: Para mejor feedback visual */
-  border-radius: 6px;
+  border-radius: var(--border-radius-md);
   transition: background-color 0.2s ease;
 }
 .blog-navbar-toggler:hover {
@@ -262,91 +256,92 @@
 }
 
 .toggler-icon {
-  /* Considera usar un icono SVG para más control */
   display: block;
-  width: 24px; /* MODIFICADO: Ligeramente más grande */
-  height: 3px; /* MODIFICADO: Un poco más grueso */
-  background-color: white;
-  margin: 5px 0; /* MODIFICADO: Un poco más de separación */
-  transition: background-color 0.3s, transform 0.3s ease-in-out; /* NUEVO: Transición para animación */
-  border-radius: 1px; /* NUEVO: Puntas redondeadas */
+  width: 24px;
+  height: 3px;
+  background-color: var(--color-text-headings);
+  margin: 5px 0;
+  transition: background-color 0.3s, transform 0.3s ease-in-out;
+  border-radius: 1px;
 }
 
-/* NUEVO: Animación para el toggler (opcional, requiere JS para añadir/quitar clase 'open') */
 .blog-navbar-toggler.open .toggler-icon:nth-child(1) {
-  transform: translateY(8px) rotate(45deg); /* Ajustar 8px según height y margin */
+  transform: translateY(8px) rotate(45deg);
 }
 .blog-navbar-toggler.open .toggler-icon:nth-child(2) {
   opacity: 0;
 }
 .blog-navbar-toggler.open .toggler-icon:nth-child(3) {
-  transform: translateY(-8px) rotate(-45deg); /* Ajustar 8px */
+  transform: translateY(-8px) rotate(-45deg);
 }
 
 /* --- MENÚ COLAPSABLE (Móvil) --- */
 .blog-navbar-collapse {
-  display: none;
+  display: none; /* Se gestiona con JS o .expanded */
   position: absolute;
-  top: 100%; /* Se mantiene, pero asegúrate que no haya solapamiento con la sombra del navbar si es muy grande */
+  top: 100%;
   left: 0;
   right: 0;
-  /* MODIFICADO: Un fondo que sea coherente. Si el navbar es #7FAA72, #333 es un contraste alto. */
-  /* Podrías usar una versión más oscura del verde, o un gris oscuro más moderno. */
-  background-color: #3a3a3a; /* Anterior: #333. Un gris ligeramente más suave. */
-  /* background-color: #5E8D54; */ /* Opción: Verde oscuro */
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  background-color: var(
+    --color-background-card
+  ); /* Mismo fondo que el navbar o ligeramente más oscuro */
+  /* Alternativa: background-color: #171720; /* Un poco más oscuro que el navbar */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);
   z-index: 1000;
   max-height: 0;
   overflow-y: auto;
   transition: max-height 0.35s ease-in-out, padding 0.35s ease-in-out,
     background-color 0.3s ease;
   padding: 0 1rem;
+  border-top: 1px solid var(--color-border); /* NUEVO: Separador sutil */
 }
 
 .blog-navbar-collapse.expanded {
-  display: block;
-  /* MODIFICADO: El 65px debe coincidir con la altura del navbar */
-  max-height: calc(100vh - 65px);
+  /* display: block; /* No es necesario si se usa max-height */
+  max-height: calc(100vh - 65px); /* 65px debe ser la altura de tu navbar */
   padding: 1rem;
 }
 
 /* Buscador Móvil */
 .blog-navbar-search-mobile {
   display: flex;
-  margin-bottom: 1.5rem; /* MODIFICADO: Más espacio abajo */
+  margin-bottom: 1.5rem;
 }
 .blog-navbar-search-mobile input[type="search"] {
   flex-grow: 1;
-  padding: 0.75rem; /* MODIFICADO: Padding más generoso */
-  border: 1px solid #555;
-  border-radius: 6px 0 0 6px; /* MODIFICADO: Ligero redondeo */
-  background-color: #4f4f4f; /* MODIFICADO: Un poco más claro que el #444 */
-  color: white;
-  font-size: 1rem; /* MODIFICADO: Tamaño de fuente estándar */
+  padding: 0.75rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-md) 0 0 var(--border-radius-md);
+  background-color: var(
+    --color-background-body
+  ); /* Fondo más oscuro para contraste */
+  color: var(--color-text-primary);
+  font-size: var(--font-size-base);
 }
 .blog-navbar-search-mobile input[type="search"]::placeholder {
-  color: #b0b0b0; /* MODIFICADO: Placeholder más claro */
+  color: var(--color-text-secondary);
 }
 .blog-navbar-search-mobile button {
-  padding: 0.75rem 1rem; /* MODIFICADO */
-  border: 1px solid #00a3b9; /* MODIFICADO: Un cyan ligeramente más oscuro para el borde que el fondo */
-  background-color: #00bcd4; /* Mantenemos el cyan, o cambiar por un acento del navbar principal */
-  color: white;
-  border-radius: 0 6px 6px 0; /* MODIFICADO */
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--color-accent);
+  background-color: var(--color-accent);
+  color: var(--color-text-on-primary);
+  border-radius: 0 var(--border-radius-md) var(--border-radius-md) 0;
   cursor: pointer;
   display: flex;
   align-items: center;
 }
 .blog-navbar-search-mobile button svg {
-  width: 20px; /* MODIFICADO */
-  height: 20px; /* MODIFICADO */
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
 }
 
 /* Nav Items Móvil */
 .blog-navbar-nav-items-mobile {
   list-style: none;
   padding: 0;
-  margin: 0 0 1.5rem 0; /* MODIFICADO */
+  margin: 0 0 1.5rem 0;
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -357,68 +352,71 @@
 }
 .blog-navbar-nav-items-mobile a {
   display: block;
-  padding: 0.9rem 0.5rem; /* MODIFICADO: Más padding vertical */
-  border-bottom: 1px solid #4f4f4f; /* MODIFICADO: Coherente con otros grises */
-  color: #f0f0f0; /* MODIFICADO: Blanco menos intenso */
+  padding: 0.9rem 0.5rem;
+  border-bottom: 1px solid var(--color-border);
+  color: var(--color-text-primary);
   text-decoration: none;
-  font-size: 1.05rem; /* MODIFICADO: Ligeramente más grande */
-  transition: background-color 0.2s ease, color 0.2s ease; /* NUEVO */
+  font-size: var(--font-size-base); /* Ajustado para usar variable */
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 .blog-navbar-nav-items-mobile a:hover {
-  background-color: #4a4a4a; /* MODIFICADO */
-  color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.03); /* Hover muy sutil */
+  color: var(--color-text-headings);
 }
 .blog-navbar-nav-items-mobile li:last-child a {
   border-bottom: none;
 }
-/* NUEVO: Estilo para el enlace activo en móvil */
 .blog-navbar-nav-items-mobile a.active {
-  color: #ffffff; /* O tu color de acento principal */
+  color: var(--color-primary); /* Usar color primario para el activo */
   font-weight: bold;
-  background-color: #454545; /* Un fondo sutilmente diferente */
+  background-color: rgba(
+    0,
+    174,
+    255,
+    0.05
+  ); /* Fondo sutil con tinte del color primario */
 }
 
 /* Switch Idioma Móvil */
 .language-switcher-mobile {
-  margin-top: 1.5rem; /* MODIFICADO */
-  padding-top: 1.5rem; /* MODIFICADO */
-  border-top: 1px solid #555;
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--color-border);
   text-align: left;
 }
 .language-switcher-mobile p {
-  margin: 0 0 0.75rem 0.2rem; /* MODIFICADO */
-  font-size: 0.95rem; /* MODIFICADO */
-  color: #d0d0d0; /* MODIFICADO */
+  margin: 0 0 0.75rem 0.2rem;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
 }
 .language-switcher-mobile button {
   background: none;
-  border: 1px solid #666; /* MODIFICADO */
-  color: #d0d0d0; /* MODIFICADO */
-  padding: 0.6rem 1rem; /* MODIFICADO */
-  margin-right: 0.75rem; /* MODIFICADO */
-  margin-bottom: 0.75rem; /* MODIFICADO */
+  border: 1px solid var(--color-border);
+  color: var(--color-text-secondary);
+  padding: 0.6rem 1rem;
+  margin-right: 0.75rem;
+  margin-bottom: 0.75rem;
   cursor: pointer;
-  font-size: 0.9rem; /* MODIFICADO */
-  border-radius: 6px; /* MODIFICADO */
+  font-size: var(--font-size-sm);
+  border-radius: var(--border-radius-md);
   transition: background-color 0.2s ease, color 0.2s ease,
     border-color 0.2s ease;
 }
 .language-switcher-mobile button:hover {
-  color: white;
-  border-color: #888;
-  background-color: #4f4f4f; /* NUEVO */
+  color: var(--color-text-headings);
+  border-color: var(--color-primary); /* Borde con color primario al hover */
+  background-color: rgba(0, 0, 0, 0.1); /* Fondo sutil */
 }
 .language-switcher-mobile button.active {
-  background-color: #00bcd4; /* Mantenido, pero considera consistencia con desktop */
-  /* background-color: #FFFFFF; */ /* Opción blanca */
-  /* color: #333333; */ /* Texto oscuro para botón blanco */
-  color: white;
-  border-color: #00bcd4; /* O el color del fondo si es blanco */
+  background-color: var(
+    --color-accent
+  ); /* Mantenido, pero considera consistencia con desktop */
+  color: var(--color-text-on-primary);
+  border-color: var(--color-accent);
   font-weight: bold;
 }
 
 /* --- MEDIA QUERIES (Responsividad) --- */
-/* No he modificado la lógica de las media queries, solo los estilos internos que heredan */
 @media (max-width: 992px) {
   .blog-navbar-group-center,
   .blog-navbar-group-left .blog-navbar-nav-items,
@@ -426,7 +424,7 @@
     display: none;
   }
   .expandable-search.expanded .search-input {
-    width: 180px; /* MODIFICADO: Ajuste fino */
+    width: 180px;
   }
 }
 
@@ -438,7 +436,7 @@
     display: none;
   }
   .blog-navbar-toggler {
-    display: flex; /* MODIFICADO: Usar flex para centrar el icono si es SVG o tiene padding interno */
+    display: flex;
     align-items: center;
     justify-content: center;
     order: 2;
@@ -464,49 +462,42 @@
 }
 
 .blog-navbar-group-right .nav-link-button {
-  /* MODIFICADO: Para que coincida con los nuevos estilos de <a> */
-  color: #ffffff;
-  font-size: 1rem;
+  color: var(
+    --color-text-primary
+  ); /* Coincidir con los nuevos estilos de <a> */
+  font-size: var(--font-size-base);
   font-weight: 500;
   padding: 0.5rem 0.75rem;
   transition: color 0.2s ease, background-color 0.2s ease;
-  border-radius: 6px;
+  border-radius: var(--border-radius-md);
 }
 .blog-navbar-group-right .nav-link-button:hover {
-  /* MODIFICADO: Coincidir con hover de <a> */
-  color: #ffffff;
-  background-color: rgba(255, 255, 255, 0.1);
+  color: var(--color-text-headings); /* Coincidir con hover de <a> */
+  background-color: rgba(255, 255, 255, 0.05);
 }
-/* NUEVO: Estilo activo para botones como enlaces */
 .blog-navbar-group-right .nav-link-button.active {
+  color: var(--color-primary); /* Coincidir con .active de los 'a' */
   font-weight: 700;
-  /* background-color: rgba(0, 0, 0, 0.1); O similar al .active de los 'a' */
 }
-.blog-navbar-group-right .nav-link-button.active::after {
-  /* Si quieres el subrayado */
-  content: "";
-  position: absolute; /* Necesitaría que el botón también sea position: relative */
-  /* Estilos del ::after como en .blog-navbar-nav-items a.active::after */
-  /* Esto es más complejo para un botón, quizás solo cambiar fondo/peso sea suficiente */
-}
+/* .blog-navbar-group-right .nav-link-button.active::after { ... } */ /* El subrayado es más complejo para botones, se omite por simplicidad */
 
 .nav-link-button-mobile {
   display: block;
   width: 100%;
-  /* MODIFICADO: Coincidir con los nuevos estilos de <a> móviles */
   padding: 0.9rem 0.5rem;
-  color: #f0f0f0;
+  color: var(
+    --color-text-primary
+  ); /* Coincidir con los nuevos estilos de <a> móviles */
   text-decoration: none;
-  font-size: 1.05rem;
+  font-size: var(--font-size-base);
   transition: background-color 0.2s ease, color 0.2s ease;
 }
 .nav-link-button-mobile:hover {
-  background-color: #4a4a4a;
-  color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.03);
+  color: var(--color-text-headings);
 }
-/* NUEVO: Estilo activo para botones como enlaces en móvil */
 .nav-link-button-mobile.active {
-  color: #ffffff;
+  color: var(--color-primary);
   font-weight: bold;
-  background-color: #454545;
+  background-color: rgba(0, 174, 255, 0.05);
 }

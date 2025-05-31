@@ -1,11 +1,9 @@
-// src/components/Entradas/EntradaDetalle.tsx
 import React, { useEffect, useState, useMemo } from "react";
 import { useParams } from "react-router-dom";
-import { useLanguage } from "../widgets/LanguageContext";
-import type { LanguageCode } from "../widgets/LanguageContext";
-import "./EntradaDetalle.css";
+import { useLanguage } from "../widgets/LanguageContext"; // Asegúrate que la ruta sea correcta
+import type { LanguageCode } from "../widgets/LanguageContext"; // Asegúrate que la ruta sea correcta
+import "./EntradaDetalle.css"; // Asegúrate que la ruta sea correcta
 
-// ... (Tu interfaz BlogPost y funciones helper getPostTranslatedField, DetailTranslations, getDetailTranslation)
 interface BlogPost {
   id: number;
   autor_id: number;
@@ -60,49 +58,71 @@ const getDetailTranslation = (key: string, lang: LanguageCode): string => {
 };
 
 const EntradaDetalle: React.FC = () => {
-  // --- SECCIÓN DE HOOKS (Todos deben estar aquí arriba) ---
-  const { slug } = useParams<{ slug: string }>(); // Hook 1
-  const { currentLanguage } = useLanguage(); // Hook 2
-  const [post, setPost] = useState<BlogPost | null>(null); // Hook 3
-  const [cargando, setCargando] = useState<boolean>(true); // Hook 4
-  const [error, setError] = useState<string | null>(null); // Hook 5
+  // --- SECCIÓN DE HOOKS ---
+  const { slug } = useParams<{ slug: string }>();
+  const { currentLanguage } = useLanguage();
+  const [post, setPost] = useState<BlogPost | null>(null);
+  const [cargando, setCargando] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const API_BASE_URL = "http://127.0.0.1:5000/entradas"; // Esto no es un Hook
+  // Definición de la URL base de la API. Puede estar en un archivo de configuración.
+  const API_BASE_URL = "http://127.0.0.1:5000/entradas";
 
   useEffect(() => {
-    // Hook 6
     if (!slug) {
       setError("No se proporcionó un slug para la entrada.");
       setCargando(false);
       return;
     }
-    const fetchPost = async () => {
-      // ... (lógica de fetchPost como en tu código original/anterior solución)
+
+    const fetchPostData = async () => {
       setCargando(true);
       setError(null);
-      setPost(null);
+      setPost(null); // Limpiar el post anterior mientras se carga el nuevo
       try {
         const response = await fetch(`${API_BASE_URL}?slug=${slug}`);
-        if (!response.ok) {
-          if (response.status === 404) {
+
+        // Intentar parsear el cuerpo de la respuesta como JSON.
+        // Esto es útil incluso para errores, ya que el backend podría enviar detalles en JSON.
+        let jsonResponse;
+        try {
+          jsonResponse = await response.json();
+        } catch (parseError) {
+          // Si el parseo falla (ej. respuesta no es JSON válido), y la respuesta no fue OK.
+          if (!response.ok) {
             throw new Error(
-              `Entrada con slug "${slug}" no encontrada (Error 404).`
+              `Error HTTP: ${response.status} - Respuesta no es JSON válido.`
             );
           }
+          // Si la respuesta fue OK pero no es JSON, es un problema inesperado.
+          throw new Error("Respuesta exitosa pero no se pudo parsear el JSON.");
+        }
+
+        if (!response.ok) {
+          if (response.status === 404) {
+            // Usar el mensaje del backend si está disponible en jsonResponse
+            const message =
+              jsonResponse?.message ||
+              `Entrada con slug "${slug}" no encontrada (Error 404).`;
+            throw new Error(message);
+          }
+          // Para otros errores HTTP, intentar usar mensaje de jsonResponse si existe
+          const errorText =
+            jsonResponse?.error ||
+            jsonResponse?.message ||
+            `Error HTTP: ${response.status} - No se pudo cargar la entrada.`;
+          throw new Error(errorText);
+        }
+
+        // Si la respuesta es OK (status 200-299)
+        // Validar que jsonResponse (que es `entrada.to_dict()` del backend) sea un objeto válido de post.
+        // El backend devuelve el objeto directamente, no un array.
+        if (!jsonResponse || typeof jsonResponse.slug === "undefined") {
           throw new Error(
-            `Error HTTP: ${response.status} - No se pudo cargar la entrada.`
+            `La respuesta del servidor para el slug "${slug}" no contiene los datos esperados de la entrada.`
           );
         }
-        const jsonResponse = await response.json();
-        const entryData = Array.isArray(jsonResponse)
-          ? jsonResponse[0]
-          : jsonResponse;
-        if (!entryData) {
-          throw new Error(
-            `Entrada con slug "${slug}" no fue encontrada en la respuesta.`
-          );
-        }
-        setPost(entryData as BlogPost);
+        setPost(jsonResponse as BlogPost);
       } catch (e: unknown) {
         const errorMessage =
           e instanceof Error
@@ -110,16 +130,16 @@ const EntradaDetalle: React.FC = () => {
             : "Ocurrió un error desconocido al cargar la entrada.";
         setError(errorMessage);
         console.error("Error al cargar la entrada:", e);
-        setPost(null);
+        setPost(null); // Asegurar que el post sea null en caso de error
       } finally {
         setCargando(false);
       }
     };
-    fetchPost();
-  }, [slug]); // Considera si currentLanguage es necesario aquí para el fetch
+
+    fetchPostData();
+  }, [slug]); // API_BASE_URL es constante en este scope, no necesita ser dependencia.
 
   const pageTitle = useMemo(() => {
-    // Hook 7
     if (cargando) return "Cargando...";
     if (error) return "Error al cargar";
     if (!post) return "Entrada no encontrada";
@@ -127,19 +147,18 @@ const EntradaDetalle: React.FC = () => {
   }, [post, currentLanguage, cargando, error]);
 
   useEffect(() => {
-    // Hook 8
     document.title = pageTitle;
   }, [pageTitle]);
 
-  // Este es el Hook que probablemente está causando problemas si no está aquí:
   const fechaPublicacionFormateada = useMemo(() => {
-    // Hook 9
     if (!post || !post.fecha_publicacion) {
       return "Fecha desconocida";
     }
     try {
+      // Asegurarse que currentLanguage sea un código de idioma válido para toLocaleDateString
+      const langForLocale = currentLanguage.toLowerCase().split("_")[0]; // ej. 'es-MX' -> 'es'
       return new Date(post.fecha_publicacion).toLocaleDateString(
-        currentLanguage.toLowerCase(),
+        langForLocale, // Usar solo el código de idioma base
         {
           year: "numeric",
           month: "long",
@@ -149,13 +168,19 @@ const EntradaDetalle: React.FC = () => {
         }
       );
     } catch (e) {
-      console.error("Error al formatear la fecha:", e);
-      return post.fecha_publicacion;
+      console.error(
+        "Error al formatear la fecha:",
+        e,
+        "Idioma actual:",
+        currentLanguage,
+        "Fecha original:",
+        post.fecha_publicacion
+      );
+      return post.fecha_publicacion; // Devolver la fecha original si el formateo falla
     }
   }, [post, currentLanguage]);
-  // --- FIN DE LA SECCIÓN DE HOOKS ---
 
-  // --- LÓGICA DE RETORNO CONDICIONAL (Después de TODOS los Hooks) ---
+  // --- LÓGICA DE RETORNO CONDICIONAL ---
   if (cargando) {
     return <div className="entrada-detalle-status">Cargando entrada... ⏳</div>;
   }
@@ -176,7 +201,7 @@ const EntradaDetalle: React.FC = () => {
     );
   }
 
-  // --- RENDERIZADO PRINCIPAL (Cuando post existe y no hay errores/carga) ---
+  // --- RENDERIZADO PRINCIPAL ---
   const titulo = getPostTranslatedField(post, "titulo", currentLanguage);
   const contenido = getPostTranslatedField(post, "contenido", currentLanguage);
 
@@ -190,6 +215,8 @@ const EntradaDetalle: React.FC = () => {
               src={post.imagen_destacada}
               alt={`Imagen destacada para ${titulo}`}
               className="entrada-detalle-imagen"
+              // Considerar añadir un onError para manejar imágenes rotas
+              onError={(e) => (e.currentTarget.style.display = "none")}
             />
           )}
           <div className="entrada-detalle-meta">
@@ -201,6 +228,20 @@ const EntradaDetalle: React.FC = () => {
                 {fechaPublicacionFormateada}
               </time>
             </p>
+            {/* Puedes añadir más metadatos aquí si es necesario, ej: autor, categoría */}
+            {/* <p className="meta-item">
+              <span className="meta-label">
+                {getDetailTranslation("authorLabel", currentLanguage)}:
+              </span>{" "}
+              {post.autor_id}
+            </p>
+            <p className="meta-item">
+              <span className="meta-label">
+                {getDetailTranslation("categoryLabel", currentLanguage)}:
+              </span>{" "}
+              {post.categoria_id}
+            </p>
+            */}
           </div>
         </header>
         <div

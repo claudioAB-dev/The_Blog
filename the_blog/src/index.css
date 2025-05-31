@@ -11,83 +11,98 @@
 }
 
 html {
-  font-size: 80%;
+  /* RECOMENDACIÓN: Usar 62.5% para que 1rem = 10px, facilitando cálculos.
+     Si 16px (default del navegador) * 0.625 = 10px. Tu anterior 80% (12.8px) también es válido. */
+  font-size: 62.5%; /* Esto hace que 1rem sea 10px, 1.6rem sea 16px, etc. */
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* Para temas oscuros, ayuda al navegador con los elementos de UI por defecto (scrollbars, etc.) */
+  color-scheme: dark;
 }
 
 body {
   font-family: var(--font-primary);
-  line-height: 1.65; /* Este interlineado debería seguir funcionando bien, ajústalo si es necesario */
+  line-height: 1.65;
   color: var(--color-text-primary);
   background-color: var(--color-background-body);
   overflow-x: hidden;
+  font-size: 1.6rem; /* Establece el tamaño de fuente base del cuerpo a 16px (si html font-size es 62.5%) */
 }
 
-/* 2. Variables CSS (Custom Properties)
+/* 2. Variables CSS (Custom Properties) - ESTILO TECH OSCURO
 -------------------------------------------------------------------------------- */
 :root {
-  /* Paleta de Colores (Sin cambios aquí) */
-  --color-primary: #7faa72;
-  --color-primary-dark: #5e8c6a;
-  --color-accent: #00bcd4;
+  /* Paleta de Colores - ESTILO TECH OSCURO */
+  --color-primary: #00aeff; /* Azul eléctrico brillante - para enlaces, botones primarios */
+  --color-primary-dark: #007acc; /* Azul más oscuro para hover/active */
+  --color-accent: #e81cff; /* Magenta vibrante - para acentos especiales */
+  /* Alternativa de acento: --color-accent: #39ff14; /* Verde neón */
 
-  --color-text-primary: #333d45;
-  --color-text-secondary: #55626b;
-  --color-text-headings: #2c3e50;
-  --color-text-light: #ffffff;
-  --color-text-on-primary: #ffffff;
+  --color-text-primary: #adb5bd; /* Gris claro para texto principal */
+  --color-text-secondary: #868e96; /* Gris un poco más oscuro para texto secundario */
+  --color-text-headings: #ffffff; /* Blanco puro para encabezados */
+  --color-text-light: #f8f9fa; /* Para texto sobre fondos oscuros que no sean el principal */
+  --color-text-on-primary: #ffffff; /* Texto sobre el color primario (botones) */
 
-  --color-background-body: #f8f9fa;
-  --color-background-card: #ffffff;
-  --color-background-code: #2d2d2d;
+  --color-background-body: #121212; /* Negro o gris muy oscuro para el fondo */
+  --color-background-card: #1e1e1e; /* Gris oscuro para tarjetas, ligeramente más claro que el body */
+  --color-background-code: #2a2a2a; /* Fondo para bloques de código */
 
-  --color-border: #e0e3e6;
-  --color-border-light: #ececec;
-  --color-shadow: rgba(0, 0, 0, 0.08);
-  --shadow-card: 0 4px 12px rgba(0, 0, 0, 0.1); /* Añadido para tarjetas */
-  --shadow-card-hover: 0 6px 16px rgba(0, 0, 0, 0.15); /* Añadido para tarjetas */
+  --color-border: #343a40; /* Bordes oscuros, sutiles */
+  --color-border-light: #495057; /* Un borde un poco más claro si es necesario */
+  --color-shadow: rgba(
+    0,
+    174,
+    255,
+    0.1
+  ); /* Sombra sutil con un tinte del color primario */
+  --shadow-card: 0 4px 12px rgba(0, 0, 0, 0.3); /* Sombra más pronunciada para tarjetas en modo oscuro */
+  --shadow-card-hover: 0 6px 16px rgba(0, 0, 0, 0.4);
 
-  /* Tipografía (Sin cambios en las definiciones de variables de fuente aquí, ya que escalarán con la base) */
+  /* Tipografía - Fuente de Encabezados más "Tech" */
   --font-primary: "Nunito Sans", -apple-system, BlinkMacSystemFont, "Segoe UI",
     Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
     "Segoe UI Symbol";
-  --font-headings: "Merriweather Sans", -apple-system, BlinkMacSystemFont,
-    "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji",
-    "Segoe UI Emoji", "Segoe UI Symbol";
+  /* Montserrat es una fuente sans-serif moderna y limpia, excelente para un look tech */
+  --font-headings: "Montserrat", "Nunito Sans", -apple-system,
+    BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   --font-code: "Fira Code", "Consolas", "Monaco", "Andale Mono", "Ubuntu Mono",
     monospace;
 
-  /* Tamaños de Fuente Base (Estos valores en 'rem' ahora se calcularán sobre una base más pequeña) */
-  /* Por ejemplo, si la base es 16px: */
-  /* --font-size-xs: 0.75rem;   -> 12px */
-  /* --font-size-sm: 0.875rem;  -> 14px */
-  /* --font-size-base: 1rem;    -> 16px */
-  /* --font-size-md: 1.125rem;  -> 18px */
-  /* etc. */
-  --font-size-xs: 0.75rem;
-  --font-size-sm: 0.875rem;
-  --font-size-base: 1rem;
-  --font-size-md: 1.125rem;
-  --font-size-lg: 1.25rem;
-  --font-size-xl: 1.5rem;
-  --font-size-xxl: 2rem;
-  --font-size-xxxl: 2.5rem;
+  /* Tamaños de Fuente Base (Estos valores en 'rem' se calculan sobre la base de html { font-size: 62.5% }) */
+  /* Si 1rem = 10px: */
+  /* --font-size-xs: 0.75rem;   -> 7.5px (¡CUIDADO! Esto es muy pequeño. Originalmente eran 12px sobre 16px) */
+  /* Considera recalcular estos si cambias la base de html. Para mantener tamaños visuales similares: */
+  /* Si antes html era 80% (12.8px base) y --font-size-base era 1rem (12.8px): */
+  /* Para que --font-size-base siga siendo ~12.8px con html al 62.5% (10px base), necesitarías ~1.28rem */
+  /* O, más comúnmente, si quieres que el font-size del body sea 16px: */
+  /* html { font-size: 62.5% } -> 1rem = 10px */
+  /* body { font-size: 1.6rem } -> 16px */
+  /* Y luego ajustas los tamaños relativos: */
+  --font-size-xs: 1.2rem; /* Equivale a 12px */
+  --font-size-sm: 1.4rem; /* Equivale a 14px */
+  --font-size-base: 1.6rem; /* Equivale a 16px (buen tamaño para p) */
+  --font-size-md: 1.8rem; /* Equivale a 18px */
+  --font-size-lg: 2rem; /* Equivale a 20px */
+  --font-size-xl: 2.4rem; /* Equivale a 24px */
+  --font-size-xxl: 3.2rem; /* Equivale a 32px */
+  --font-size-xxxl: 4rem; /* Equivale a 40px */
 
-  /* Espaciado (Ajustados para ser más pequeños. Considera si necesitas ajustar visualmente) */
-  --space-xs: 0.2rem; /* Originalmente 0.25rem */
-  --space-sm: 0.4rem; /* Originalmente 0.5rem */
-  --space-md: 0.8rem; /* Originalmente 1rem */
-  --space-lg: 1.2rem; /* Originalmente 1.5rem */
-  --space-xl: 1.6rem; /* Originalmente 2rem */
-  --space-xxl: 2.4rem; /* Originalmente 3rem */
+  /* Espaciado (Ajustados para la nueva base de 1rem = 10px, manteniendo proporción visual) */
+  --space-xs: 0.4rem; /* Originalmente 0.2rem (sobre base 12.8px) -> 2.56px. Nuevo: 4px */
+  --space-sm: 0.8rem; /* Originalmente 0.4rem -> 5.12px. Nuevo: 8px */
+  --space-md: 1.6rem; /* Originalmente 0.8rem -> 10.24px. Nuevo: 16px */
+  --space-lg: 2.4rem; /* Originalmente 1.2rem -> 15.36px. Nuevo: 24px */
+  --space-xl: 3.2rem; /* Originalmente 1.6rem -> 20.48px. Nuevo: 32px */
+  --space-xxl: 4.8rem; /* Originalmente 2.4rem -> 30.72px. Nuevo: 48px */
 
-  /* Radios de Borde (Sin cambios aquí) */
-  --border-radius-sm: 4px;
-  --border-radius-md: 8px;
-  --border-radius-lg: 12px;
-  --border-radius-xl: 16px;
+  /* Radios de Borde (Opcional: un poco más nítidos para look tech) */
+  --border-radius-sm: 3px; /* Originalmente 4px */
+  --border-radius-md: 6px; /* Originalmente 8px */
+  --border-radius-lg: 10px; /* Originalmente 12px */
+  --border-radius-xl: 14px; /* Originalmente 16px */
   --border-radius-pill: 50px;
   --border-radius-circle: 50%;
 
@@ -100,14 +115,13 @@ body {
   --z-index-sticky: 1020;
   /* ... más z-indexes ... */
 
-  /* Colores de Alerta (Asegúrate que estén definidos) */
-  --color-danger: #dc3545;
-  --color-danger-background: #f8d7da;
-  --color-danger-border: #f5c6cb;
+  /* Colores de Alerta (Ajustados para contraste en modo oscuro) */
+  --color-danger: #ff4d4f; /* Rojo más brillante */
+  --color-danger-background: rgba(255, 77, 79, 0.15);
+  --color-danger-border: #ff7875;
 }
 
 /* 3. Estilos Tipográficos Base
-    (No se necesitan cambios aquí, ya que usan variables en 'rem' que escalarán con la nueva base de 100%)
 -------------------------------------------------------------------------------- */
 h1,
 h2,
@@ -120,7 +134,7 @@ h6 {
   line-height: 1.3;
   margin-top: var(--space-lg);
   margin-bottom: var(--space-md);
-  font-weight: 700;
+  font-weight: 700; /* Montserrat es un poco más ligera, así que 700 (bold) está bien */
 }
 
 h1 {
@@ -140,12 +154,12 @@ h5 {
 }
 h6 {
   font-size: var(--font-size-base);
-  font-weight: 600;
+  font-weight: 600; /* Semibold para h6 */
 }
 
 p {
   margin-bottom: var(--space-md);
-  font-size: var(--font-size-base);
+  font-size: var(--font-size-base); /* Usará 1.6rem (16px) */
 }
 
 a {
@@ -159,23 +173,40 @@ a:focus {
   text-decoration: underline;
 }
 
-/* ... (resto de estilos tipográficos, formularios, utilidades, etc., sin cambios necesarios ya que usan 'rem' o heredan) ... */
+/* ... (resto de estilos tipográficos, formularios, utilidades, etc.) ... */
 
-/* Ejemplo de cómo se verían los estilos de formularios y código, también escalarán: */
 input,
 button,
 textarea,
 select {
   font-family: inherit;
-  font-size: inherit; /* Heredará el tamaño escalado */
+  font-size: inherit;
   line-height: inherit;
-  /* ... */
+  /* Considera añadir estilos base para que se adapten al tema oscuro */
+  /* Por ejemplo:
+  background-color: var(--color-background-card);
+  color: var(--color-text-primary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-sm);
+  padding: var(--space-sm) var(--space-md);
+  */
 }
 
 pre,
 code {
   font-family: var(--font-code);
-  font-size: var(--font-size-sm); /* Escalará con la nueva base */
+  background-color: var(
+    --color-background-code
+  ); /* Asegúrate que tenga fondo */
+  color: var(--color-text-light); /* Texto claro para el código */
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: var(--border-radius-sm);
+  font-size: var(--font-size-sm); /* Usará 1.4rem (14px) */
+  overflow-x: auto; /* Para bloques de código largos */
 }
 
-/* ... (El segundo bloque 'body' que estaba aquí ha sido eliminado por redundancia y uso de variables no definidas) ... */
+/* Asegúrate de que los bloques pre también tengan buen espaciado y estilo */
+pre {
+  padding: var(--space-md);
+  margin-bottom: var(--space-md);
+}
