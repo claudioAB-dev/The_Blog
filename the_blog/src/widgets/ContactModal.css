@@ -1,35 +1,20 @@
-/* contact-modal.css - Adaptado al concepto global */
-
 .contact-modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  /* Podrías usar una variable si defines un color de overlay global: var(--color-overlay-background, rgba(0, 0, 0, 0.7)); */
-  background-color: rgba(
-    0,
-    0,
-    0,
-    0.75
-  ); /* Overlay ligeramente más oscuro para mayor contraste */
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
-  z-index: var(--z-index-modal-backdrop, 1050); /* Usar variable de z-index */
-  padding: var(--space-md); /* Antes: 15px */
+  padding-top: 80px; /* <-- Ahora sí es 8% de la altura de la ventana */
+  background-color: rgba(0, 0, 0, 0.75);
+  z-index: var(--z-index-modal-backdrop, 1050);
   opacity: 0;
   visibility: hidden;
   transition: opacity var(--transition-base),
     visibility 0s linear var(--transition-base);
 }
-
-.contact-modal-overlay[role="dialog"] {
-  opacity: 1;
-  visibility: visible;
-  transition: opacity var(--transition-base);
-}
-
 .contact-modal-content {
   background-color: var(--color-background-card); /* Antes: #ffffff */
   padding: var(--space-lg) var(--space-xl); /* Antes: 25px 30px */

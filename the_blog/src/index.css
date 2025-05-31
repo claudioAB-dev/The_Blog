@@ -2,6 +2,7 @@
 
 /* 1. Reset Básico y Box-Sizing Global
 -------------------------------------------------------------------------------- */
+
 *,
 *::before,
 *::after {
@@ -11,13 +12,10 @@
 }
 
 html {
-  /* RECOMENDACIÓN: Usar 62.5% para que 1rem = 10px, facilitando cálculos.
-     Si 16px (default del navegador) * 0.625 = 10px. Tu anterior 80% (12.8px) también es válido. */
   font-size: 62.5%; /* Esto hace que 1rem sea 10px, 1.6rem sea 16px, etc. */
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /* Para temas oscuros, ayuda al navegador con los elementos de UI por defecto (scrollbars, etc.) */
   color-scheme: dark;
 }
 

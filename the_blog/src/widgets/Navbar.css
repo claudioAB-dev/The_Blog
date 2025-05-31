@@ -1,8 +1,7 @@
-/* BlogNavbar.css */
-
-/* Usaremos variables de :root definidas en tu index.css (tema oscuro "Tech") */
-
 .blog-navbar {
+  position: fixed;
+  top: 0;
+  z-index: 100;
   /* MODIFICADO: Usando variables para el fondo y color de texto */
   background-color: var(
     --color-background-card
